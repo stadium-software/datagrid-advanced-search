@@ -73,13 +73,19 @@ Building advanced search forms for DataGrids
 
 ### Global scripts
 
-1. Create six global scripts (or copy them from the sample application)
-   1. ConstructSearchPhrase
-   2. ParseColumnHeading
-   3. SetBooleanFilter
-   4. SetDateFilter
-   5. SetNumberFilter
-   6. SetTextFilter
+Create six global scripts as per the attached sample application
+1. ConstructSearchPhrase
+Creates the SearchPhrase from the current phrase and the new phrase. Two decision actions evaluate whether to create a new phrase, add to an existing one or do nothing. 
+1. ParseColumnHeading
+Adds escape characters (\) to spaces found in the column header. 
+1. SetBooleanFilter
+Creates a search prase for a boolean filter. 
+1. SetDateFilter
+Creates a search phrase for a date filter.
+1. SetNumberFilter
+Creates a search phrase for a number filter.
+1. SetTextFilter
+Creates a search phrase for a text filter. 
 
 ### Apply button event handler
 
