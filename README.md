@@ -2,6 +2,8 @@
 
 Building advanced search forms for DataGrids
 
+<hr>
+
 ## Required setup
 
 ### DataGrid
@@ -87,7 +89,7 @@ Building advanced search forms for DataGrids
 For every filter in the grid
 1. Add the global script that corresponds with the column data type (e.g. Text columns -> add SetTextFilter script)
 2. Set the parameters required by the script
-   1. ColumnHeading: The heading of the DataGrid column the filter needs to be applied to as it appears in the "Header Text" property of that column or in the Heading row of the rendered DataGrid (NOTE: DataGrid headings might contain spaces that the corresponding Database column may not contain)
+   1. ColumnHeading: The heading of the DataGrid column the filter needs to be applied to as it appears in the "Header Text" property of that column or in the Heading row of the rendered DataGrid (NOTE: DataGrid headings might contain spaces that the corresponding Database columns do not contain)
    2. Operator: The value of the "operator" DropDown of the filter
    3. Values: 
       1. For Text fields: value of the TextBox
