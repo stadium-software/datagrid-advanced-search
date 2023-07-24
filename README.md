@@ -104,12 +104,9 @@ For every filter in the grid
    1. If the value of the DropDown of this filter is "SmallerThan" or "GreaterThan" set the "To" TextBox visibility to false
    2. Else  set the "To" TextBox visibility to true
 
-## Optional setup
+<hr>
 
-### Filter Heading
-1. Add a label control above the filters grid with the filter heading
-2. Right-click on the control and select "Style"
-3. Add heading styles as you see fit
+## Optional setup
 
 ### Clear button
 
