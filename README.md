@@ -4,7 +4,7 @@ Building advanced search forms for DataGrids
 
 ## Required setup
 
-### DataGrid Setup
+### DataGrid
 
 1. Add a Database connector 
 2. Add a query to select the data for the DataGrid
@@ -13,7 +13,7 @@ Building advanced search forms for DataGrids
 5. Execute the query in the .Load event handler of the page
 6. Assign the data returned by the query to the DataGrid using a SetValue function
 
-### Filters form setup
+### Filters form
 
 1. Add a Grid control to the page 
 2. Add a button below the grid with the Text "Apply"
@@ -69,7 +69,7 @@ Building advanced search forms for DataGrids
    2. Yes
    3. No
 
-### Global Scripts
+### Global scripts
 
 1. Create six global scripts (or copy them from the sample application)
    1. ConstructSearchPhrase
@@ -104,9 +104,7 @@ For every filter in the grid
    1. If the value of the DropDown of this filter is "SmallerThan" or "GreaterThan" set the "To" TextBox visibility to false
    2. Else  set the "To" TextBox visibility to true
 
-|----------------------------------|
-
-## Optional
+## Optional setup
 
 ### Filter Heading
 1. Add a label control above the filters grid with the filter heading
