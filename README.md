@@ -10,6 +10,9 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 
 ## Required setup
 
+### Database
+Create the database by running the SQL scripts in the Database folder of this repo. 
+
 ### DataGrid
 
 1. Add a Database connector 
