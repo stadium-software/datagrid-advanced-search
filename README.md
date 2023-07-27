@@ -9,6 +9,7 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 <hr>
 
 ## Required setup
+NOTE: These instructions apply to Stadium 6 only
 
 ### Database
 Create the MSSQL database by running the SQL scripts in the Database folder of this repo. 
