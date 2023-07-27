@@ -1,6 +1,6 @@
-# DataGrid Advanced Search
+# DataGrid Advanced Client-Side Search
 
-Building advanced search forms for DataGrids
+Building advanced client-side search forms for DataGrids
 
 
 https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964bf79-e513-4227-9a72-361cee6c0d7b
