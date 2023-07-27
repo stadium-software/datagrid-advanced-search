@@ -25,7 +25,8 @@ Create the database by running the SQL scripts in the Database folder of this re
 ### Filters form
 
 1. Add a Grid control to the page 
-2. Add a button below the grid with the Text "Apply"
+2. Add a class entitled "filtergrid" to the grid control classes property
+3. Add a button below the grid with the Text "Apply"
 
 #### For Text columns
 
