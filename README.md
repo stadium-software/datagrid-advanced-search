@@ -125,7 +125,8 @@ For every filter in the grid
 2. Add a SetValue into the handler and set the DataGrid SearchTerm property to empty (= "")
 3. Add a JavaScript action to the handler with the following JS code
 
-<code>const pageName = window.location.pathname.replace("/", "");
+```
+const pageName = window.location.pathname.replace("/", "");
 let arr = document.querySelectorAll(".filtergrid input");
 for (let i=0;i<arr.length;i++){
  let inputName = arr[i].id.replace(`${pageName}_`, "");
@@ -138,15 +139,18 @@ for (let i=0;i<arr.length;i++){
   if (this[`${inputName}Options`][0].value == "ShowAll"){
   this[`${inputName}SelectedValue`] = undefined;
  } 
-}</code>
+}
+```
 
 4. Add a button with the text "Clear" to the page
 5. Create the Click event handler for the button
 6. In the handler, call the ClearForm script
 7. Drag a JavaScript action to the Apply button click event handler with the following JS code
 
-<code>let th = this;
+```
+let th = this;
 let clearfilter = document.querySelector(".clear-filter");
 clearfilter.addEventListener("click", function () {
  th.ClearForm();
-});</code>
+});
+```
