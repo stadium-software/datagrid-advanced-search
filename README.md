@@ -166,4 +166,6 @@ clearfilter.addEventListener("click", function () {
 });
 ```
 
-## Additional Options
+## Optional Custom Development
+1. Allowing users to save searches to the database (save generated search phase)
+2. Providing a dropdown for users to apply previously saved searches (populate search field with previously saved phrase)
