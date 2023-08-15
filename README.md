@@ -8,8 +8,16 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 
 <hr>
 
-## Required setup
-NOTE: These instructions apply to Stadium 6 only
+## Version
+1.0
+
+## Sample applications
+This repo contains two Stadium 6 applications. 
+1. AdvancedClientSideSearchForm.sapz: Global scripts were created using Stadium actions (easier to understand)
+2. AdvancedClientSideSearchForm_JS.sapz: Global scripts were created using Javascript actions (easier to recreate)
+
+## Setup instructions
+These instructions apply to Stadium 6 only.
 
 ### Database
 Create the MSSQL database by running the SQL scripts in the Database folder of this repo. 
@@ -82,7 +90,10 @@ Create the MSSQL database by running the SQL scripts in the Database folder of t
 
 ### Global scripts
 
-Create six global scripts as per the attached sample application
+Create six global scripts listed below as per the attached sample application. 
+
+NOTES: If you are using Stadium 6.6 or later, you can copy the global scripts from the sample application into your own. 
+
 1. ConstructSearchPhrase: Creates the SearchPhrase from the current phrase and the new phrase. Two decision actions evaluate whether to create a new phrase, add to an existing one or do nothing. 
 1. ParseColumnHeading: Adds escape characters (\\) to spaces found in the column header. 
 1. SetBooleanFilter: Creates a search prase for a boolean filter. 
@@ -154,3 +165,5 @@ clearfilter.addEventListener("click", function () {
  th.ClearForm();
 });
 ```
+
+## Additional Options
