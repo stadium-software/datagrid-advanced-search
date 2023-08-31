@@ -13,9 +13,9 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 
 ## Sample applications
 This repo contains two Stadium 6 applications. 
-1. [AdvancedClientSideSearchForm.sapz](Stadium6/AdvancedClientSideSearchForm.sapz)
+1. [AdvancedClientSideSearchForm.sapz](Stadium6/AdvancedClientSideSearchForm.sapz?raw=true)
 Created using Stadium actions (easier to understand)
-2. [AdvancedClientSideSearchForm_JS.sapz](Stadium6/AdvancedClientSideSearchForm_JS.sapz)
+2. [AdvancedClientSideSearchForm_JS.sapz](Stadium6/AdvancedClientSideSearchForm_JS.sapz?raw=true)
 Created using Javascript actions (easier to recreate)
 
 <hr>
@@ -108,7 +108,7 @@ select * from MyData
 
 Create six global scripts listed below as per the attached sample application. 
 
-NOTES: If you are using Stadium 6.6 or later, you can copy the global scripts from the [sample application](Stadium6/AdvancedClientSideSearchForm_JS.sapz) into your own. 
+NOTES: If you are using Stadium 6.6 or later, you can copy the global scripts from the [sample application](Stadium6/AdvancedClientSideSearchForm_JS.sapz?raw=true) into your own. 
 
 1. ConstructSearchPhrase: Creates the SearchPhrase from the current phrase and the new phrase. Two decision actions evaluate whether to create a new phrase, add to an existing one or do nothing. 
 1. ParseColumnHeading: Adds escape characters (\\) to spaces found in the column header. 
