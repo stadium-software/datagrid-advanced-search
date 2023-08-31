@@ -13,23 +13,30 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 
 ## Sample applications
 This repo contains two Stadium 6 applications. 
-1. AdvancedClientSideSearchForm.sapz: Global scripts were created using Stadium actions (easier to understand)
-2. AdvancedClientSideSearchForm_JS.sapz: Global scripts were created using Javascript actions (easier to recreate)
+1. [AdvancedClientSideSearchForm.sapz](Stadium6/AdvancedClientSideSearchForm.sapz)
+Created using Stadium actions (easier to understand)
+2. [AdvancedClientSideSearchForm_JS.sapz](Stadium6/AdvancedClientSideSearchForm_JS.sapz)
+Created using Javascript actions (easier to recreate)
 
 ## Setup instructions
 These instructions apply to Stadium 6 only.
 
 ### Database
-Create the MSSQL database by running the SQL scripts in the Database folder of this repo. 
+Create the MSSQL database by running the SQL script in the Database folder of this repo. 
 
 ### DataGrid
 
-1. Add a Database connector 
+1. Add a Database connector to the Database you created in the step above 
 2. Add a query to select the data for the DataGrid
+```
+select * from MyData
+```
 3. Add a DataGrid Control to a page
-4. Define DataGrid columns in the DataGrid properties
-5. Execute the query in the .Load event handler of the page
-6. Assign the data returned by the query to the DataGrid using a SetValue function
+4. Define DataGrid columns in the *Columns* property of the DataGrid
+5. Open the StartPage.load event handler
+6. Drag the query in the StartPage.Load event handler of the page
+7. Drag a SetValue function under the query in the StartPage.load event handler
+8. Assign the data returned by the query to the DataGrid
 
 ### Filters form
 
