@@ -18,8 +18,12 @@ Created using Stadium actions (easier to understand)
 2. [AdvancedClientSideSearchForm_JS.sapz](Stadium6/AdvancedClientSideSearchForm_JS.sapz)
 Created using Javascript actions (easier to recreate)
 
+<hr>
+
 ## Setup instructions
 These instructions apply to Stadium 6 only.
+
+<hr>
 
 ### Database
 Create the MSSQL database by running the SQL script in the Database folder of this repo. 
@@ -39,6 +43,7 @@ select * from MyData
 8. Assign the data returned by the query to the DataGrid
 ![chrome_d5JjUV3l2U](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/99144d6a-d7c2-41f0-9ede-fd27446e8193)
 
+<hr>
 
 ### Filters form
 
@@ -49,10 +54,10 @@ select * from MyData
 #### For Text columns
 
 1. Add the following controls into a grid row
-   1. A label control
-   2. A DropDown control
-   3. A TextBox control
-2. Enter the name of the DataGrid column heading you want to filter into the label Text property
+   1. Label 
+   2. DropDown 
+   3. TextBox 
+2. Enter the name of the DataGrid column heading you want to filter into the label Text property (e.g. FirstName)
 3. Add any or all of the operators shown below in any order as *values* for the DropDown options (assign any text to these options you like)
    1. Contains
    2. DoesNotContain
@@ -62,10 +67,10 @@ select * from MyData
 #### For Number columns
 
 1. Add the following controls into a grid row
-   1. A label control
-   2. A DropDown control
-   3. A Flexbox control
-   4. Add two TextBox control next to each other into the Flexbox control (From and To)
+   1. Label 
+   2. DropDown 
+   3. Flexbox 
+   4. Two TextBox controls next to each other into the Flexbox control (From and To)
 2. Enter the name of the DataGrid column heading you want to filter into the label Text property
 3. Add any or all of the operators shown below as *values* for the DropDown options (set "From-To" or "Between" as the first option)
    1. From-To
@@ -76,10 +81,10 @@ select * from MyData
 #### For Date columns
 
 1. Add the following controls into a grid row
-   1. A label control
-   2. A DropDown control
-   3. A Flexbox control
-   4. Add two TextBox control next to each other into the Flexbox control (From and To)
+   1. Label 
+   2. DropDown 
+   3. Flexbox 
+   4. Two TextBox controls next to each other into the Flexbox control (From and To)
 2. Enter the name of the DataGrid column heading you want to filter into the label Text property
 3. Add any or all of the operators shown below as *values* for the DropDown options (set "Between" as the first option)
    1. Between
@@ -89,19 +94,21 @@ select * from MyData
 #### For Boolean columns
 
 1. Add the following controls into a grid row
-   1. A label control
-   2. A DropDown control
+   1. Label 
+   2. DropDown 
 2. Enter the name of the DataGrid column heading you want to filter into the label Text property
 3. Add any or all of the operators shown below as *values* for the DropDown options (set "ShowAll" as the first option)
    1. ShowAll
    2. Yes
    3. No
 
+<hr>
+
 ### Global scripts
 
 Create six global scripts listed below as per the attached sample application. 
 
-NOTES: If you are using Stadium 6.6 or later, you can copy the global scripts from the sample application into your own. 
+NOTES: If you are using Stadium 6.6 or later, you can copy the global scripts from the [sample application](Stadium6/AdvancedClientSideSearchForm_JS.sapz) into your own. 
 
 1. ConstructSearchPhrase: Creates the SearchPhrase from the current phrase and the new phrase. Two decision actions evaluate whether to create a new phrase, add to an existing one or do nothing. 
 1. ParseColumnHeading: Adds escape characters (\\) to spaces found in the column header. 
@@ -109,6 +116,8 @@ NOTES: If you are using Stadium 6.6 or later, you can copy the global scripts fr
 1. SetDateFilter: Creates a search phrase for a date filter.
 1. SetNumberFilter: Creates a search phrase for a number filter.
 1. SetTextFilter: Creates a search phrase for a text filter. 
+
+<hr>
 
 ### Apply button event handler
 
