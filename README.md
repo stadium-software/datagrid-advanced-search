@@ -37,6 +37,8 @@ select * from MyData
 6. Drag the query in the StartPage.Load event handler of the page
 7. Drag a SetValue function under the query in the StartPage.load event handler
 8. Assign the data returned by the query to the DataGrid
+![chrome_d5JjUV3l2U](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/99144d6a-d7c2-41f0-9ede-fd27446e8193)
+
 
 ### Filters form
 
