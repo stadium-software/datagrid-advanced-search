@@ -52,13 +52,6 @@ select * from MyData
 3. Add a button below the grid with the Text "Apply"
 4. Place the controls below into the Grid control
 
-| Filter Type | Column heading | Operator | Value |
-|-------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
-| Text        | Label | DropDown | TextBox |
-| Number      | Label | DropDown | Flexbox containing two TextBoxes | 
-| Date        | Label | DropDown | Flexbox containing two TextBoxes | 
-| Boolean     | Label | DropDown | - |
-
 ![Form-Controls](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/35ebab95-12e2-4416-8aaf-bd302c2f6462)
 
 #### For Text columns
