@@ -59,6 +59,8 @@ select * from MyData
 | Date        | Label | DropDown | Flexbox containing two TextBoxes | 
 | Boolean     | Label | DropDown | - |
 
+![Form-Controls](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/35ebab95-12e2-4416-8aaf-bd302c2f6462)
+
 #### For Text columns
 
 1. Enter the name of the filter into the Label Text property (e.g. FirstName)
