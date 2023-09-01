@@ -50,15 +50,19 @@ select * from MyData
 1. Add a Grid control to the page 
 2. Add a class entitled "filtergrid" to the grid control classes property
 3. Add a button below the grid with the Text "Apply"
+4. Place the controls below into the Grid control
+
+| Filter Type | Column heading | Operator | Value |
+|-------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| Text        | Label | DropDown | TextBox |
+| Number      | Label | DropDown | Flexbox containing two TextBoxes | 
+| Date        | Label | DropDown | Flexbox containing two TextBoxes | 
+| Boolean     | Label | DropDown | - |
 
 #### For Text columns
 
-1. Add the following controls into a grid row
-   1. Label 
-   2. DropDown 
-   3. TextBox 
-2. Enter the name of the DataGrid column heading you want to filter into the label Text property (e.g. FirstName)
-3. Add any or all of the operators shown below in any order as *values* for the DropDown options (assign any text to these options you like)
+1. Enter the name of the filter into the Label Text property (e.g. FirstName)
+2. Add any or all of the operators shown below in any order as *values* for the DropDown options (assign any text to these options you like)
    1. Contains
    2. DoesNotContain
    3. Equals
@@ -66,13 +70,8 @@ select * from MyData
 
 #### For Number columns
 
-1. Add the following controls into a grid row
-   1. Label 
-   2. DropDown 
-   3. Flexbox 
-   4. Two TextBox controls next to each other into the Flexbox control (From and To)
-2. Enter the name of the DataGrid column heading you want to filter into the label Text property
-3. Add any or all of the operators shown below as *values* for the DropDown options (set "From-To" or "Between" as the first option)
+1. Enter the name of the filter into the Label Text property
+2. Add any or all of the operators shown below as *values* for the DropDown options (set "From-To" or "Between" as the first option)
    1. From-To
    2. Between
    3. GreaterThan
@@ -80,24 +79,16 @@ select * from MyData
 
 #### For Date columns
 
-1. Add the following controls into a grid row
-   1. Label 
-   2. DropDown 
-   3. Flexbox 
-   4. Two TextBox controls next to each other into the Flexbox control (From and To)
-2. Enter the name of the DataGrid column heading you want to filter into the label Text property
-3. Add any or all of the operators shown below as *values* for the DropDown options (set "Between" as the first option)
+1. Enter the name of the filter into the Label Text property
+2. Add any or all of the operators shown below as *values* for the DropDown options (set "Between" as the first option)
    1. Between
    2. GreaterThan
    3. SmallerThan
 
 #### For Boolean columns
 
-1. Add the following controls into a grid row
-   1. Label 
-   2. DropDown 
-2. Enter the name of the DataGrid column heading you want to filter into the label Text property
-3. Add any or all of the operators shown below as *values* for the DropDown options (set "ShowAll" as the first option)
+1. Enter the name of the filter into the label Text property
+2. Add any or all of the operators shown below as *values* for the DropDown options (set "ShowAll" as the first option)
    1. ShowAll
    2. Yes
    3. No
