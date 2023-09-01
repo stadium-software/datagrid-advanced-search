@@ -50,7 +50,7 @@ select * from MyData
 1. Add a Grid control to the page 
 2. Add a class entitled "filtergrid" to the grid control classes property
 3. Add a button below the grid with the Text "Apply"
-4. Place the controls below into the Grid control
+4. Place controls into the Grid control as shown below
 
 ![Form-Controls](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/35ebab95-12e2-4416-8aaf-bd302c2f6462)
 
