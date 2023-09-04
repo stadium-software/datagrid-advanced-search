@@ -122,7 +122,11 @@ For every filter in the grid
       2. For Number and Date Fields: The values of the From and To TextBoxes
       3. For Enums: The value of the DropDown control of the filter
       4. SearchPhrase: The variable entitled SearchPhrase
-   4. Under each call, add a SetValue control and assign the reault of the script to the "SearchPhrase" variable 
+![ApplyButtonSetup](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/053ce56b-06c6-42be-b76f-7e505f67cf66)
+
+   4. Under each call, add a SetValue control and assign the reault of the script to the "SearchPhrase" variable
+![SetSearchPhrase](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/432e2f33-17d0-4aca-b37f-952af5ffcfa4)
+
 3. After all script calls, add a SetValue control and assign the "SearchPhrase" to the "SearchTerm" property of the DataGrid
 
 ### For each Number and Date filter
