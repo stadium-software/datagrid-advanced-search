@@ -108,12 +108,13 @@ NOTES: If you are using Stadium 6.6 or later, you can copy the global scripts fr
 
 1. Add a *Click* event handler for the "Apply" button
 2. Add a *Variable* called "SearchPhrase" inside the handler
-
+-------------------
 For every filter in the grid
 1. Add the global script that corresponds with the column data type 
    1. Text columns: add *SetTextFilter* script
    2. Date columns: add *SetDateFilter* script
    3. Number columns: add *SetNumberFilter* script
+   4. Boolean columns:  add *SetBooleanFilter* script
 2. Set the parameters required by the script
    1. ColumnHeading: The heading of the DataGrid column the filter needs to be applied to as it appears in the "Header Text" property of that column or in the Heading row of the rendered DataGrid (NOTE: DataGrid headings might contain spaces that the corresponding Database columns do not contain)
    2. Operator: The value of the "operator" DropDown of the filter
@@ -124,9 +125,9 @@ For every filter in the grid
       4. SearchPhrase: The variable entitled SearchPhrase
 ![ApplyButtonSetup](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/053ce56b-06c6-42be-b76f-7e505f67cf66)
 
-   4. Under each call, add a SetValue control and assign the reault of the script to the "SearchPhrase" variable
+   1. Under each call, add a SetValue control and assign the reault of the script to the "SearchPhrase" variable
 ![SetSearchPhrase](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/432e2f33-17d0-4aca-b37f-952af5ffcfa4)
-
+-------------------
 3. After all script calls, add a SetValue control and assign the "SearchPhrase" to the "SearchTerm" property of the DataGrid
 
 ### For each Number and Date filter
