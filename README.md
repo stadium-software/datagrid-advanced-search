@@ -129,6 +129,7 @@ For every filter in the grid
 ![SetSearchPhrase](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/432e2f33-17d0-4aca-b37f-952af5ffcfa4)
 -------------------
 3. After all script calls, add a SetValue control and assign the "SearchPhrase" to the "SearchTerm" property of the DataGrid
+![SetDGSearchTerm](https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/0837b0f8-168f-4524-b5d2-f1a3f82e76cd)
 
 ### For each Number and Date filter
 
