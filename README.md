@@ -12,7 +12,7 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 1.1
 
 ### Changes
-Converted 'Boolean Filter' to a generic 'Enum Filter'. This filter still works for Bollean columns, but can now also be applied to any other column. 
+Converted 'Boolean Filter' to a generic 'Enum Filter'. This filter still works for Boolean columns, but can now also be applied to any other column
 
 ## Sample applications
 This repo contains two Stadium 6 applications. 
