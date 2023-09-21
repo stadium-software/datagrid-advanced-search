@@ -106,6 +106,8 @@ NOTES: If you are using Stadium 6.6 or later, you can just copy the global scrip
 10. SetPhraseSession: Saves the search phrase to a session variable
 11. SetTextFilter: Creates a search phrase for a text filter
 
+![Global Scripts](images/Global-Scripts.png)
+
 <hr>
 
 ## Page.Load event handler
@@ -138,6 +140,8 @@ For **every filter** in the grid
 1. Add a *Click* event handler for the "Clear" button
 2. Drag the *ClearFilters* script into the event handler
 
+![Clear Button Click Event Handler](images/Clear-Button-Event.png)
+
 ## For all Number and Date filters
 
 1. Create a "Change" event handler for the operator DropDown control
@@ -145,6 +149,8 @@ For **every filter** in the grid
 3. Add the value of the operator DropDown into the *SelectedOperatorValue* property
 4. Drag a *SetValue* control under the script call
 5. Set the "To" field for the filter (e.g. StartDateToField) to the return value of the script
+
+![Change Event Handler](images/Change-Event.png)
 
 ## Styling
 
