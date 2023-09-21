@@ -11,6 +11,7 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 
 ### Change Log
 1.1 Converted 'Boolean Filter' to a generic 'Enum Filter'. This filter still works for Boolean columns, but can now also be applied to any other column
+
 1.2 Removed non-JS sample application; re-added boolean filter; added muilti-select text filter; simplified implementation
 
 ## Sample applications
