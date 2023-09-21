@@ -148,17 +148,17 @@ For **every filter** in the grid
 
 ## Styling
 
-1. Add a class called "liteButton" to the Clear button classes property
+1. Add a class called "lite-button" to the Clear button classes property
 2. Copy the CSS below into your StyleSheet
 3. To change the width of the dropdowns, adjust the *.filtergrid select* width property in the CSS as you see fit 
 
 ```
-.liteButton button {
+.lite-button button {
 	background-color: white;
 	color:#3399ff; 
 	box-shadow: none;
 }
-.liteButton button:hover {
+.lite-button button:hover {
 	background-color: white;
 	color:#3399ff; 
 }
