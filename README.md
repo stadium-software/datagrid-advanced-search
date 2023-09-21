@@ -117,8 +117,8 @@ NOTES: If you are using Stadium 6.6 or later, you can just copy the global scrip
 ## Apply button event handler
 
 1. Add a *Click* event handler for the "Apply" button
--------------------
-For every filter in the grid
+
+For **every filter** in the grid
 1. Add the global script that corresponds with the column data type 
 2. Set the parameters required by the script
    1. ColumnHeading: The heading of the DataGrid column the filter needs to be applied to as it appears in the "Header Text" property of that column or in the Heading row of the rendered DataGrid (NOTE: DataGrid headings might contain spaces that the corresponding Database columns do not contain)
@@ -133,6 +133,11 @@ For every filter in the grid
 
 ![Apply Button Click Event Handler](images/Apply-Button-Click.png)
 
+## Clear button event handler
+
+1. Add a *Click* event handler for the "Clear" button
+2. Drag the *ClearFilters* script into the event handler
+
 ## For all Number and Date filters
 
 1. Create a "Change" event handler for the operator DropDown control
@@ -140,11 +145,6 @@ For every filter in the grid
 3. Add the value of the operator DropDown into the *SelectedOperatorValue* property
 4. Drag a *SetValue* control under the script call
 5. Set the "To" field for the filter (e.g. StartDateToField) to the return value of the script
-
-## Clear button event handler
-
-1. Add a *Click* event handler for the "Clear" button
-2. Drag the *ClearFilters* script into the event handler
 
 ## Styling
 
