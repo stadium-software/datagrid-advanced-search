@@ -92,7 +92,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 
 Create six global scripts listed below as per the attached sample application. 
 
-NOTES: If you are using Stadium 6.6 or later, you can just copy the global scripts from the [sample application](Stadium6/ClientSideFilters.sapz?raw=true) into your own. Otherwise you will need to recreate these scripts in your application. 
+NOTES: If you are using Stadium 6.6 or later, you can just copy the global scripts from the [sample application](Stadium6/ClientSideFilters.sapz?raw=true) into your own.
 
 1. ApplySearchPhrase: Applies the search phrase to the DataGrid
 2. ClearFilters: Resets the filter form
@@ -139,6 +139,9 @@ For **every filter** in the grid
 
 1. Add a *Click* event handler for the "Clear" button
 2. Drag the *ClearFilters* script into the event handler
+3. Drag a *SetValue* into the event handler
+   1. Target: DataGrid.SearchTerm
+   2. Value: = ''
 
 ![Clear Button Click Event Handler](images/Clear-Button-Event.png)
 
@@ -156,9 +159,12 @@ For **every filter** in the grid
 
 1. Add a class called "lite-button" to the Clear button classes property
 2. Copy the CSS below into your StyleSheet
-3. To change the width of the dropdowns, adjust the *.filtergrid select* width property in the CSS as you see fit 
+3. To change the width of the dropdowns, adjust the *--filtergrid-dropdown-width* variable in the CSS below as you see fit 
 
 ```
+:root {
+   --filtergrid-dropdown-width: 125px;
+}
 .lite-button button {
 	background-color: white;
 	color:#3399ff; 
@@ -169,7 +175,7 @@ For **every filter** in the grid
 	color:#3399ff; 
 }
 .filtergrid select {
-	width: 125px;
+	width: var(--filtergrid-dropdown-width);
 }
 ```
 
