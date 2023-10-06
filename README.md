@@ -4,8 +4,6 @@ Building advanced client-side search forms for DataGrids
 
 https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964bf79-e513-4227-9a72-361cee6c0d7b
 
-<hr>
-
 ## Version
 1.2
 
@@ -18,16 +16,12 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 This repo contains one Stadium 6 application
 [ClientSideFilters.sapz](Stadium6/ClientSideFilters.sapz?raw=true)
 
-<hr>
-
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 2. Add a variable called "SearchPhrase" to the application variables
 
 ## Database, Connector and DataGrid
 Use the instructions from [this repo](https://github.com/stadium-software/samples-database) to setup the database and DataGrid for this sample
-
-<hr>
 
 ## Filters form
 
@@ -86,8 +80,6 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 2. Add any number of text values you want people to select from as *values* for the CheckBoxList *Options* property (e.g. a list of statuses) 
 3. You can populate this dropdown from a data source, such as a query or API call
 
-<hr>
-
 ## Global scripts
 
 Create six global scripts listed below as per the attached sample application. 
@@ -108,8 +100,6 @@ NOTES: If you are using Stadium 6.6 or later, you can just copy the global scrip
 
 ![Global Scripts](images/Global-Scripts.png)
 
-<hr>
-
 ## Page.Load event handler
 
 1. Populate your datagrid with data
@@ -123,7 +113,7 @@ NOTES: If you are using Stadium 6.6 or later, you can just copy the global scrip
 For **every filter** in the grid
 1. Add the global script that corresponds with the column data type 
 2. Set the parameters required by the script
-   1. ColumnHeading: The heading of the DataGrid column the filter needs to be applied to as it appears in the "Header Text" property of that column or in the Heading row of the rendered DataGrid (NOTE: DataGrid headings might contain spaces that the corresponding Database columns do not contain)
+   1. ColumnHeading: The heading of the DataGrid column the filter needs to be applied to **exactly** as it appears in the "Header Text" property of that column or in the Heading row of the rendered DataGrid (NOTE: DataGrid headings might contain spaces)
    2. Operator: The value of the "operator" DropDown of the filter
    3. Values: 
       1. For Text fields: value of the *TextBox*
@@ -178,8 +168,6 @@ For **every filter** in the grid
 	width: var(--filtergrid-dropdown-width);
 }
 ```
-
-<hr>
 
 # Optional Custom Development
 1. Allowing users to save searches to the database (save generated search phase)
