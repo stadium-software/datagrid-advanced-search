@@ -12,6 +12,8 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964
 
 1.2 Removed non-JS sample application; re-added boolean filter; added muilti-select text filter; simplified implementation
 
+1.3 Fixed session retained after page reload bug; This requires an additional SetValue in the InitialiseFilters script
+
 ## Sample applications
 This repo contains one Stadium 6 application
 [ClientSideFilters.sapz](Stadium6/ClientSideFilters.sapz?raw=true)
