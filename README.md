@@ -153,7 +153,7 @@ For **every filter** in the grid
 2. Copy the CSS below into your StyleSheet
 3. To change the width of the dropdowns, adjust the *--filtergrid-dropdown-width* variable in the CSS below as you see fit 
 
-```
+```css
 :root {
    --filtergrid-dropdown-width: 125px;
 }
