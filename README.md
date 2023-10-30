@@ -568,7 +568,7 @@ Various elements in this module can be styled using the two CSS files in this re
 
 **Stadium 6.6 or higher**
 1. Create a folder called "CSS" inside of your Embedded Files in your application
-2. Drag the two CSS files from this repo [*datagrid-column-edit-inline-variables.css*](datagrid-column-edit-inline-variables.css) and [*datagrid-column-edit-inline.css*](datagrid-column-edit-inline.css) into that folder
+2. Drag the two CSS files from this repo [*datagrid-clientside-filters-variables.css*](datagrid-clientside-filters-variables.css) and [*datagrid-clientside-filters.css*](datagrid-clientside-filters.css) into that folder
 3. Paste the link tags below into the *head* property of your application
 ```html
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-clientside-filters.css">
@@ -581,7 +581,7 @@ Various elements in this module can be styled using the two CSS files in this re
 1. Copy the CSS from the two css files into the Stylesheet in your application
 
 ## Customising CSS
-1. Open the CSS file called [*datagrid-column-edit-inline-variables.css*](datagrid-column-edit-inline-variables.css) from this repo
+1. Open the CSS file called [*datagrid-clientside-filters-variables.css*](datagrid-clientside-filters-variables.css) from this repo
 2. Adjust the variables in the *:root* element as you see fit
 3. Overwrite the file in the CSS folder of your application with the customised file
 
