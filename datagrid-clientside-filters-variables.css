@@ -1,0 +1,11 @@
+:root {
+    --datagrid-filter-background-color: #f5f5f5;
+    
+    --datagrid-integrated-filter-header-background-color: white;
+    --datagrid-integrated-filter-border-color: #ccc;
+
+    --datagrid-filter-clear-button-font-color: #3399ff;
+    --datagrid-filter-clear-button-background-color: white;
+    --datagrid-filter-clear-button-hover-font-color: #3399ff;
+    --datagrid-filter-clear-button-hover-background-color: white;
+}

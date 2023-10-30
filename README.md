@@ -2,174 +2,588 @@
 
 Building advanced client-side search forms for DataGrids
 
-https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/5964bf79-e513-4227-9a72-361cee6c0d7b
 
-## Version
-1.2
-
-### Change Log
-1.1 Converted 'Boolean Filter' to a generic 'Enum Filter'. This filter still works for Boolean columns, but can now also be applied to any other column
-
-1.2 Removed non-JS sample application; re-added boolean filter; added muilti-select text filter; simplified implementation
-
-1.3 Fixed session retained after page reload bug; This requires an additional SetValue in the InitialiseFilters script
 
 ## Sample applications
-This repo contains one Stadium 6 application
-[ClientSideFilters.sapz](Stadium6/ClientSideFilters.sapz?raw=true)
+This repo contains one Stadium 6.7 application
+[ClientSideFilters_v2.0.sapz](Stadium6/ClientSideFilters_v2.0.sapz?raw=true)
+
+## Version
+2.0
+
+### Change Log
+2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added display modes (standard, collapsed and integrated)
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
-2. Add a variable called "SearchPhrase" to the application variables
 
 ## Database, Connector and DataGrid
 Use the instructions from [this repo](https://github.com/stadium-software/samples-database) to setup the database and DataGrid for this sample
 
-## Filters form
+## Global Script Setup
+1. Create a Global Script and call it "DataGridFilter"
+2. Add the input parameters below to the script
+   1. DataGridClass
+   2. DisplayMode
+   3. FilterConfig
+   4. FilterContainerClass
+3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action (you can ignore the Stadium validation "Invalif Javascript was detected" error message)
+```javascript
+let scope = this;
+let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
+let dgClassName = "." + ~.Parameters.Input.DataGridClass;
+let filterConfig = ~.Parameters.Input.FilterConfig;
+let displayMode = ~.Parameters.Input.DisplayMode;
+if (displayMode) displayMode = displayMode.toLowerCase();
+let pageName = window.location.pathname.replace("/", "");
 
-1. Add a Grid control to the page and place it above the DataGrid
-2. Add a class entitled "filtergrid" to the grid control classes property
-3. Add a button below the grid with the Text "Clear"
-4. Add another button below the grid with the Text "Apply"
-5. Place controls into the Grid control as shown below
-
-![Form-Controls](images/UI-Explanation.png)
-
-### For Text columns
-
-1. Enter the name of the filter into the label *Text* property (e.g. FirstName)
-2. Add any or all of the operators shown below in any order as *values* for the DropDown  *Options* property (assign any text to these options you like)
-   1. Contains
-   2. DoesNotContain
-   3. Equals
-   4. NotEquals
-
-### For Number columns
-
-1. Enter the name of the filter into the label *Text* property
-2. Add any or all of the operators shown below as *values* for the DropDown  *Options* property (set "From-To" or "Between" as the first option)
-   1. From-To
-   2. Between
-   3. GreaterThan
-   4. SmallerThan
-
-### For Date columns
-
-1. Enter the name of the filter into the label *Text* property
-2. Add any or all of the operators shown below as *values* for the DropDown  *Options* property (set "Between" as the first option)
-   1. Between
-   2. GreaterThan
-   3. SmallerThan
-
-### Enum Filter
-
-1. Enter the name of the filter into the label *Text* property
-2. Add "ShowAll" as the first value in the filter dropdown
-3. Add any number of text values you want people to select from as *values* for the DropDown *Options* property (e.g. a list of statuses) 
-4. You can populate this dropdown from a data source, such as a query or API call
-
-### Boolean columns
-
-1. Enter the name of the filter into the label *Text* property
-2. Add the values as *values* in the DropDown *Options* property
-   1. "ShowAll"
-   2. "Yes"
-   3. "No"
-
-### Multi-Select Filter
-
-1. Enter the name of the filter into the label *Text* property
-2. Add any number of text values you want people to select from as *values* for the CheckBoxList *Options* property (e.g. a list of statuses) 
-3. You can populate this dropdown from a data source, such as a query or API call
-
-## Global scripts
-
-Create six global scripts listed below as per the attached sample application. 
-
-NOTES: If you are using Stadium 6.6 or later, you can just copy the global scripts from the [sample application](Stadium6/ClientSideFilters.sapz?raw=true) into your own.
-
-1. ApplySearchPhrase: Applies the search phrase to the DataGrid
-2. ClearFilters: Resets the filter form
-3. InitialiseFilters: Initialises the clear filter function
-4. ReturnVisibleState: Checks the operator and returns a boolean to set the visibility of the "To" value TextBox of Number and Date filters
-5. SetBooleanFilter: Creates a search phrase for a ShowAll/Yes/No boolean filter
-6. SetDateFilter: Creates a search phrase for a date filter
-7. SetEnumFilter: Creates a search phrase for a value selected from a dropdown
-8. SetMultiSelectFilter: Creates a search phrase for a checkbox list filter
-9. SetNumberFilter: Creates a search phrase for a number filter
-10. SetPhraseSession: Saves the search phrase to a session variable
-11. SetTextFilter: Creates a search phrase for a text filter
-
-![Global Scripts](images/Global-Scripts.png)
-
-## Page.Load event handler
-
-1. Populate your datagrid with data
-2. Populate any enum or multi-select filters with data
-3. Drag the *InitialiseFilters* script into the event handler
-
-## Apply button event handler
-
-1. Add a *Click* event handler for the "Apply" button
-
-For **every filter** in the grid
-1. Add the global script that corresponds with the column data type 
-2. Set the parameters required by the script
-   1. ColumnHeading: The heading of the DataGrid column the filter needs to be applied to **exactly** as it appears in the "Header Text" property of that column or in the Heading row of the rendered DataGrid (NOTE: DataGrid headings might contain spaces)
-   2. Operator: The value of the "operator" DropDown of the filter
-   3. Values: 
-      1. For Text fields: value of the *TextBox*
-      2. For Number and Date Fields: The values of the From and To *TextBoxes*
-      3. For Enums: The value of the *DropDown* control of the filter
-      4. For Booleans: The value of the *DropDown* control of the filter
-      5. For Multi-Selects: The *SelectedOptions* of the *CheckboxList* 
-3. After all filter-specific script calls, add the "ApplySearchPhrase" script
-
-![Apply Button Click Event Handler](images/Apply-Button-Click.png)
-
-## Clear button event handler
-
-1. Add a *Click* event handler for the "Clear" button
-2. Drag the *ClearFilters* script into the event handler
-3. Drag a *SetValue* into the event handler
-   1. Target: DataGrid.SearchTerm
-   2. Value: = ''
-
-![Clear Button Click Event Handler](images/Clear-Button-Event.png)
-
-## For all Number and Date filters
-
-1. Create a "Change" event handler for the operator DropDown control
-2. Drag the *ReturnVisible* script into the event handler
-3. Add the value of the operator DropDown into the *SelectedOperatorValue* property
-4. Drag a *SetValue* control under the script call
-5. Set the "To" field for the filter (e.g. StartDateToField) to the return value of the script
-
-![Change Event Handler](images/Change-Event.png)
-
-## Styling
-
-1. Add a class called "lite-button" to the Clear button classes property
-2. Copy the CSS below into your StyleSheet
-3. To change the width of the dropdowns, adjust the *--filtergrid-dropdown-width* variable in the CSS below as you see fit 
-
-```css
-:root {
-   --filtergrid-dropdown-width: 125px;
+let dg = document.querySelectorAll(dgClassName);
+if (dg.length == 0) {
+    dg = document.querySelector(".data-grid-container");
+} else if (dg.length > 1) {
+    console.error("The class '" + dgClassName + "' is assigned to multiple DataGrids. DataGrids using this script must have unique classnames");
+    return false;
+} else { 
+    dg = dg[0];
 }
-.lite-button button {
-	background-color: white;
-	color:#3399ff; 
-	box-shadow: none;
+dg.classList.add("stadium-filtered-datagrid");
+let searchBoxName = dg.id.replace(`${pageName}_`, "").replace("-container","");
+let table = dg.querySelector("table");
+let arrHeadingTags = table.querySelectorAll("thead th a");
+let arrHeadings = [];
+for (let i = 0; i < arrHeadingTags.length; i++) {
+    arrHeadings.push(arrHeadingTags[i].textContent.replaceAll(" ","").toLowerCase());
 }
-.lite-button button:hover {
-	background-color: white;
-	color:#3399ff; 
+let arrDisplayHeadings = [];
+for (let i = 0; i < arrHeadingTags.length; i++) {
+    arrDisplayHeadings.push(arrHeadingTags[i]);
 }
-.filtergrid select {
-	width: var(--filtergrid-dropdown-width);
+let filterContainer = document.querySelectorAll(filterClassName);
+if (filterContainer.length == 0) {
+    console.error("The container for the filter was not found. Drag a container control into the page and assign the class '" + filterClassName + "' to it.");
+    return false;
+} else if (dg.length > 1) {
+    console.error("The class '" + filterClassName + "' is assigned to multiple controls. Assign a unique classname to the filter container");
+    return false;
+} else { 
+    filterContainer = filterContainer[0];
+}
+filterContainer.classList.add("stadium-filter-container");
+let filterInnerContainer = document.createElement("div");
+filterInnerContainer.classList.add("stadium-filter-inner-container");
+filterContainer.appendChild(filterInnerContainer);
+let stadiumFilters = document.createElement("div");
+stadiumFilters.classList.add("stadium-filters");
+filterInnerContainer.appendChild(stadiumFilters);
+
+if (displayMode == "integrated" || displayMode == "collapsed") {
+    let filterHeader = document.createElement("div");
+    filterHeader.classList.add("stadium-filter-header");
+    filterInnerContainer.before(filterHeader);
+    filterHeader.addEventListener("click", function (e) {
+        e.target.closest(".stadium-filter-container").classList.toggle("expand");
+    });
+    if (displayMode == "integrated") { 
+        filterContainer.classList.add("filter-integrated");
+        let datagridheader = dg.querySelector(".data-grid-header");
+        if (datagridheader.querySelector("div")) {
+            datagridheader.querySelector("div:nth-child(1)").before(filterContainer);
+        } else { 
+            datagridheader.appendChild(filterContainer);
+        }
+    } else if (displayMode == "collapsed") { 
+        filterHeader.textContent = "Advanced Filter";
+        filterContainer.classList.add("filter-collapsed");
+    }
+}
+
+const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
+initFilterForm();
+
+function initFilterForm() {
+    for (let i = 0; i < filterConfig.length; i++) {
+        let column = filterConfig[i].column.replaceAll(" ", "").toLowerCase();
+        let colNo = arrHeadings.indexOf(column) + 1;
+        if (!colNo) continue;
+        let type = filterConfig[i].type;
+        let name = filterConfig[i].name;
+        let data = filterConfig[i].data;
+        let display = filterConfig[i].display;
+        
+        let label = document.createElement("div");
+        label.classList.add("control-container","label-container");
+        let labelInner = document.createElement("span");
+        labelInner.textContent = name;
+        label.appendChild(labelInner);
+
+        let operator = document.createElement("div");
+        let valueField = document.createElement("div");
+        let select, input;
+
+        if (type == "text") {
+            select = document.createElement("select");
+            let options = ["Contains", "Does Not Contain", "Equals", "Does Not Equal"];
+            for(let s = 0; s < options.length; s++) {
+                let opt = options[s];
+                let el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+            }
+            select.classList.add("form-control");
+            operator.classList.add("control-container", "drop-down-container");
+            input = document.createElement("input");
+            input.classList.add("form-control", "text-box-input", "filtergrid-text-value");
+            input.setAttribute("placeholder", "Text");
+            valueField.classList.add("control-container","text-box-container");
+        }
+        if (type == "number") {
+            select = document.createElement("select");
+            let options = ["Between", "From-To", "Greater than", "Smaller than"];
+            for(let s = 0; s < options.length; s++) {
+                let opt = options[s];
+                let el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+            }
+            select.classList.add("form-control");
+            operator.classList.add("control-container", "drop-down-container");
+            let numInput1 = document.createElement("input");
+            numInput1.classList.add("form-control", "text-box-input", "filtergrid-from-number");
+            numInput1.setAttribute("placeholder", "From value");
+            let numInput2 = document.createElement("input");
+            numInput2.classList.add("form-control", "text-box-input", "filtergrid-to-number");
+            numInput2.setAttribute("placeholder", "To value");
+            input = document.createElement("div");
+            input.classList.add("number-values");
+            select.addEventListener("change", function (e) {
+                if (e.target.value != "Between" && e.target.value != "From-To") {
+                    stadiumFilters.querySelector(".filtergrid-to-number").classList.add("visually-hidden");
+                    stadiumFilters.querySelector(".filtergrid-from-number").setAttribute("placeholder", "Value");
+                } else { 
+                    stadiumFilters.querySelector(".filtergrid-to-number").classList.remove("visually-hidden");
+                    stadiumFilters.querySelector(".filtergrid-from-number").setAttribute("placeholder", "From value");
+                }
+            });
+            input.appendChild(numInput1);
+            input.appendChild(numInput2);
+        }
+        if (type == "date") {
+            select = document.createElement("select");
+            let options = ["Between", "Greater than", "Smaller than"];
+            for(let s = 0; s < options.length; s++) {
+                let opt = options[s];
+                let el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+            }
+            select.classList.add("form-control");
+            operator.classList.add("control-container", "drop-down-container");
+            let dtInput1 = document.createElement("input");
+            dtInput1.classList.add("form-control", "text-box-input", "filtergrid-from-date");
+            dtInput1.setAttribute("placeholder", "From date");
+            let dtInput2 = document.createElement("input");
+            dtInput2.classList.add("form-control", "text-box-input", "filtergrid-to-date");
+            dtInput2.setAttribute("placeholder", "To date");
+            input = document.createElement("div");
+            input.classList.add("date-values");
+            select.addEventListener("change", function (e) {
+                if (e.target.value == "Greater than" || e.target.value == "Smaller than") {
+                    stadiumFilters.querySelector(".filtergrid-to-date").classList.add("visually-hidden");
+                    stadiumFilters.querySelector(".filtergrid-from-date").setAttribute("placeholder", "Value");
+                } else { 
+                    stadiumFilters.querySelector(".filtergrid-to-date").classList.remove("visually-hidden");
+                    stadiumFilters.querySelector(".filtergrid-from-date").setAttribute("placeholder", "From value");
+                }
+            });
+            input.appendChild(dtInput1);
+            input.appendChild(dtInput2);
+        }
+        if (type == "boolean") {
+            let options = ["Show all", "Yes", "No"];
+            if (display == "radio") {
+                select = document.createElement("div");
+                for (let s = 0; s < options.length; s++) {
+                    let cont = document.createElement("div");
+                    cont.classList.add("radio");
+                    let opt = options[s];
+                    let el = document.createElement("input");
+                    let lab = document.createElement("label");
+                    el.type = "radio";
+                    el.name = column;
+                    el.checked = false;
+                    if (opt == "Show all") el.checked = true;
+                    el.value = opt;
+                    lab.textContent = opt;
+                    let fid = column + "_" + opt;
+                    el.id = fid.replaceAll(" ", "").toLowerCase();
+                    lab.setAttribute("for", el.id);
+                    cont.appendChild(el);
+                    cont.appendChild(lab);
+                    select.appendChild(cont);
+                }
+                operator.classList.add("control-container", "radio-button-list-container", "filtergrid-radiobutton-list");
+            } else {
+                select = document.createElement("select");
+                for(let s = 0; s < options.length; s++) {
+                    let opt = options[s];
+                    let el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt;
+                    select.appendChild(el);
+                }
+                select.classList.add("form-control");
+                operator.classList.add("control-container", "drop-down-container", "filtergrid-boolean-operator");
+            }
+            input = document.createElement("div");
+        }
+        if (type == "enum") {
+            data = insert(data, 0, "Show all");
+            if (display == "radio") {
+                select = document.createElement("div");
+                for (let s = 0; s < data.length; s++) {
+                    let cont = document.createElement("div");
+                    cont.classList.add("radio");
+                    let opt = data[s];
+                    let el = document.createElement("input");
+                    let lab = document.createElement("label");
+                    el.type = "radio";
+                    el.name = column;
+                    el.checked = false;
+                    if (opt == "Show all") el.checked = true;
+                    el.value = opt;
+                    lab.textContent = opt;
+                    let fid = column + "_" + opt;
+                    el.id = fid.replaceAll(" ", "").toLowerCase();
+                    lab.setAttribute("for", el.id);
+                    cont.appendChild(el);
+                    cont.appendChild(lab);
+                    select.appendChild(cont);
+                }
+                operator.classList.add("control-container", "radio-button-list-container", "filtergrid-radiobutton-list");
+            } else {
+                select = document.createElement("select");
+                for (let s = 0; s < data.length; s++) {
+                    let opt = data[s];
+                    let el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt;
+                    select.appendChild(el);
+                }
+                select.classList.add("form-control");
+                operator.classList.add("control-container", "drop-down-container", "filtergrid-enum-operator");
+            }
+            input = document.createElement("div");
+        }
+        if (type == "multiselect") {
+            select = document.createElement("div");
+            for (let s = 0; s < data.length; s++) {
+                let cont = document.createElement("div");
+                cont.classList.add("checkbox");
+                let opt = data[s];
+                let el = document.createElement("input");
+                let lab = document.createElement("label");
+                el.type = "checkbox";
+                el.checked = false;
+                el.value = opt;
+                lab.textContent = opt;
+                let fid = column + "_" + opt;
+                el.id = fid.replaceAll(" ", "").toLowerCase();
+                lab.setAttribute("for", el.id);
+                cont.appendChild(el);
+                cont.appendChild(lab);
+                select.appendChild(cont);
+            }
+            operator.classList.add("control-container", "check-box-list-container", "filtergrid-checkbox-list");
+            input = document.createElement("div");
+        }
+        setAttributes(operator, { "foperator": column, "ftype": type, "cno": colNo, "fdisplay": display });
+        operator.appendChild(select);
+
+        setAttributes(valueField, { "fvalue": column, "ftype": type, "cno": colNo, "fdisplay": display });
+        valueField.appendChild(input);
+
+        stadiumFilters.appendChild(label);
+        stadiumFilters.appendChild(operator);
+        stadiumFilters.appendChild(valueField);
+    }
+    let buttonBar = document.createElement("div"); buttonBar.classList.add("filter-button-bar");
+
+    let clearButton = document.createElement("button");
+    clearButton.textContent = "Clear";
+    clearButton.classList.add("lite-button", "btn", "btn-lg", "btn-default");
+    clearButton.addEventListener("click", clearForm);
+    let clearButtonContainer = document.createElement("div");
+    clearButtonContainer.classList.add("control-container", "button-container");
+    clearButtonContainer.appendChild(clearButton);
+    buttonBar.appendChild(clearButtonContainer);
+
+    let saveButton = document.createElement("button");
+    saveButton.textContent = "Save";
+    saveButton.classList.add("btn", "btn-lg", "btn-default");
+    saveButton.addEventListener("click", filterDataGrid);
+    let saveButtonContainer = document.createElement("div");
+    saveButtonContainer.classList.add("control-container", "button-container");
+    saveButtonContainer.appendChild(saveButton);
+    buttonBar.appendChild(saveButtonContainer);
+
+    stadiumFilters.appendChild(buttonBar);
+    document.body.addEventListener("click", function(e){
+        if (!e.target.closest(filterClassName)) {
+            let allFilters = document.querySelectorAll(filterClassName);
+            for (let i=0;i<allFilters.length;i++){
+                allFilters[i].classList.remove("expand");
+            }
+        }
+    });
+}
+
+function filterDataGrid() {
+    let searchPhrase = [];
+    let operatorEls = stadiumFilters.querySelectorAll("[foperator]");
+    for (let i = 0; i < operatorEls.length; i++) {
+        let ftype = operatorEls[i].getAttribute("ftype");
+        let colNo = operatorEls[i].getAttribute("cno");
+        let fdisplay = operatorEls[i].getAttribute("fdisplay");
+        let colText = arrDisplayHeadings[colNo - 1].textContent;
+        let fvalueEl = operatorEls[i].nextElementSibling;
+        let heading = colText.replaceAll(" ", "\\ ");
+        let output;
+        if (ftype == "text") {
+            let txtoperator = operatorEls[i].querySelector("select").value;
+            let txtvalue = fvalueEl.querySelector("input").value;
+            if (txtoperator == "Contains" && txtvalue) {
+                output = heading + ':"' + txtvalue + '"';
+            } else if (txtoperator == "Does Not Contain" && txtvalue) {
+                output = heading + ':(NOT "' + txtvalue + '")';
+            } else if (txtoperator == "Equals" && txtvalue) {
+                output = heading + ':["' + txtvalue + '" TO "' + txtvalue + '"]';
+            } else if (txtoperator == "Does Not Equal" && txtvalue) {
+                output = heading + ':(NOT ["' + txtvalue + '" TO "' + txtvalue + '"])';
+            }
+        }
+        if (ftype == "number") {
+            let numoperator = operatorEls[i].querySelector("select").value;
+            let numvaluefrom = fvalueEl.querySelector(".filtergrid-from-number").value;
+            let numvalueto = fvalueEl.querySelector(".filtergrid-to-number").value;
+            if (numvaluefrom) {
+                if (numoperator == "Between") {
+                    output = heading + ':{' + numvaluefrom + ' TO ' + numvalueto + '}';
+                } else if (numoperator == "From-To") {
+                    output = heading + ':[' + numvaluefrom + ' TO ' + numvalueto + ']';
+                } else if (numoperator == "Greater Than") {
+                    output = heading + ':{' + numvaluefrom + ' TO 9007199254740991}';
+                } else if (numoperator == "Smaller Than") {
+                    output = heading + ':{-9007199254740991 TO ' + numvaluefrom + '}';
+                }
+            }
+        }
+        if (ftype == "date") {
+            let dtoperator = operatorEls[i].querySelector("select").value;
+            let dtvaluefrom = fvalueEl.querySelector(".filtergrid-from-date").value;
+            let dtvalueto = fvalueEl.querySelector(".filtergrid-to-date").value;
+            if (dtvaluefrom) {
+                if (dtoperator == "Between") {
+                    output = heading + ':{' + dtvaluefrom + ' TO ' + dtvalueto + '}';
+                } else if (dtoperator == "Greater Than") {
+                    output = heading + ':{' + dtvaluefrom + ' TO 3000/01/01}';
+                } else if (dtoperator == "Smaller Than") {
+                    output = heading + ':{1000/01/01 TO ' + dtvaluefrom + '}';
+                }
+            }
+        }
+        if (ftype == "boolean" && fdisplay == "radio") {
+            let multioperator = operatorEls[i].querySelectorAll("input[type='radio']");
+            for (let s = 0; s < multioperator.length; s++) {
+                if (multioperator[s].checked && multioperator[s].value != "Show all") {
+                    output = heading + ':' + multioperator[s].value;
+                }
+            }
+        } else if (ftype == "boolean") {
+            let booloperator = operatorEls[i].querySelector("select").value;
+            if (booloperator != "Show all" && booloperator != "") {
+                output = heading + ':' + booloperator;
+            }
+        }
+        if (ftype == "enum" && fdisplay == "radio") {
+            let multioperator = operatorEls[i].querySelectorAll("input[type='radio']");
+            for (let s = 0; s < multioperator.length; s++) {
+                if (multioperator[s].checked && multioperator[s].value != "Show all") {
+                    output = heading + ':["' + multioperator[s].value + '" TO "' + multioperator[s].value + '"]';
+                }
+            }
+        } else if (ftype == "enum") {
+            let enumoperator = operatorEls[i].querySelector("select").value;
+            if (enumoperator != "Show all" && enumoperator != "") {
+                output = heading + ':["' + enumoperator + '" TO "' + enumoperator + '"]';
+            }
+        }
+        if (ftype == "multiselect") {
+            let multioperator = operatorEls[i].querySelectorAll("input[type='checkbox']");
+            let or = "";
+            output = "(";
+            for (let s = 0; s < multioperator.length; s++) {
+                if (multioperator[s].checked) {
+                    output += or + heading + ':["' + multioperator[s].value + '" TO "' + multioperator[s].value + '"]';
+                    or = " OR ";
+                }
+            }
+            output += ")";
+        }
+        if (output && output != "()") searchPhrase.push(output);
+    }
+    filterContainer.classList.remove("expand");
+    scope[`${searchBoxName}SearchTerm`] = searchPhrase.join(' AND ');
+}
+function clearForm() { 
+    let allCheckboxes = stadiumFilters.querySelectorAll("input[type='checkbox']");
+    for (let i = 0; i < allCheckboxes.length; i++) {
+        allCheckboxes[i].checked = false;
+    } 
+    let allRadios = stadiumFilters.querySelectorAll("input[type='radio']");
+    for (let i = 0; i < allRadios.length; i++) {
+        allRadios[i].checked = false;
+        if (allRadios[i].value == "Show all") allRadios[i].checked = true;
+    } 
+    let allInputs = stadiumFilters.querySelectorAll("input:not([type='checkbox'],[type='radio'])");
+    for (let i = 0; i < allInputs.length; i++) {
+        allInputs[i].value = "";
+    }   
+    let allSelects = stadiumFilters.querySelectorAll("select");
+    for (let i = 0; i < allSelects.length; i++) {
+        allSelects[i].options.selectedIndex = 0;
+    }
+    let visuallyHidden = stadiumFilters.querySelectorAll(".visually-hidden");
+    for (let i = 0; i < visuallyHidden.length; i++) {
+        visuallyHidden[i].classList.remove("visually-hidden");
+    }
+    scope[`${searchBoxName}SearchTerm`] = null;
+}
+function setAttributes(el, attrs) {
+  for(var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
 }
 ```
+
+## Type Setup
+1. Add a type called "FilterConfig" to the types collection in the Stadium Application Explorer
+2. Add the following properties to the type
+   1. type (Any)
+   2. name (Any)
+   3. column (Any)
+   4. display (Any)
+   5. data (List)
+      1. Item (Any)
+
+![Type Setup](images/TypeSetup.png)
+
+## Page Setup
+1. Add a *Container* control to the page
+2. Add a class to uniquely identify the *Container* control to the control classes property (e.g. filter-container)
+3. Add the *DataGrid* control the filter must apply to to the page 
+4. Add a class to uniquely identify the *DataGrid* control to the control classes property (e.g. filter-datagrid)
+
+![Page Setup](images/pageSetup.png)
+
+## Page.Load Setup
+1. Populate the *DataGrid* control with data by dragging on a query and assigning it using a *SetValue* (see [this repo](https://github.com/stadium-software/samples-database))
+2. Drag a *List* action under the *SetValue*
+3. Assign the *FilterConfig* type to the *List* action
+4. Define the fields in the filtergrid
+   1. *type*: the data type of the column you wish to enable filtering for
+      1. text
+      2. date
+      3. number
+      4. boolean (dropdown or radiobuttonlist)
+      5. enum (dropdown or radiobuttonlist)
+      6. multiselect (checkboxlist)
+   2. *name*: the label displayed for the filter
+   3. *column*: the heading of the DataGrid column the filter must be applied to
+   4. *display*: filters of type *boolean* and *enum* are shown as dropdowns by default. When passing the value "radio" in this property, these filters will be shown as radio button lists
+   5. *data*: filters of type *enum* and *multiselect* require a list of data users can select from
+   
+```json
+= [{
+	"type": "text",
+	"name": "First Name",
+	"column": "FirstName"
+},{
+	"type": "date",
+ 	"name": "Start Date",
+ 	"column": "startdate"
+},{
+	"type": "number",
+	"name": "Number Of Pets",
+	"column": "noof pets"
+},{
+	"type": "boolean",
+	"name": "Healthy",
+	"column": "healthy",
+	"display": "radio"
+},{
+	"type": "enum",
+	"name": "Number of Children",
+	"column": "no of children",
+	"data": [0,1,2,3,4,5,6,7,8,9,10]
+},{
+	"type": "multiselect",
+	"name": "Subscription",
+	"column": "subscription",
+	"data": ["No data","Subscribed","Unsubscribed"]
+}]
+```
+5. Drag the "DataGridFilter" global script below the *List*
+6. Enter parameters for the script
+   1. DataGridClass: The unique classname you assigned to the DataGrid above (e.g. filter-datagrid)
+   2. DisplayMode: This parameter accepts three values
+      1. Empty (default)
+      2. "collapsed"
+      3. "integrated"
+   3. FilterConfig: Select the List containing the filter configurations you created from the dropdown
+   4. FilterContainerClass: The unique classname you assigned to the Container control above (e.g. filter-container)
+
+## Display Modes
+1. Leaving this parameter empty means the filter is showing as a block whereever the *Container* control is placed on the page
+
+![Standard Display](images/Standard.gif)
+
+2. Adding the word "collapsed" in the parameter causes the filter to be expandable by the user. When expanded, the filter will displace any controls below it on the page. 
+
+![Collapsed Display](images/Collapsed.gif)
+
+3. Adding the word "integrated" in the parameter causes the filter to be expandable and shown as an icon next to the search bar. When it is opened, the filter will overlay other controls onthe page. 
+
+![Integrated Display](images/Integrated.gif)
+
+# Styling
+Various elements in this module can be styled using the two CSS files in this repo
+
+## Applying the CSS
+
+**Stadium 6.6 or higher**
+1. Create a folder called "CSS" inside of your Embedded Files in your application
+2. Drag the two CSS files from this repo [*datagrid-column-edit-inline-variables.css*](datagrid-column-edit-inline-variables.css) and [*datagrid-column-edit-inline.css*](datagrid-column-edit-inline.css) into that folder
+3. Paste the link tags below into the *head* property of your application
+```html
+<link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-clientside-filters.css">
+<link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-clientside-filters-variables.css">
+``` 
+
+![](images/ApplicationHeader.png)
+
+**Versions lower than 6.6**
+1. Copy the CSS from the two css files into the Stylesheet in your application
+
+## Customising CSS
+1. Open the CSS file called [*datagrid-column-edit-inline-variables.css*](datagrid-column-edit-inline-variables.css) from this repo
+2. Adjust the variables in the *:root* element as you see fit
+3. Overwrite the file in the CSS folder of your application with the customised file
+
+## CSS Upgrading
+To upgrade the CSS in this module, follow the [steps outlined in this repo](https://github.com/stadium-software/samples-upgrading)
 
 # Optional Custom Development
 1. Allowing users to save searches to the database (save generated search phase)

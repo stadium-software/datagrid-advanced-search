@@ -1,0 +1,165 @@
+.stadium-filter-container {
+    & .visually-hidden {
+        height: 0;
+        width: 0;
+        overflow: hidden;
+        outline: 0;
+        border: 0;
+        position: absolute;
+        padding: 0;
+    }
+
+    & .stadium-filters {
+        border: 1px solid var(--datagrid-integrated-filter-border-color);
+        background-color: var(--datagrid-filter-background-color);
+        display: grid;
+        grid-template-columns: minmax(min-content, max-content) max-content minmax(120px, 1fr);
+        align-items: center;
+        padding: 0 6px;
+    }
+
+    & .stadium-filter-inner-container {
+        overflow: hidden;
+    }
+
+    & .lite-button,
+    & .lite-button:focus {
+        background-color: var(--datagrid-filter-clear-button-background-color);
+        color: var(--datagrid-filter-clear-button-font-color);
+        box-shadow: none;
+    }
+
+    & .lite-button:hover {
+        background-color: var(--datagrid-filter-clear-button-background-color);
+        color: var(--datagrid-filter-clear-button-font-color);
+    }
+
+    & input:not([type='checkbox'], [type='radio']) {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    & select {
+        min-width: 135px;
+        width: 100%;
+    }
+
+    & .control-container:has(.filtergrid-text-value),
+    & .filtergrid-text-value {
+        padding-right: 0;
+    }
+
+    & .number-values {
+        display: flex;
+        gap: 10px;
+
+        &>.form-control {
+            width: calc(50% - 5px);
+            max-width: 145px;
+        }
+    }
+
+    & .date-values {
+        display: flex;
+        gap: 10px;
+
+        &>.form-control {
+            width: calc(50% - 5px);
+            max-width: 145px;
+        }
+    }
+
+    & .filtergrid-checkbox-list,
+    & .filtergrid-radiobutton-list {
+        padding: 6px;
+    }
+
+    & .label-container {
+       overflow-wrap: break-word;
+    }
+
+    & .label-container:has(+ .filtergrid-checkbox-list) {
+        align-self: self-start;
+    }
+
+    & .filter-button-bar {
+        grid-column: 1 / 3;
+        padding-bottom: 6px;
+    }
+}
+
+.filter-collapsed {
+    & .stadium-filter-header {
+        user-select: none;
+        background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
+        background-repeat: no-repeat;
+        background-size: 20px;
+        background-color: var(--datagrid-integrated-filter-header-background-color);
+        background-position: right 8px center;
+        cursor: pointer;
+        font-weight: bold;
+        line-height: 2;
+        padding: 6px;
+    }
+
+    & .stadium-filters {
+        overflow: hidden;
+        transition: border-color 500ms;
+        border-color: white;
+    }
+
+    & .stadium-filter-inner-container {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 500ms;
+    }
+}
+
+.filter-integrated {
+    background-color: transparent;
+
+    & .stadium-filter-header {
+        user-select: none;
+        background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
+        background-repeat: no-repeat;
+        background-size: 20px;
+        background-color: var(--datagrid-integrated-filter-header-background-color);
+        background-position: center;
+        cursor: pointer;
+        font-weight: bold;
+        line-height: 2;
+        width: 38px;
+        height: 38px;
+    }
+
+    & .stadium-filter-inner-container {
+        position: absolute;
+        top: 48px;
+        z-index: 10;
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 500ms;
+    }
+
+    & .stadium-filters {
+        overflow: hidden;
+        transition: border-color 500ms;
+        border-color: white;
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+}
+.expand.filter-integrated {
+    & .stadium-filter-inner-container {
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    }
+}
+.expand.filter-integrated,
+.expand.filter-collapsed {
+    & .stadium-filter-inner-container {
+        grid-template-rows: 1fr;
+    }
+    & .stadium-filters {
+        border-color: var(--datagrid-integrated-filter-border-color);
+    }
+}
