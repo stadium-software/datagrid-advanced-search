@@ -2,7 +2,7 @@
 
 Building advanced client-side search forms for DataGrids
 
-
+https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/a3a601aa-1040-44f1-9beb-cf56af1ad9d3
 
 ## Sample applications
 This repo contains one Stadium 6.7 application
