@@ -486,7 +486,7 @@ function setAttributes(el, attrs) {
 3. Add the *DataGrid* control the filter must apply to to the page 
 4. Add a class to uniquely identify the *DataGrid* control to the control classes property (e.g. filter-datagrid)
 
-![Page Setup](images/pageSetup.png)
+![Page Setup](images/PageSetup.png)
 
 ## Page.Load Setup
 1. Populate the *DataGrid* control with data by dragging on a query and assigning it using a *SetValue* (see [this repo](https://github.com/stadium-software/samples-database))
@@ -504,7 +504,8 @@ function setAttributes(el, attrs) {
    3. *column*: the heading of the DataGrid column the filter must be applied to
    4. *display*: filters of type *boolean* and *enum* are shown as dropdowns by default. When passing the value "radio" in this property, these filters will be shown as radio button lists
    5. *data*: filters of type *enum* and *multiselect* require a list of data users can select from
-   
+
+Fields Definition Example
 ```json
 = [{
 	"type": "text",
@@ -545,8 +546,10 @@ function setAttributes(el, attrs) {
    3. FilterConfig: Select the List containing the filter configurations you created from the dropdown
    4. FilterContainerClass: The unique classname you assigned to the Container control above (e.g. filter-container)
 
+![Script Parameters Example](images/ScriptParametersExample.png)
+
 ## Display Modes
-1. Leaving this parameter empty means the filter is showing as a block whereever the *Container* control is placed on the page
+1. Leaving this parameter empty means the filter is showing as a block wherever the *Container* control is placed on the page
 
 ![Standard Display](images/Standard.gif)
 
