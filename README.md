@@ -27,6 +27,8 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    2. DisplayMode
    3. FilterConfig
    4. FilterContainerClass
+   5. FilterHeading
+   6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action (you can ignore the Stadium validation "Invalif Javascript was detected" error message)
 ```javascript
 let scope = this;
@@ -34,6 +36,8 @@ let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let dgClassName = "." + ~.Parameters.Input.DataGridClass;
 let filterConfig = ~.Parameters.Input.FilterConfig;
 let displayMode = ~.Parameters.Input.DisplayMode;
+let dismissClick = ~.Parameters.Input.CollapseOnClickAway;
+let filterHeading = ~.Parameters.Input.FilterHeading;
 if (displayMode) displayMode = displayMode.toLowerCase();
 let pageName = window.location.pathname.replace("/", "");
 
@@ -92,7 +96,7 @@ if (displayMode == "integrated" || displayMode == "collapsed") {
             datagridheader.appendChild(filterContainer);
         }
     } else if (displayMode == "collapsed") { 
-        filterHeader.textContent = "Advanced Filter";
+        filterHeader.textContent = filterHeading;
         filterContainer.classList.add("filter-collapsed");
     }
 }
@@ -321,7 +325,7 @@ function initFilterForm() {
     buttonBar.appendChild(clearButtonContainer);
 
     let saveButton = document.createElement("button");
-    saveButton.textContent = "Save";
+    saveButton.textContent = "Apply";
     saveButton.classList.add("btn", "btn-lg", "btn-default");
     saveButton.addEventListener("click", filterDataGrid);
     let saveButtonContainer = document.createElement("div");
@@ -330,14 +334,16 @@ function initFilterForm() {
     buttonBar.appendChild(saveButtonContainer);
 
     stadiumFilters.appendChild(buttonBar);
-    document.body.addEventListener("click", function(e){
-        if (!e.target.closest(filterClassName)) {
-            let allFilters = document.querySelectorAll(filterClassName);
-            for (let i=0;i<allFilters.length;i++){
-                allFilters[i].classList.remove("expand");
+    if (dismissClick) {
+        document.body.addEventListener("click", function (e) {
+            if (!e.target.closest(filterClassName)) {
+                let allFilters = document.querySelectorAll(filterClassName);
+                for (let i = 0; i < allFilters.length; i++) {
+                    allFilters[i].classList.remove("expand");
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function filterDataGrid() {
@@ -373,9 +379,9 @@ function filterDataGrid() {
                     output = heading + ':{' + numvaluefrom + ' TO ' + numvalueto + '}';
                 } else if (numoperator == "From-To") {
                     output = heading + ':[' + numvaluefrom + ' TO ' + numvalueto + ']';
-                } else if (numoperator == "Greater Than") {
+                } else if (numoperator == "Greater than") {
                     output = heading + ':{' + numvaluefrom + ' TO 9007199254740991}';
-                } else if (numoperator == "Smaller Than") {
+                } else if (numoperator == "Smaller than") {
                     output = heading + ':{-9007199254740991 TO ' + numvaluefrom + '}';
                 }
             }
@@ -387,9 +393,9 @@ function filterDataGrid() {
             if (dtvaluefrom) {
                 if (dtoperator == "Between") {
                     output = heading + ':{' + dtvaluefrom + ' TO ' + dtvalueto + '}';
-                } else if (dtoperator == "Greater Than") {
+                } else if (dtoperator == "Greater than") {
                     output = heading + ':{' + dtvaluefrom + ' TO 3000/01/01}';
-                } else if (dtoperator == "Smaller Than") {
+                } else if (dtoperator == "Smaller than") {
                     output = heading + ':{1000/01/01 TO ' + dtvaluefrom + '}';
                 }
             }
@@ -545,6 +551,8 @@ Fields Definition Example
       3. "integrated"
    3. FilterConfig: Select the List containing the filter configurations you created from the dropdown
    4. FilterContainerClass: The unique classname you assigned to the Container control above (e.g. filter-container)
+   5. FilterHeading: The title of the filter
+   6. CollapseOnClickAway (true / false): Whether to collapse the filter container when the user clicks elsewhere on the page
 
 ![Script Parameters Example](images/ScriptParametersExample.png)
 
