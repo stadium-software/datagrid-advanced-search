@@ -66,7 +66,7 @@ let filterContainer = document.querySelectorAll(filterClassName);
 if (filterContainer.length == 0) {
     console.error("A container control for the filter was not found. Drag a container control into the page, assign a class to it and provide this class in the 'FilterContainerClass parameter'.");
     return false;
-} else if (dg.length > 1) {
+} else if (filterContainer.length > 1) {
     console.error("The class '" + filterClassName + "' is assigned to multiple controls. Assign a unique classname to the filter container");
     return false;
 } else { 
