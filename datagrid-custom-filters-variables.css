@@ -1,7 +1,8 @@
 :root {
     --datagrid-filter-background-color: #f5f5f5;    
-    
+
     --datagrid-integrated-filter-icon: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
+    --datagrid-integrated-filter-icon-leftright-pos: left;
     --datagrid-integrated-filter-header-background-color: #f5f5f5;
     --datagrid-integrated-filter-border-color: #ccc;
 

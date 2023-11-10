@@ -96,7 +96,7 @@
         background-size: 20px;
         min-height: 28px;
         background-color: var(--datagrid-integrated-filter-header-background-color);
-        background-position: right 8px center;
+        background-position: var(--datagrid-integrated-filter-icon-leftright-pos, right) 8px center;
         cursor: pointer;
         font-weight: bold;
         line-height: 2;
