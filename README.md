@@ -12,7 +12,7 @@ This repo contains one Stadium 6.7 application
 2.0
 
 ### Change Log
-2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added display modes (standard, collapsed and integrated)
+2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -29,7 +29,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    4. FilterContainerClass
    5. FilterHeading
    6. CollapseOnClickAway
-3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action (you can ignore the Stadium validation "Invalif Javascript was detected" error message)
+3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action (you can ignore the Stadium validation "Invalid Javascript was detected" error message)
 ```javascript
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
@@ -64,7 +64,7 @@ for (let i = 0; i < arrHeadingTags.length; i++) {
 }
 let filterContainer = document.querySelectorAll(filterClassName);
 if (filterContainer.length == 0) {
-    console.error("The container for the filter was not found. Drag a container control into the page and assign the class '" + filterClassName + "' to it.");
+    console.error("A container control for the filter was not found. Drag a container control into the page, assign a class to it and provide this class in the 'FilterContainerClass parameter'.");
     return false;
 } else if (dg.length > 1) {
     console.error("The class '" + filterClassName + "' is assigned to multiple controls. Assign a unique classname to the filter container");
@@ -551,7 +551,7 @@ Fields Definition Example
       3. "integrated"
    3. FilterConfig: Select the List containing the filter configurations you created from the dropdown
    4. FilterContainerClass: The unique classname you assigned to the Container control above (e.g. filter-container)
-   5. FilterHeading: The title of the filter
+   5. FilterHeading: The title of the filter (not used in "integrated" display mode)
    6. CollapseOnClickAway (true / false): Whether to collapse the filter container when the user clicks elsewhere on the page
 
 ![Script Parameters Example](images/ScriptParametersExample.png)

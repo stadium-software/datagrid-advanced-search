@@ -135,7 +135,7 @@
 
     & .stadium-filter-inner-container {
         position: absolute;
-        top: 48px;
+        top: 46px;
         z-index: 10;
         display: grid;
         grid-template-rows: 0fr;
