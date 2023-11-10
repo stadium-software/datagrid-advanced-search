@@ -311,7 +311,7 @@ function initFilterForm() {
 
         stadiumFilters.appendChild(label);
         stadiumFilters.appendChild(operator);
-        stadiumFilters.appendChild(valueField);
+        if (type === "text" || type === "number" || type === "date") stadiumFilters.appendChild(valueField);
     }
     let buttonBar = document.createElement("div"); buttonBar.classList.add("filter-button-bar");
 

@@ -53,9 +53,13 @@
         display: flex;
         gap: 10px;
 
-        &>.form-control {
+        & > .form-control {
             width: calc(50% - 5px);
             max-width: 145px;
+        }
+        & .filtergrid-from-number:has(+ .filtergrid-to-number.visually-hidden) {
+            width: 100%;
+            max-width: 300px;
         }
     }
 
@@ -63,15 +67,27 @@
         display: flex;
         gap: 10px;
 
-        &>.form-control {
+        & > .form-control {
             width: calc(50% - 5px);
             max-width: 145px;
+        }
+        & .filtergrid-from-date:has(+ .filtergrid-to-date.visually-hidden) {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+
+    & .filtergrid-enum-operator {
+        grid-column: 2 / span 2;
+        & .form-control {
+            width: auto;
         }
     }
 
     & .filtergrid-checkbox-list,
     & .filtergrid-radiobutton-list {
         padding: 6px;
+        grid-column: 2 / span 2;
     }
 
     & .label-container {
@@ -83,7 +99,7 @@
     }
 
     & .filter-button-bar {
-        grid-column: 1 / 3;
+        grid-column: 1 / span 3;
         padding-bottom: 6px;
     }
 }
