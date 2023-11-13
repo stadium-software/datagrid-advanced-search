@@ -21,7 +21,7 @@ This repo contains one Stadium 6.7 application
 Use the instructions from [this repo](https://github.com/stadium-software/samples-database) to setup the database and DataGrid for this sample
 
 ## Global Script Setup
-1. Create a Global Script and call it "DataGridFilter"
+1. Create a Global Script and name it "DataGridFilter"
 2. Add the input parameters below to the script
    1. DataGridClass
    2. DisplayMode
