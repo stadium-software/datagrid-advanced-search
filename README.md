@@ -31,6 +31,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action (you can ignore the Stadium validation "Invalid Javascript was detected" error message)
 ```javascript
+/*Stadium Script Version 2.0*/
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let dgClassName = "." + ~.Parameters.Input.DataGridClass;
@@ -513,6 +514,7 @@ function setAttributes(el, attrs) {
 
 Fields Definition Example
 ```json
+/*Stadium Script Version 2.0*/
 = [{
 	"type": "text",
 	"name": "First Name",
