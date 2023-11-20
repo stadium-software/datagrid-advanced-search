@@ -514,7 +514,6 @@ function setAttributes(el, attrs) {
 
 Fields Definition Example
 ```json
-/*Stadium Script Version 2.0*/
 = [{
 	"type": "text",
 	"name": "First Name",
