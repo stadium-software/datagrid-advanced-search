@@ -13,6 +13,7 @@ This repo contains one Stadium 6.7 application
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
+2.1 Fixed Selectable column bug
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -31,7 +32,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action (you can ignore the Stadium validation "Invalid Javascript was detected" error message)
 ```javascript
-/*Stadium Script Version 2.0*/
+/*Stadium Script Version 2.1*/
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let dgClassName = "." + ~.Parameters.Input.DataGridClass;
@@ -54,7 +55,7 @@ if (dg.length == 0) {
 dg.classList.add("stadium-filtered-datagrid");
 let searchBoxName = dg.id.replace(`${pageName}_`, "").replace("-container","");
 let table = dg.querySelector("table");
-let arrHeadingTags = table.querySelectorAll("thead th a");
+let arrHeadingTags = table.querySelectorAll("thead th");
 let arrHeadings = [];
 for (let i = 0; i < arrHeadingTags.length; i++) {
     arrHeadings.push(arrHeadingTags[i].textContent.replaceAll(" ","").toLowerCase());
