@@ -53,13 +53,9 @@
         display: flex;
         gap: 10px;
 
-        & > .form-control {
+        &>.form-control {
             width: calc(50% - 5px);
             max-width: 145px;
-        }
-        & .filtergrid-from-number:has(+ .filtergrid-to-number.visually-hidden) {
-            width: 100%;
-            max-width: 300px;
         }
     }
 
@@ -67,27 +63,15 @@
         display: flex;
         gap: 10px;
 
-        & > .form-control {
+        &>.form-control {
             width: calc(50% - 5px);
             max-width: 145px;
-        }
-        & .filtergrid-from-date:has(+ .filtergrid-to-date.visually-hidden) {
-            width: 100%;
-            max-width: 300px;
-        }
-    }
-
-    & .filtergrid-enum-operator {
-        grid-column: 2 / span 2;
-        & .form-control {
-            width: auto;
         }
     }
 
     & .filtergrid-checkbox-list,
     & .filtergrid-radiobutton-list {
         padding: 6px;
-        grid-column: 2 / span 2;
     }
 
     & .label-container {
@@ -99,20 +83,24 @@
     }
 
     & .filter-button-bar {
-        grid-column: 1 / span 3;
+        grid-column: 1 / 3;
         padding-bottom: 6px;
+    }
+    & .filtergrid-from-date:has(+ .visually-hidden),
+    & .filtergrid-from-number:has(+ .visually-hidden) {
+        width: 100%;
+        max-width: 300px;
     }
 }
 
 .filter-collapsed {
     & .stadium-filter-header {
         user-select: none;
-        background-image: var(--datagrid-integrated-filter-icon);
+        background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
         background-repeat: no-repeat;
         background-size: 20px;
-        min-height: 28px;
         background-color: var(--datagrid-integrated-filter-header-background-color);
-        background-position: var(--datagrid-integrated-filter-icon-leftright-pos, right) 8px center;
+        background-position: right 8px center;
         cursor: pointer;
         font-weight: bold;
         line-height: 2;
@@ -151,7 +139,7 @@
 
     & .stadium-filter-inner-container {
         position: absolute;
-        top: 46px;
+        top: 48px;
         z-index: 10;
         display: grid;
         grid-template-rows: 0fr;

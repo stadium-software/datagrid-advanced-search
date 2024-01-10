@@ -13,7 +13,7 @@ This repo contains one Stadium 6.7 application
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
-2.1 Fixed Selectable column bug
+2.1 Fixed selectable column bug
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -32,14 +32,12 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action (you can ignore the Stadium validation "Invalid Javascript was detected" error message)
 ```javascript
-/*Stadium Script Version 2.1*/
+/* Stadium Script v2.1 */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let dgClassName = "." + ~.Parameters.Input.DataGridClass;
 let filterConfig = ~.Parameters.Input.FilterConfig;
 let displayMode = ~.Parameters.Input.DisplayMode;
-let dismissClick = ~.Parameters.Input.CollapseOnClickAway;
-let filterHeading = ~.Parameters.Input.FilterHeading;
 if (displayMode) displayMode = displayMode.toLowerCase();
 let pageName = window.location.pathname.replace("/", "");
 
@@ -55,7 +53,7 @@ if (dg.length == 0) {
 dg.classList.add("stadium-filtered-datagrid");
 let searchBoxName = dg.id.replace(`${pageName}_`, "").replace("-container","");
 let table = dg.querySelector("table");
-let arrHeadingTags = table.querySelectorAll("thead th");
+let arrHeadingTags = table.querySelectorAll("thead th a");
 let arrHeadings = [];
 for (let i = 0; i < arrHeadingTags.length; i++) {
     arrHeadings.push(arrHeadingTags[i].textContent.replaceAll(" ","").toLowerCase());
@@ -66,9 +64,9 @@ for (let i = 0; i < arrHeadingTags.length; i++) {
 }
 let filterContainer = document.querySelectorAll(filterClassName);
 if (filterContainer.length == 0) {
-    console.error("A container control for the filter was not found. Drag a container control into the page, assign a class to it and provide this class in the 'FilterContainerClass parameter'.");
+    console.error("The container for the filter was not found. Drag a container control into the page and assign the class '" + filterClassName + "' to it.");
     return false;
-} else if (filterContainer.length > 1) {
+} else if (dg.length > 1) {
     console.error("The class '" + filterClassName + "' is assigned to multiple controls. Assign a unique classname to the filter container");
     return false;
 } else { 
@@ -98,12 +96,30 @@ if (displayMode == "integrated" || displayMode == "collapsed") {
             datagridheader.appendChild(filterContainer);
         }
     } else if (displayMode == "collapsed") { 
-        filterHeader.textContent = filterHeading;
+        filterHeader.textContent = "Advanced Filter";
         filterContainer.classList.add("filter-collapsed");
     }
 }
-
 const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
+let numberSelectChange = (e) => {
+    if (e.target.value != "Between" && e.target.value != "From-To") {
+        stadiumFilters.querySelector(".filtergrid-to-number").classList.add("visually-hidden");
+        stadiumFilters.querySelector(".filtergrid-from-number").setAttribute("placeholder", "Value");
+    } else { 
+        stadiumFilters.querySelector(".filtergrid-to-number").classList.remove("visually-hidden");
+        stadiumFilters.querySelector(".filtergrid-from-number").setAttribute("placeholder", "From value");
+    }
+};
+let dateSelectChange = (e) => {
+    if (e.target.value == "Greater than" || e.target.value == "Smaller than") {
+        stadiumFilters.querySelector(".filtergrid-to-date").classList.add("visually-hidden");
+        stadiumFilters.querySelector(".filtergrid-from-date").setAttribute("placeholder", "Value");
+    } else { 
+        stadiumFilters.querySelector(".filtergrid-to-date").classList.remove("visually-hidden");
+        stadiumFilters.querySelector(".filtergrid-from-date").setAttribute("placeholder", "From value");
+    }
+};
+
 initFilterForm();
 
 function initFilterForm() {
@@ -163,15 +179,7 @@ function initFilterForm() {
             numInput2.setAttribute("placeholder", "To value");
             input = document.createElement("div");
             input.classList.add("number-values");
-            select.addEventListener("change", function (e) {
-                if (e.target.value != "Between" && e.target.value != "From-To") {
-                    stadiumFilters.querySelector(".filtergrid-to-number").classList.add("visually-hidden");
-                    stadiumFilters.querySelector(".filtergrid-from-number").setAttribute("placeholder", "Value");
-                } else { 
-                    stadiumFilters.querySelector(".filtergrid-to-number").classList.remove("visually-hidden");
-                    stadiumFilters.querySelector(".filtergrid-from-number").setAttribute("placeholder", "From value");
-                }
-            });
+            select.addEventListener("change", numberSelectChange);
             input.appendChild(numInput1);
             input.appendChild(numInput2);
         }
@@ -195,15 +203,7 @@ function initFilterForm() {
             dtInput2.setAttribute("placeholder", "To date");
             input = document.createElement("div");
             input.classList.add("date-values");
-            select.addEventListener("change", function (e) {
-                if (e.target.value == "Greater than" || e.target.value == "Smaller than") {
-                    stadiumFilters.querySelector(".filtergrid-to-date").classList.add("visually-hidden");
-                    stadiumFilters.querySelector(".filtergrid-from-date").setAttribute("placeholder", "Value");
-                } else { 
-                    stadiumFilters.querySelector(".filtergrid-to-date").classList.remove("visually-hidden");
-                    stadiumFilters.querySelector(".filtergrid-from-date").setAttribute("placeholder", "From value");
-                }
-            });
+            select.addEventListener("change", dateSelectChange);
             input.appendChild(dtInput1);
             input.appendChild(dtInput2);
         }
@@ -313,7 +313,7 @@ function initFilterForm() {
 
         stadiumFilters.appendChild(label);
         stadiumFilters.appendChild(operator);
-        if (type === "text" || type === "number" || type === "date") stadiumFilters.appendChild(valueField);
+        stadiumFilters.appendChild(valueField);
     }
     let buttonBar = document.createElement("div"); buttonBar.classList.add("filter-button-bar");
 
@@ -327,7 +327,7 @@ function initFilterForm() {
     buttonBar.appendChild(clearButtonContainer);
 
     let saveButton = document.createElement("button");
-    saveButton.textContent = "Apply";
+    saveButton.textContent = "Save";
     saveButton.classList.add("btn", "btn-lg", "btn-default");
     saveButton.addEventListener("click", filterDataGrid);
     let saveButtonContainer = document.createElement("div");
@@ -336,16 +336,14 @@ function initFilterForm() {
     buttonBar.appendChild(saveButtonContainer);
 
     stadiumFilters.appendChild(buttonBar);
-    if (dismissClick) {
-        document.body.addEventListener("click", function (e) {
-            if (!e.target.closest(filterClassName)) {
-                let allFilters = document.querySelectorAll(filterClassName);
-                for (let i = 0; i < allFilters.length; i++) {
-                    allFilters[i].classList.remove("expand");
-                }
+    document.body.addEventListener("click", function(e){
+        if (!e.target.closest(filterClassName)) {
+            let allFilters = document.querySelectorAll(filterClassName);
+            for (let i=0;i<allFilters.length;i++){
+                allFilters[i].classList.remove("expand");
             }
-        });
-    }
+        }
+    });
 }
 
 function filterDataGrid() {
@@ -377,13 +375,13 @@ function filterDataGrid() {
             let numvaluefrom = fvalueEl.querySelector(".filtergrid-from-number").value;
             let numvalueto = fvalueEl.querySelector(".filtergrid-to-number").value;
             if (numvaluefrom) {
-                if (numoperator == "Between") {
+                if (numoperator.toLowerCase() == "between") {
                     output = heading + ':{' + numvaluefrom + ' TO ' + numvalueto + '}';
-                } else if (numoperator == "From-To") {
+                } else if (numoperator.toLowerCase() == "from-to") {
                     output = heading + ':[' + numvaluefrom + ' TO ' + numvalueto + ']';
-                } else if (numoperator == "Greater than") {
+                } else if (numoperator.toLowerCase() == "greater than") {
                     output = heading + ':{' + numvaluefrom + ' TO 9007199254740991}';
-                } else if (numoperator == "Smaller than") {
+                } else if (numoperator.toLowerCase() == "smaller than") {
                     output = heading + ':{-9007199254740991 TO ' + numvaluefrom + '}';
                 }
             }
@@ -393,11 +391,11 @@ function filterDataGrid() {
             let dtvaluefrom = fvalueEl.querySelector(".filtergrid-from-date").value;
             let dtvalueto = fvalueEl.querySelector(".filtergrid-to-date").value;
             if (dtvaluefrom) {
-                if (dtoperator == "Between") {
+                if (dtoperator.toLowerCase() == "between") {
                     output = heading + ':{' + dtvaluefrom + ' TO ' + dtvalueto + '}';
-                } else if (dtoperator == "Greater than") {
+                } else if (dtoperator.toLowerCase() == "greater than") {
                     output = heading + ':{' + dtvaluefrom + ' TO 3000/01/01}';
-                } else if (dtoperator == "Smaller than") {
+                } else if (dtoperator.toLowerCase() == "smaller than") {
                     output = heading + ':{1000/01/01 TO ' + dtvaluefrom + '}';
                 }
             }
