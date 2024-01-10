@@ -30,7 +30,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    4. FilterContainerClass
    5. FilterHeading
    6. CollapseOnClickAway
-3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action (you can ignore the Stadium validation "Invalid Javascript was detected" error message)
+3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
 /* Stadium Script v2.1 */
 let scope = this;
