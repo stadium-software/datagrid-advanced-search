@@ -14,6 +14,7 @@ This repo contains one Stadium 6.7 application
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
 2.1 Fixed selectable column bug
+2.2 Changed Save/Apply button text
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -32,7 +33,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v2.1 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v2.2 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let dgClassName = "." + ~.Parameters.Input.DataGridClass;
@@ -327,7 +328,7 @@ function initFilterForm() {
     buttonBar.appendChild(clearButtonContainer);
 
     let saveButton = document.createElement("button");
-    saveButton.textContent = "Save";
+    saveButton.textContent = "Apply";
     saveButton.classList.add("btn", "btn-lg", "btn-default");
     saveButton.addEventListener("click", filterDataGrid);
     let saveButtonContainer = document.createElement("div");
