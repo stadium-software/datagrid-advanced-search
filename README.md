@@ -4,17 +4,17 @@ Building advanced client-side search forms for DataGrids
 
 https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/a3a601aa-1040-44f1-9beb-cf56af1ad9d3
 
-## Sample applications
-This repo contains one Stadium 6.7 application
-[ClientSideFilters_v2.0.sapz](Stadium6/ClientSideFilters_v2.0.sapz?raw=true)
-
 ## Version
-2.0
+2.3
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
+
 2.1 Fixed selectable column bug
+
 2.2 Changed Save/Apply button text
+
+2.3 Added version to CSS; fixed url parsing bug
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -33,14 +33,15 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v2.2 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v2.3 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let dgClassName = "." + ~.Parameters.Input.DataGridClass;
 let filterConfig = ~.Parameters.Input.FilterConfig;
 let displayMode = ~.Parameters.Input.DisplayMode;
 if (displayMode) displayMode = displayMode.toLowerCase();
-let pageName = window.location.pathname.replace("/", "");
+let arrPageName = window.location.pathname.split("/");
+let pageName = arrPageName[arrPageName.length - 1];
 
 let dg = document.querySelectorAll(dgClassName);
 if (dg.length == 0) {
@@ -125,8 +126,14 @@ initFilterForm();
 
 function initFilterForm() {
     for (let i = 0; i < filterConfig.length; i++) {
-        let column = filterConfig[i].column.replaceAll(" ", "").toLowerCase();
-        let colNo = arrHeadings.indexOf(column) + 1;
+        let column = filterConfig[i].column;
+        let colNo;
+        if (isNaN(parseFloat(column))) {
+            column = column.replaceAll(" ", "").toLowerCase();
+            colNo = arrHeadings.indexOf(column) + 1;
+        } else if (!isNaN(parseFloat(column))) {
+            colNo = column;
+        }
         if (!colNo) continue;
         let type = filterConfig[i].type;
         let name = filterConfig[i].name;
@@ -508,39 +515,39 @@ function setAttributes(el, attrs) {
       5. enum (dropdown or radiobuttonlist)
       6. multiselect (checkboxlist)
    2. *name*: the label displayed for the filter
-   3. *column*: the heading of the DataGrid column the filter must be applied to
+   3. *column*: the number of the DataGrid column the filter must be applied to
    4. *display*: filters of type *boolean* and *enum* are shown as dropdowns by default. When passing the value "radio" in this property, these filters will be shown as radio button lists
    5. *data*: filters of type *enum* and *multiselect* require a list of data users can select from
 
 Fields Definition Example
 ```json
-= [{
-	"type": "text",
-	"name": "First Name",
-	"column": "FirstName"
+[{
+ "type": "text",
+ "name": "First Name",
+ "column": "firstname"
 },{
-	"type": "date",
- 	"name": "Start Date",
- 	"column": "startdate"
+ "type": "date",
+  "name": "Start Date",
+  "column": 5
 },{
-	"type": "number",
-	"name": "Number Of Pets",
-	"column": "noof pets"
+ "type": "number",
+ "name": "Number Of Pets",
+ "column": 4
 },{
-	"type": "boolean",
-	"name": "Healthy",
-	"column": "healthy",
-	"display": "radio"
+ "type": "boolean",
+ "name": "Healthy",
+ "column": 6,
+ "display": "radio"
 },{
-	"type": "enum",
-	"name": "Number of Children",
-	"column": "no of children",
-	"data": [0,1,2,3,4,5,6,7,8,9,10]
+ "type": "enum",
+ "name": "Number of Children",
+ "column": 3,
+ "data": [0,1,2,3,4,5,6,7,8,9,10]
 },{
-	"type": "multiselect",
-	"name": "Subscription",
-	"column": "subscription",
-	"data": ["No data","Subscribed","Unsubscribed"]
+ "type": "multiselect",
+ "name": "Subscription",
+ "column": 7,
+ "data": ["No data","Subscribed","Unsubscribed"]
 }]
 ```
 5. Drag the "DataGridFilter" global script below the *List*
