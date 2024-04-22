@@ -5,7 +5,7 @@ Building advanced client-side search forms for DataGrids
 https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/a3a601aa-1040-44f1-9beb-cf56af1ad9d3
 
 ## Version
-2.3
+2.4
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
@@ -15,6 +15,8 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/a3a6
 2.2 Changed Save/Apply button text
 
 2.3 Added version to CSS; fixed url parsing bug
+
+2.4 Switched column parameter from [heading property to name property](#pageload-setup); fixed number and date input display bug; general JS cleanup
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -33,7 +35,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v2.3 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v2.4 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let dgClassName = "." + ~.Parameters.Input.DataGridClass;
@@ -42,7 +44,6 @@ let displayMode = ~.Parameters.Input.DisplayMode;
 if (displayMode) displayMode = displayMode.toLowerCase();
 let arrPageName = window.location.pathname.split("/");
 let pageName = arrPageName[arrPageName.length - 1];
-
 let dg = document.querySelectorAll(dgClassName);
 if (dg.length == 0) {
     dg = document.querySelector(".data-grid-container");
@@ -53,17 +54,8 @@ if (dg.length == 0) {
     dg = dg[0];
 }
 dg.classList.add("stadium-filtered-datagrid");
-let searchBoxName = dg.id.replace(`${pageName}_`, "").replace("-container","");
-let table = dg.querySelector("table");
-let arrHeadingTags = table.querySelectorAll("thead th a");
-let arrHeadings = [];
-for (let i = 0; i < arrHeadingTags.length; i++) {
-    arrHeadings.push(arrHeadingTags[i].textContent.replaceAll(" ","").toLowerCase());
-}
-let arrDisplayHeadings = [];
-for (let i = 0; i < arrHeadingTags.length; i++) {
-    arrDisplayHeadings.push(arrHeadingTags[i]);
-}
+let datagridname = dg.id.replace(`${pageName}_`, "").replace("-container","");
+let dataGridColumns = getColumnDefinition();
 let filterContainer = document.querySelectorAll(filterClassName);
 if (filterContainer.length == 0) {
     console.error("The container for the filter was not found. Drag a container control into the page and assign the class '" + filterClassName + "' to it.");
@@ -104,21 +96,27 @@ if (displayMode == "integrated" || displayMode == "collapsed") {
 }
 const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
 let numberSelectChange = (e) => {
-    if (e.target.value != "Between" && e.target.value != "From-To") {
-        stadiumFilters.querySelector(".filtergrid-to-number").classList.add("visually-hidden");
-        stadiumFilters.querySelector(".filtergrid-from-number").setAttribute("placeholder", "Value");
+    let target = e.target;
+    let toEl = target.closest("div").nextElementSibling.querySelector(".filtergrid-to-number");
+    let fromEl = target.closest("div").nextElementSibling.querySelector(".filtergrid-from-number");
+    if (target.value != "Between" && target.value != "From-To") {
+        toEl.classList.add("visually-hidden");
+        fromEl.setAttribute("placeholder", "Value");
     } else { 
-        stadiumFilters.querySelector(".filtergrid-to-number").classList.remove("visually-hidden");
-        stadiumFilters.querySelector(".filtergrid-from-number").setAttribute("placeholder", "From value");
+        toEl.classList.remove("visually-hidden");
+        fromEl.setAttribute("placeholder", "From value");
     }
 };
 let dateSelectChange = (e) => {
-    if (e.target.value == "Greater than" || e.target.value == "Smaller than") {
-        stadiumFilters.querySelector(".filtergrid-to-date").classList.add("visually-hidden");
-        stadiumFilters.querySelector(".filtergrid-from-date").setAttribute("placeholder", "Value");
+    let target = e.target;
+    let toEl = target.closest("div").nextElementSibling.querySelector(".filtergrid-to-date");
+    let fromEl = target.closest("div").nextElementSibling.querySelector(".filtergrid-from-date");
+    if (target.value == "Greater than" || target.value == "Smaller than") {
+        toEl.classList.add("visually-hidden");
+        fromEl.setAttribute("placeholder", "Value");
     } else { 
-        stadiumFilters.querySelector(".filtergrid-to-date").classList.remove("visually-hidden");
-        stadiumFilters.querySelector(".filtergrid-from-date").setAttribute("placeholder", "From value");
+        toEl.classList.remove("visually-hidden");
+        fromEl.setAttribute("placeholder", "From value");
     }
 };
 
@@ -127,14 +125,25 @@ initFilterForm();
 function initFilterForm() {
     for (let i = 0; i < filterConfig.length; i++) {
         let column = filterConfig[i].column;
-        let colNo;
-        if (isNaN(parseFloat(column))) {
-            column = column.replaceAll(" ", "").toLowerCase();
-            colNo = arrHeadings.indexOf(column) + 1;
-        } else if (!isNaN(parseFloat(column))) {
+        let columnDef, colNo;
+        if (!isNumber(column)) {
+            columnDef = getElementFromObjects(dataGridColumns, column, "name");
+            if (!columnDef) {
+                console.error("Column '" + column + "' was not found. The 'column' property must contain the column name exactly as defined in the DataGrid 'Columns' property or the column number.");
+                continue;
+            }
+            colNo = dataGridColumns.map(function (e) {return e.name;}).indexOf(columnDef.name) + 1;
+        } else {
             colNo = column;
+            columnDef = dataGridColumns[column - 1];
+            column = columnDef.name;
         }
-        if (!colNo) continue;
+        if (!colNo || !columnDef.headerText) {
+            if (!columnDef.headerText) {
+                console.error("Column '" + columnDef.name + "' has no header text. Filter columns must have a header text.");
+            }
+            continue;
+        }
         let type = filterConfig[i].type;
         let name = filterConfig[i].name;
         let data = filterConfig[i].data;
@@ -361,10 +370,10 @@ function filterDataGrid() {
         let ftype = operatorEls[i].getAttribute("ftype");
         let colNo = operatorEls[i].getAttribute("cno");
         let fdisplay = operatorEls[i].getAttribute("fdisplay");
-        let colText = arrDisplayHeadings[colNo - 1].textContent;
+        let colText = dataGridColumns[colNo - 1].headerText;
         let fvalueEl = operatorEls[i].nextElementSibling;
-        let heading = colText.replaceAll(" ", "\\ ");
-        let output;
+        let output, heading = "";
+        if (colText) heading = colText.replaceAll(" ", "\\ ");
         if (ftype == "text") {
             let txtoperator = operatorEls[i].querySelector("select").value;
             let txtvalue = fvalueEl.querySelector("input").value;
@@ -449,7 +458,7 @@ function filterDataGrid() {
         if (output && output != "()") searchPhrase.push(output);
     }
     filterContainer.classList.remove("expand");
-    scope[`${searchBoxName}SearchTerm`] = searchPhrase.join(' AND ');
+    scope[`${datagridname}SearchTerm`] = searchPhrase.join(' AND ');
 }
 function clearForm() { 
     let allCheckboxes = stadiumFilters.querySelectorAll("input[type='checkbox']");
@@ -473,12 +482,26 @@ function clearForm() {
     for (let i = 0; i < visuallyHidden.length; i++) {
         visuallyHidden[i].classList.remove("visually-hidden");
     }
-    scope[`${searchBoxName}SearchTerm`] = null;
+    scope[`${datagridname}SearchTerm`] = null;
 }
 function setAttributes(el, attrs) {
   for(var key in attrs) {
     el.setAttribute(key, attrs[key]);
   }
+}
+function getColumnDefinition() {
+    let colDefs = scope[`${datagridname}ColumnDefinitions`];
+    if (scope[`${datagridname}DataGridHasSelectableData`]) {
+        colDefs.unshift({name:"RowSelector", headerText: "RowSelector"});
+    }
+    return colDefs;
+}
+function isNumber(str) {
+    if (typeof str == "number") return true;
+    return !isNaN(str) && !isNaN(parseFloat(str));
+}
+function getElementFromObjects(haystack, needle, column) {
+    return haystack.find(obj => {return obj[column] == needle;});
 }
 ```
 
@@ -515,39 +538,53 @@ function setAttributes(el, attrs) {
       5. enum (dropdown or radiobuttonlist)
       6. multiselect (checkboxlist)
    2. *name*: the label displayed for the filter
-   3. *column*: the number of the DataGrid column the filter must be applied to
-   4. *display*: filters of type *boolean* and *enum* are shown as dropdowns by default. When passing the value "radio" in this property, these filters will be shown as radio button lists
+   3. *column*: the number of the DataGrid column or the column name the filter must be applied to as specified in the DataGrid "Column" property
+![](images/ColumnPropertyName.png)
+   4. *display*: applies to filters of type *boolean* and *enum* only. These are shown as dropdowns by default, but passing the value "radio" in this property will cause them to be shown as radio button lists instead
    5. *data*: filters of type *enum* and *multiselect* require a list of data users can select from
 
 Fields Definition Example
 ```json
-[{
- "type": "text",
- "name": "First Name",
- "column": "firstname"
+= [{
+	"type": "text",
+	"name": "First Name",
+	"column": "FirstName"
 },{
- "type": "date",
-  "name": "Start Date",
-  "column": 5
+    "type": "text",
+    "name": "Last Name",
+    "column": 3
 },{
- "type": "number",
- "name": "Number Of Pets",
- "column": 4
+	"type": "date",
+	"name": "Start Date",
+	"column": "StartDate"
 },{
- "type": "boolean",
- "name": "Healthy",
- "column": 6,
- "display": "radio"
+	"type": "date",
+	"name": "End Date",
+	"column": "EndDate"
 },{
- "type": "enum",
- "name": "Number of Children",
- "column": 3,
- "data": [0,1,2,3,4,5,6,7,8,9,10]
+	"type": "number",
+	"name": "Number Of Pets",
+	"column": "NoOfPets"
 },{
- "type": "multiselect",
- "name": "Subscription",
- "column": 7,
- "data": ["No data","Subscribed","Unsubscribed"]
+	"type": "boolean",
+	"name": "Healthy",
+	"column": "Healthy",
+	"display": "radio"
+},{
+	"type": "boolean",
+	"name": "Happy",
+	"column": "Happy",
+	"display": "radio"
+},{
+	"type": "enum",
+	"name": "Number of Children",
+	"column": "NoOfChildren",
+	"data": [0,1,2,3,4,5,6,7,8,9,10]
+},{
+	"type": "multiselect",
+	"name": "Subscription",
+	"column": "Subscription",
+	"data": ["No data","Subscribed","Unsubscribed"]
 }]
 ```
 5. Drag the "DataGridFilter" global script below the *List*
@@ -560,7 +597,7 @@ Fields Definition Example
    3. FilterConfig: Select the List containing the filter configurations you created from the dropdown
    4. FilterContainerClass: The unique classname you assigned to the Container control above (e.g. filter-container)
    5. FilterHeading: The title of the filter (not used in "integrated" display mode)
-   6. CollapseOnClickAway (true / false): Whether to collapse the filter container when the user clicks elsewhere on the page
+   6. CollapseOnClickAway (true / false): Applies only when Filters are shown in "collapsed" or "integrated" display mode. Defines whether to collapse the filter container when the user clicks elsewhere on the page. Default is "true"
 
 ![Script Parameters Example](images/ScriptParametersExample.png)
 
@@ -569,11 +606,11 @@ Fields Definition Example
 
 ![Standard Display](images/Standard.gif)
 
-2. Adding the word "collapsed" in the parameter causes the filter to be expandable by the user. When expanded, the filter will displace any controls below it on the page. 
+2. Adding the word "collapsed" in the parameter causes the filter to be expandable by the user. When expanded, the filter will displace any controls below it on the page
 
 ![Collapsed Display](images/Collapsed.gif)
 
-3. Adding the word "integrated" in the parameter causes the filter to be expandable and shown as an icon next to the search bar. When it is opened, the filter will overlay other controls onthe page. 
+3. Adding the word "integrated" in the parameter causes the filter to be expandable and shown as an icon next to the search bar. When it is opened, the filter will overlay other controls onthe page
 
 ![Integrated Display](images/Integrated.gif)
 
