@@ -18,7 +18,7 @@ Current version 2.5
 
 2.4 Switched column parameter from [heading property to name property](#pageload-setup); fixed number and date input display bug; general JS cleanup
 
-2.5 Fixed "control in template" bug
+2.5 Fixed "control in template" bug; fixed "invisible column" filter bug; fixed non-existent column number filter bug
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -142,7 +142,15 @@ function initFilterForm() {
         } else {
             colNo = column;
             columnDef = dataGridColumns[column - 1];
+            if (!columnDef) {
+                console.error("Column '" + column + "' was not found.");
+                continue;
+            }
             column = columnDef.name;
+        }
+        if (columnDef.visible == false) {
+            console.error("Column '" + column + "' is not visible. Only visible columns can be used. ");
+            continue;
         }
         if (!colNo || !columnDef.headerText) {
             if (!columnDef.headerText) {
