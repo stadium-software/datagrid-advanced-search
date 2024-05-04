@@ -18,7 +18,7 @@ Current version 2.5
 
 2.4 Switched column parameter from [heading property to name property](#pageload-setup); fixed number and date input display bug; general JS cleanup
 
-2.5 Fixed "control in template" bug; fixed "invisible column" filter bug; fixed non-existent column number filter bug; fixed inetgrated display bug (CSS)
+2.5 Fixed "control in template" bug; fixed "invisible column" filter bug; fixed non-existent column number filter bug; fixed integrated display bug (CSS)
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
