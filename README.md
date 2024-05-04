@@ -14,7 +14,7 @@ Current version 2.5
 
 2.2 Changed Save/Apply button text
 
-2.3 Added version to CSS; fixed url parsing bug
+2.3 Fixed url parsing bug
 
 2.4 Switched column parameter from [heading property to name property](#pageload-setup); fixed number and date input display bug; general JS cleanup
 
