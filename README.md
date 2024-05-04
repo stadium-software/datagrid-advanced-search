@@ -5,7 +5,7 @@ Building advanced client-side search forms for DataGrids
 https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/a3a601aa-1040-44f1-9beb-cf56af1ad9d3
 
 ## Version
-2.4
+Current version 2.5
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
@@ -17,6 +17,8 @@ https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/a3a6
 2.3 Added version to CSS; fixed url parsing bug
 
 2.4 Switched column parameter from [heading property to name property](#pageload-setup); fixed number and date input display bug; general JS cleanup
+
+2.5 Fixed "control in template" bug
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -35,18 +37,22 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v2.4 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v2.5 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
-let dgClassName = "." + ~.Parameters.Input.DataGridClass;
+let classInput = ~.Parameters.Input.DataGridClass;
+if (typeof classInput == "undefined") {
+    console.error("The DataGridClass parameter is required");
+    return false;
+} 
+let dgClassName = "." + classInput;
 let filterConfig = ~.Parameters.Input.FilterConfig;
 let displayMode = ~.Parameters.Input.DisplayMode;
 if (displayMode) displayMode = displayMode.toLowerCase();
-let arrPageName = window.location.pathname.split("/");
-let pageName = arrPageName[arrPageName.length - 1];
 let dg = document.querySelectorAll(dgClassName);
 if (dg.length == 0) {
-    dg = document.querySelector(".data-grid-container");
+    console.error("The class '" + dgClassName + "' is not assigned to any DataGrid");
+    return false;
 } else if (dg.length > 1) {
     console.error("The class '" + dgClassName + "' is assigned to multiple DataGrids. DataGrids using this script must have unique classnames");
     return false;
@@ -54,7 +60,7 @@ if (dg.length == 0) {
     dg = dg[0];
 }
 dg.classList.add("stadium-filtered-datagrid");
-let datagridname = dg.id.replace(`${pageName}_`, "").replace("-container","");
+let datagridname = dg.id.split("_")[1].replace("-container","");
 let dataGridColumns = getColumnDefinition();
 let filterContainer = document.querySelectorAll(filterClassName);
 if (filterContainer.length == 0) {
@@ -602,14 +608,22 @@ Fields Definition Example
 ![Script Parameters Example](images/ScriptParametersExample.png)
 
 ## Display Modes
-1. Leaving this parameter empty means the filter is showing as a block wherever the *Container* control is placed on the page
+There are three display modes:
+1. default
+2. collapsed
+3. integrated
+
+### Default
+1. Leaving the "DisplayMode" parameter empty means the filter is showing as a block wherever the *Container* control is placed on the page
 
 ![Standard Display](images/Standard.gif)
 
+### Collapsed
 2. Adding the word "collapsed" in the parameter causes the filter to be expandable by the user. When expanded, the filter will displace any controls below it on the page
 
 ![Collapsed Display](images/Collapsed.gif)
 
+### Integrated
 3. Adding the word "integrated" in the parameter causes the filter to be expandable and shown as an icon next to the search bar. When it is opened, the filter will overlay other controls onthe page
 
 ![Integrated Display](images/Integrated.gif)
