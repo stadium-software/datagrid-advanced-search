@@ -20,6 +20,25 @@ Current version 2.5
 
 2.5 Fixed "control in template" bug; fixed "invisible column" filter bug; fixed non-existent column number filter bug; fixed integrated display bug (CSS)
 
+## Content
+- [DataGrid Client Side Filters](#datagrid-client-side-filters)
+  - [Version](#version)
+    - [Change Log](#change-log)
+  - [Content](#content)
+  - [Application Setup](#application-setup)
+  - [Database, Connector and DataGrid](#database-connector-and-datagrid)
+  - [Global Script Setup](#global-script-setup)
+  - [Type Setup](#type-setup)
+  - [Page Setup](#page-setup)
+  - [Page.Load Setup](#pageload-setup)
+  - [Display Modes](#display-modes)
+    - [Default](#default)
+    - [Collapsed](#collapsed)
+    - [Integrated](#integrated)
+  - [Applying the CSS](#applying-the-css)
+  - [Customising CSS](#customising-css)
+  - [CSS Upgrading](#css-upgrading)
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
