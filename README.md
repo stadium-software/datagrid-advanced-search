@@ -38,6 +38,7 @@ Current version 2.5
   - [Applying the CSS](#applying-the-css)
   - [Customising CSS](#customising-css)
   - [CSS Upgrading](#css-upgrading)
+  - [Known Issues](#known-issues)
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -679,3 +680,6 @@ The CSS below is required for the correct functioning of the module. Some elemen
 
 ## CSS Upgrading
 To upgrade the CSS in this module, follow the [steps outlined in this repo](https://github.com/stadium-software/samples-upgrading)
+
+## Known Issues
+1. Using an underscore (_) in the page or template name can cause the script to break
