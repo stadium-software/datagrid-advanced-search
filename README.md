@@ -5,7 +5,7 @@ Building advanced client-side search forms for DataGrids
 https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/8b7cda4f-5069-4c77-85d4-f25a3f1a40c7
 
 ## Version
-Current version 2.5
+Current version 2.6
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
@@ -19,6 +19,8 @@ Current version 2.5
 2.4 Switched column parameter from [heading property to name property](#pageload-setup); fixed number and date input display bug; general JS cleanup
 
 2.5 Fixed "control in template" bug; fixed "invisible column" filter bug; fixed non-existent column number filter bug; fixed integrated display bug (CSS)
+
+2.6 Added "Equals" condition for number and date types
 
 ## Content
 - [DataGrid Client Side Filters](#datagrid-client-side-filters)
@@ -57,7 +59,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v2.5 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v2.6 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -137,12 +139,13 @@ let dateSelectChange = (e) => {
     let target = e.target;
     let toEl = target.closest("div").nextElementSibling.querySelector(".filtergrid-to-date");
     let fromEl = target.closest("div").nextElementSibling.querySelector(".filtergrid-from-date");
-    if (target.value == "Greater than" || target.value == "Smaller than") {
+    let targetVal = target.value.toLowerCase();
+    if (targetVal == "greater than" || targetVal == "smaller than" || targetVal == "equals") {
         toEl.classList.add("visually-hidden");
-        fromEl.setAttribute("placeholder", "Value");
+        fromEl.setAttribute("placeholder", "Date");
     } else { 
         toEl.classList.remove("visually-hidden");
-        fromEl.setAttribute("placeholder", "From value");
+        fromEl.setAttribute("placeholder", "From date");
     }
 };
 
@@ -212,7 +215,7 @@ function initFilterForm() {
         }
         if (type == "number") {
             select = document.createElement("select");
-            let options = ["Between", "From-To", "Greater than", "Smaller than"];
+            let options = ["Between", "From-To", "Equals", "Greater than", "Smaller than"];
             for(let s = 0; s < options.length; s++) {
                 let opt = options[s];
                 let el = document.createElement("option");
@@ -236,7 +239,7 @@ function initFilterForm() {
         }
         if (type == "date") {
             select = document.createElement("select");
-            let options = ["Between", "Greater than", "Smaller than"];
+            let options = ["Between", "Equals", "Greater than", "Smaller than"];
             for(let s = 0; s < options.length; s++) {
                 let opt = options[s];
                 let el = document.createElement("option");
@@ -430,6 +433,8 @@ function filterDataGrid() {
                     output = heading + ':{' + numvaluefrom + ' TO ' + numvalueto + '}';
                 } else if (numoperator.toLowerCase() == "from-to") {
                     output = heading + ':[' + numvaluefrom + ' TO ' + numvalueto + ']';
+                } else if (numoperator.toLowerCase() == "equals") {
+                    output = heading + ':[' + numvaluefrom + ' TO ' + numvaluefrom + ']';
                 } else if (numoperator.toLowerCase() == "greater than") {
                     output = heading + ':{' + numvaluefrom + ' TO 9007199254740991}';
                 } else if (numoperator.toLowerCase() == "smaller than") {
@@ -444,6 +449,8 @@ function filterDataGrid() {
             if (dtvaluefrom) {
                 if (dtoperator.toLowerCase() == "between") {
                     output = heading + ':{' + dtvaluefrom + ' TO ' + dtvalueto + '}';
+                } else if (dtoperator.toLowerCase() == "equals") {
+                    output = heading + ':' + dtvaluefrom;
                 } else if (dtoperator.toLowerCase() == "greater than") {
                     output = heading + ':{' + dtvaluefrom + ' TO 3000/01/01}';
                 } else if (dtoperator.toLowerCase() == "smaller than") {
