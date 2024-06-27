@@ -669,7 +669,7 @@ The CSS below is required for the correct functioning of the module. Some elemen
 **Stadium 6.6 or higher**
 1. Create a folder called "CSS" inside of your Embedded Files in your application
 2. Drag the two CSS files from this repo [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) and [*datagrid-custom-filters.css*](datagrid-custom-filters.css) into that folder
-3. Paste the link tags below into the *head* property of your application
+3. Paste the link tags below into the "head" property of your application
 ```html
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters.css">
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters-variables.css">
