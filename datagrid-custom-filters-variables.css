@@ -9,4 +9,6 @@
     --datagrid-filter-clear-button-background-color: white;
     --datagrid-filter-clear-button-hover-font-color: #3399ff;
     --datagrid-filter-clear-button-hover-background-color: white;
+
+    --datagrid-filter-clear-button-position: 0; /*Set this to 1 to reverse the button order*/
 }
