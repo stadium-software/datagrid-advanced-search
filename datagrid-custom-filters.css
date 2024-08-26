@@ -1,6 +1,6 @@
-/* Stadium CSS v2.5 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium CSS v2.6 https://github.com/stadium-software/datagrid-advanced-search */
 .stadium-filter-container {
-    & .visually-hidden {
+    .visually-hidden {
         height: 0;
         width: 0;
         overflow: hidden;
@@ -10,47 +10,43 @@
         padding: 0;
     }
 
-    & .stadium-filters {
-        border: 1px solid var(--datagrid-integrated-filter-border-color);
-        background-color: var(--datagrid-filter-background-color);
+    .stadium-filters {
+        border: 1px solid var(--datagrid-integrated-filter-border-color, var(--GENERAL-BORDER-COLOR));
+        background-color: var(--datagrid-filter-background-color, var(--BODY-BACKGROUND-COLOR));
         display: grid;
         grid-template-columns: minmax(min-content, max-content) max-content minmax(120px, 1fr);
         align-items: center;
         padding: 0 6px;
     }
 
-    & .stadium-filter-inner-container {
+    .stadium-filter-inner-container {
         overflow: hidden;
     }
 
-    & .lite-button,
-    & .lite-button:focus {
-        background-color: var(--datagrid-filter-clear-button-background-color);
-        color: var(--datagrid-filter-clear-button-font-color);
+    .lite-button,
+    .lite-button:hover, 
+    .lite-button:focus {
+        background-color: var(--datagrid-filter-clear-button-background-color, var(--BUTTON-TEXT-COLOR));
+        color: var(--datagrid-filter-clear-button-font-color, var(--BUTTON-BACKGROUND-COLOR));
         box-shadow: none;
     }
 
-    & .lite-button:hover {
-        background-color: var(--datagrid-filter-clear-button-background-color);
-        color: var(--datagrid-filter-clear-button-font-color);
-    }
-
-    & input:not([type='checkbox'], [type='radio']) {
+    input:not([type='checkbox'], [type='radio']) {
         width: 100%;
         max-width: 300px;
     }
 
-    & select {
+    select {
         min-width: 135px;
         width: 100%;
     }
 
-    & .control-container:has(.filtergrid-text-value),
-    & .filtergrid-text-value {
+    .control-container:has(.filtergrid-text-value),
+    .filtergrid-text-value {
         padding-right: 0;
     }
 
-    & .number-values {
+    .number-values {
         display: flex;
         gap: 10px;
 
@@ -60,7 +56,7 @@
         }
     }
 
-    & .date-values {
+    .date-values {
         display: flex;
         gap: 10px;
 
@@ -70,41 +66,41 @@
         }
     }
 
-    & .filtergrid-checkbox-list,
-    & .filtergrid-radiobutton-list {
+    .filtergrid-checkbox-list,
+    .filtergrid-radiobutton-list {
         padding: 6px;
     }
 
-    & .label-container {
+    .label-container {
        overflow-wrap: break-word;
     }
 
-    & .label-container:has(+ .filtergrid-checkbox-list) {
+    .label-container:has(+ .filtergrid-checkbox-list) {
         align-self: self-start;
     }
 
-    & .filter-button-bar {
+    .filter-button-bar {
         grid-column: 1 / 3;
         padding-bottom: 6px;
         display: flex;
         > .button-container:nth-child(1) {
-            order: var(--datagrid-filter-clear-button-position);
+            order: var(--datagrid-filter-clear-button-position, 1);
         }
     }
-    & .filtergrid-from-date:has(+ .visually-hidden),
-    & .filtergrid-from-number:has(+ .visually-hidden) {
+    .filtergrid-from-date:has(+ .visually-hidden),
+    .filtergrid-from-number:has(+ .visually-hidden) {
         width: 100%;
         max-width: 300px;
     }
 }
 
 .filter-collapsed {
-    & .stadium-filter-header {
+    .stadium-filter-header {
         user-select: none;
         background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
         background-repeat: no-repeat;
         background-size: 20px;
-        background-color: var(--datagrid-integrated-filter-header-background-color);
+        background-color: var(--datagrid-integrated-filter-header-background-color, var(--BODY-BACKGROUND-COLOR));
         background-position: right 8px center;
         cursor: pointer;
         font-weight: bold;
@@ -112,13 +108,13 @@
         padding: 6px;
     }
 
-    & .stadium-filters {
+    .stadium-filters {
         overflow: hidden;
         transition: border-color 500ms;
         border-color: white;
     }
 
-    & .stadium-filter-inner-container {
+    .stadium-filter-inner-container {
         display: grid;
         grid-template-rows: 0fr;
         transition: grid-template-rows 500ms;
@@ -128,12 +124,12 @@
 .filter-integrated {
     background-color: transparent;
 
-    & .stadium-filter-header {
+    .stadium-filter-header {
         user-select: none;
         background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
         background-repeat: no-repeat;
         background-size: 20px;
-        background-color: var(--datagrid-integrated-filter-header-background-color);
+        background-color: var(--datagrid-integrated-filter-header-background-color, var(--BODY-BACKGROUND-COLOR));
         background-position: center;
         cursor: pointer;
         font-weight: bold;
@@ -142,7 +138,7 @@
         height: 38px;
     }
 
-    & .stadium-filter-inner-container {
+    .stadium-filter-inner-container {
         position: absolute;
         top: 48px;
         z-index: 10;
@@ -151,7 +147,7 @@
         transition: grid-template-rows 500ms;
     }
 
-    & .stadium-filters {
+    .stadium-filters {
         overflow: hidden;
         transition: border-color 500ms;
         border-color: white;
@@ -161,18 +157,18 @@
 }
 .expand.filter-integrated {
     position: relative;
-    & .stadium-filter-inner-container {
+    .stadium-filter-inner-container {
         box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
     }
 }
 .expand.filter-integrated,
 .expand.filter-collapsed {
-    & .stadium-filter-inner-container {
+    .stadium-filter-inner-container {
         grid-template-rows: 1fr;
         grid-template-columns: max-content;
     }
-    & .stadium-filters {
+    .stadium-filters {
         padding: 12px;
-        border-color: var(--datagrid-integrated-filter-border-color);
+        border-color: var(--datagrid-integrated-filter-border-color, var(--GENERAL-BORDER-COLOR));
     }
 }
