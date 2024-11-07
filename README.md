@@ -24,6 +24,8 @@ Current version 2.6.1
 
 2.6.1 Added CSS variable to reverse the order of the "Apply" and "Clear" buttons (CSS only)
 
+2.7 Fixed "Selectable Data" bug
+
 ## Content
 - [DataGrid Client Side Filters](#datagrid-client-side-filters)
   - [Version](#version)
@@ -61,7 +63,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v2.6 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v2.7 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -533,11 +535,15 @@ function setAttributes(el, attrs) {
   }
 }
 function getColumnDefinition() {
-    let colDefs = scope[`${datagridname}ColumnDefinitions`];
-    if (scope[`${datagridname}DataGridHasSelectableData`]) {
-        colDefs.unshift({name:"RowSelector", headerText: "RowSelector"});
+    let cols = [];
+    if (scope[`${datagridname}HasSelectableData`]) {
+        cols.push({name:"RowSelector", headerText: "RowSelector"});
     }
-    return colDefs;
+    let colDefs = scope[`${datagridname}ColumnDefinitions`];
+    for (let i=0;i<colDefs.length;i++) {
+        cols.push(colDefs[i]);
+    }
+    return cols;
 }
 function isNumber(str) {
     if (typeof str == "number") return true;
