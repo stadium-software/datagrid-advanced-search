@@ -28,6 +28,12 @@ Current version 2.8
 
 2.8 Fixed "From-To" top margin display bug (CSS only)
 
+2.9 Various bug fixes and improvements
+1. Fixed "Integrated" collapsed display bug
+2. Fixed Number & Date "not to value provided" search error
+3. Added Date "format" option
+4. Added Date "display" option
+
 ## Content
 - [DataGrid Client Side Filters](#datagrid-client-side-filters)
   - [Version](#version)
@@ -65,7 +71,8 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v2.7 https://github.com/stadium-software/datagrid-advanced-search */
+
+/* Stadium Script v2.9 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -191,6 +198,7 @@ function initFilterForm() {
         let name = filterConfig[i].name;
         let data = filterConfig[i].data;
         let display = filterConfig[i].display;
+        let format = filterConfig[i].format;
         
         let label = document.createElement("div");
         label.classList.add("control-container","label-container");
@@ -244,6 +252,7 @@ function initFilterForm() {
             input.appendChild(numInput2);
         }
         if (type == "date") {
+            if (!format) format = 'YYYY/MM/DD';
             select = document.createElement("select");
             let options = ["Between", "Equals", "Greater than", "Smaller than"];
             for(let s = 0; s < options.length; s++) {
@@ -258,9 +267,14 @@ function initFilterForm() {
             let dtInput1 = document.createElement("input");
             dtInput1.classList.add("form-control", "text-box-input", "filtergrid-from-date");
             dtInput1.setAttribute("placeholder", "From date");
+            dtInput1.setAttribute("format", format);
             let dtInput2 = document.createElement("input");
             dtInput2.classList.add("form-control", "text-box-input", "filtergrid-to-date");
             dtInput2.setAttribute("placeholder", "To date");
+            if (display && display.toLowerCase() == "picker") {
+                dtInput1.type = "date";
+                dtInput2.type = "date";
+            }
             input = document.createElement("div");
             input.classList.add("date-values");
             select.addEventListener("change", dateSelectChange);
@@ -433,7 +447,7 @@ function filterDataGrid() {
         if (ftype == "number") {
             let numoperator = operatorEls[i].querySelector("select").value;
             let numvaluefrom = fvalueEl.querySelector(".filtergrid-from-number").value;
-            let numvalueto = fvalueEl.querySelector(".filtergrid-to-number").value;
+            let numvalueto = fvalueEl.querySelector(".filtergrid-to-number").value || 9007199254740991;
             if (numvaluefrom) {
                 if (numoperator.toLowerCase() == "between") {
                     output = heading + ':{' + numvaluefrom + ' TO ' + numvalueto + '}';
@@ -450,17 +464,22 @@ function filterDataGrid() {
         }
         if (ftype == "date") {
             let dtoperator = operatorEls[i].querySelector("select").value;
-            let dtvaluefrom = fvalueEl.querySelector(".filtergrid-from-date").value;
-            let dtvalueto = fvalueEl.querySelector(".filtergrid-to-date").value;
-            if (dtvaluefrom) {
+            let fromEl = fvalueEl.querySelector(".filtergrid-from-date");
+            let toEl = fvalueEl.querySelector(".filtergrid-to-date");
+            let format = fromEl.getAttribute("format");
+            if (fromEl.value) {
+                let dtvaluefrom = dayjs(fromEl.value).format(format);
+                let dtvalueto = dayjs(toEl.value).format(format);
+                if (dtvaluefrom == "Invalid Date") dtvaluefrom = dayjs('1000/01/01').format(format);
+                if (dtvalueto == "Invalid Date") dtvalueto = dayjs('3000/01/01').format(format);
                 if (dtoperator.toLowerCase() == "between") {
                     output = heading + ':{' + dtvaluefrom + ' TO ' + dtvalueto + '}';
                 } else if (dtoperator.toLowerCase() == "equals") {
                     output = heading + ':' + dtvaluefrom;
                 } else if (dtoperator.toLowerCase() == "greater than") {
-                    output = heading + ':{' + dtvaluefrom + ' TO 3000/01/01}';
+                    output = heading + ':{' + dtvaluefrom + ' TO ' + dayjs('3000/01/01').format(format) + '}';
                 } else if (dtoperator.toLowerCase() == "smaller than") {
-                    output = heading + ':{1000/01/01 TO ' + dtvaluefrom + '}';
+                    output = heading + ':{' + dayjs('1000/01/01').format(format) + ' TO ' + dtvaluefrom + '}';
                 }
             }
         }
@@ -565,6 +584,7 @@ function getElementFromObjects(haystack, needle, column) {
    4. display (Any)
    5. data (List)
       1. Item (Any)
+   6. format (Any)
 
 ![Type Setup](images/TypeSetup.png)
 
@@ -591,8 +611,11 @@ function getElementFromObjects(haystack, needle, column) {
    2. *name*: the label displayed for the filter
    3. *column*: the number of the DataGrid column or the column name the filter must be applied to as specified in the DataGrid "Column" property
 ![](images/ColumnPropertyName.png)
-   4. *display*: applies to filters of type *boolean* and *enum* only. These are shown as dropdowns by default, but passing the value "radio" in this property will cause them to be shown as radio button lists instead
+   4. *display*
+      1. For *boolean* and *enum* types: These are shown as dropdowns by default, but passing the value "radio" in this property will cause them to be shown as radio button lists instead
+      2. For *date* type: Add "picker" to display a browser-provided HTML Date Picker in the date input fields
    5. *data*: filters of type *enum* and *multiselect* require a list of data users can select from
+   6. *format* (*date* type only): The format in which date filter values are passed to the DataGrid search box. The module uses [DayJS Formats](https://day.js.org/docs/en/display/format)
 
 Fields Definition Example
 ```json
@@ -607,11 +630,13 @@ Fields Definition Example
 },{
 	"type": "date",
 	"name": "Start Date",
-	"column": "StartDate"
+	"column": "StartDate",
+    "display": "picker"
 },{
 	"type": "date",
 	"name": "End Date",
-	"column": "EndDate"
+	"column": "EndDate",
+    "format": "YYYY-MM-DD"
 },{
 	"type": "number",
 	"name": "Number Of Pets",

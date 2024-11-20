@@ -1,5 +1,7 @@
-/* Stadium CSS v2.6 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium CSS https://github.com/stadium-software/datagrid-advanced-search */
 .stadium-filter-container {
+    margin-top: 10px;
+
     .visually-hidden {
         height: 0;
         width: 0;
@@ -124,7 +126,9 @@
 }
 
 .filter-integrated {
+    position: relative;
     background-color: transparent;
+    margin-top: 0;
 
     .stadium-filter-header {
         user-select: none;
@@ -142,10 +146,11 @@
 
     .stadium-filter-inner-container {
         position: absolute;
-        top: 48px;
+        top: calc(100% - 2px);
         z-index: 10;
         display: grid;
         grid-template-rows: 0fr;
+        grid-template-columns: max-content;
         transition: grid-template-rows 500ms;
     }
 

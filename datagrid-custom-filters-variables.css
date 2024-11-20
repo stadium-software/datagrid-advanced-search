@@ -1,6 +1,6 @@
-/* Stadium CSS v2.6 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium CSS https://github.com/stadium-software/datagrid-advanced-search */
 :root {
-    --datagrid-filter-background-color: #f5f5f5;
+    --datagrid-filter-background-color: #f1f1f1;
     
     --datagrid-integrated-filter-header-background-color: white;
     --datagrid-integrated-filter-border-color: #ccc;
