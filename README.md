@@ -28,7 +28,7 @@ Current version 2.8
 
 2.8 Fixed "From-To" top margin display bug (CSS only)
 
-2.9 Various bug fixes and improvements
+2.9 Bug fixes and improvements:
 1. Fixed "Integrated" collapsed display bug
 2. Fixed Number & Date "not to value provided" search error
 3. Added Date "format" option
