@@ -5,7 +5,7 @@ Building advanced client-side search forms for DataGrids
 https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/8b7cda4f-5069-4c77-85d4-f25a3f1a40c7
 
 ## Version
-Current version 2.8
+Current version 2.9
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
