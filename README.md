@@ -513,7 +513,7 @@ function filterDataGrid() {
                     toEl.value = dtvalueto;
                 }
                 if (dtoperator.toLowerCase() == "between") {
-                    output = heading + ':{' + dtvaluefrom + ' TO ' + dayjs(dtvalueto).add(1, 'day').format(format) + '}';
+                    output = heading + ':{' + dtvaluefrom + ' TO ' + dtvalueto + '}';
                 } else if (dtoperator.toLowerCase() == "from-to") {
                     output = heading + ':[' + dtvaluefrom + ' TO ' + dtvalueto + ']';
                 } else if (dtoperator.toLowerCase() == "equals") {
