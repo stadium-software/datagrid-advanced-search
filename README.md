@@ -39,6 +39,8 @@ Current version 3.0
 2. Optional 'operator' list property in 'FilterConfig' type to limit field operators for text, number & date filters
 3. Added "From-To" operator for date fields
 4. Fixed "picker" filter date not showing bug
+5. Fixed "Between" dates bug
+6. Made "From-To" the default operator for dates and numbers
 
 ## Content
 - [DataGrid Client Side Filters](#datagrid-client-side-filters)
