@@ -2,7 +2,7 @@
 
 Building advanced client-side search forms for DataGrids
 
-https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/8b7cda4f-5069-4c77-85d4-f25a3f1a40c7
+https://github.com/user-attachments/assets/e62cbf4d-bbd1-481e-a7f3-11e7dfbf9bf3
 
 ## Version
 Current version 3.0
