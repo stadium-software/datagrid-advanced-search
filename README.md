@@ -5,7 +5,7 @@ Building advanced client-side search forms for DataGrids
 https://github.com/stadium-software/datagrid-advanced-search/assets/2085324/8b7cda4f-5069-4c77-85d4-f25a3f1a40c7
 
 ## Version
-Current version 2.9
+Current version 3.0
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
@@ -33,6 +33,12 @@ Current version 2.9
 2. Fixed Number & Date "not to value provided" search error
 3. Added Date "format" option
 4. Added Date "display" option
+
+3.0 Bug fixes and improvements
+1. Enable enter key press to search when focus is in a value field
+2. Optional 'operator' list property in 'FilterConfig' type to limit field operators for text, number & date filters
+3. Added "From-To" operator for date fields
+4. Fixed "picker" filter date not showing bug
 
 ## Content
 - [DataGrid Client Side Filters](#datagrid-client-side-filters)
@@ -71,15 +77,14 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-
-/* Stadium Script v2.9 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.0 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
 if (typeof classInput == "undefined") {
     console.error("The DataGridClass parameter is required");
     return false;
-} 
+}
 let dgClassName = "." + classInput;
 let filterConfig = ~.Parameters.Input.FilterConfig;
 let displayMode = ~.Parameters.Input.DisplayMode;
@@ -142,6 +147,7 @@ let numberSelectChange = (e) => {
     let fromEl = target.closest("div").nextElementSibling.querySelector(".filtergrid-from-number");
     if (target.value != "Between" && target.value != "From-To") {
         toEl.classList.add("visually-hidden");
+        toEl.value = "";
         fromEl.setAttribute("placeholder", "Value");
     } else { 
         toEl.classList.remove("visually-hidden");
@@ -155,6 +161,7 @@ let dateSelectChange = (e) => {
     let targetVal = target.value.toLowerCase();
     if (targetVal == "greater than" || targetVal == "smaller than" || targetVal == "equals") {
         toEl.classList.add("visually-hidden");
+        toEl.value = "";
         fromEl.setAttribute("placeholder", "Date");
     } else { 
         toEl.classList.remove("visually-hidden");
@@ -199,6 +206,8 @@ function initFilterForm() {
         let data = filterConfig[i].data;
         let display = filterConfig[i].display;
         let format = filterConfig[i].format;
+        let operators = filterConfig[i].operators || [];
+        operators = operators.map(v => v.toLowerCase());
         
         let label = document.createElement("div");
         label.classList.add("control-container","label-container");
@@ -213,18 +222,23 @@ function initFilterForm() {
         if (type == "text") {
             select = document.createElement("select");
             let options = ["Contains", "Does Not Contain", "Equals", "Does Not Equal"];
-            for(let s = 0; s < options.length; s++) {
+            for (let s = 0; s < options.length; s++) {
                 let opt = options[s];
-                let el = document.createElement("option");
-                el.textContent = opt;
-                el.value = opt;
-                select.appendChild(el);
+                if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
+                    let el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt;
+                    if (operators.length == 1) select.setAttribute("readonly", "readonly");
+                    select.classList.add("filter-operator");
+                    select.appendChild(el);
+                }
             }
             select.classList.add("form-control");
             operator.classList.add("control-container", "drop-down-container");
             input = document.createElement("input");
             input.classList.add("form-control", "text-box-input", "filtergrid-text-value");
             input.setAttribute("placeholder", "Text");
+            input.addEventListener("keypress", applyOnKeypress);
             valueField.classList.add("control-container","text-box-container");
         }
         if (type == "number") {
@@ -232,19 +246,25 @@ function initFilterForm() {
             let options = ["Between", "From-To", "Equals", "Greater than", "Smaller than"];
             for(let s = 0; s < options.length; s++) {
                 let opt = options[s];
-                let el = document.createElement("option");
-                el.textContent = opt;
-                el.value = opt;
-                select.appendChild(el);
+                if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
+                    let el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt;
+                    if (operators.length == 1) select.setAttribute("readonly", "readonly");
+                    select.classList.add("filter-operator");
+                    select.appendChild(el);
+                }
             }
             select.classList.add("form-control");
             operator.classList.add("control-container", "drop-down-container");
             let numInput1 = document.createElement("input");
             numInput1.classList.add("form-control", "text-box-input", "filtergrid-from-number");
             numInput1.setAttribute("placeholder", "From value");
+            numInput1.addEventListener("keypress", applyOnKeypress);
             let numInput2 = document.createElement("input");
             numInput2.classList.add("form-control", "text-box-input", "filtergrid-to-number");
             numInput2.setAttribute("placeholder", "To value");
+            numInput2.addEventListener("keypress", applyOnKeypress);
             input = document.createElement("div");
             input.classList.add("number-values");
             select.addEventListener("change", numberSelectChange);
@@ -254,13 +274,17 @@ function initFilterForm() {
         if (type == "date") {
             if (!format) format = 'YYYY/MM/DD';
             select = document.createElement("select");
-            let options = ["Between", "Equals", "Greater than", "Smaller than"];
+            let options = ["Between", "From-To", "Equals", "Greater than", "Smaller than"];
             for(let s = 0; s < options.length; s++) {
                 let opt = options[s];
-                let el = document.createElement("option");
-                el.textContent = opt;
-                el.value = opt;
-                select.appendChild(el);
+                if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
+                    let el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt;
+                    if (operators.length == 1) select.setAttribute("readonly", "readonly");
+                    select.classList.add("filter-operator");
+                    select.appendChild(el);
+                }
             }
             select.classList.add("form-control");
             operator.classList.add("control-container", "drop-down-container");
@@ -268,10 +292,12 @@ function initFilterForm() {
             dtInput1.classList.add("form-control", "text-box-input", "filtergrid-from-date");
             dtInput1.setAttribute("placeholder", "From date");
             dtInput1.setAttribute("format", format);
+            dtInput1.addEventListener("keypress", applyOnKeypress);
             let dtInput2 = document.createElement("input");
             dtInput2.classList.add("form-control", "text-box-input", "filtergrid-to-date");
             dtInput2.setAttribute("placeholder", "To date");
-            if (display && display.toLowerCase() == "picker") {
+            dtInput2.addEventListener("keypress", applyOnKeypress);
+            if (display == "picker") {
                 dtInput1.type = "date";
                 dtInput2.type = "date";
             }
@@ -388,6 +414,7 @@ function initFilterForm() {
         stadiumFilters.appendChild(label);
         stadiumFilters.appendChild(operator);
         stadiumFilters.appendChild(valueField);
+        select.dispatchEvent(new Event('change'));
     }
     let buttonBar = document.createElement("div"); buttonBar.classList.add("filter-button-bar");
 
@@ -402,7 +429,7 @@ function initFilterForm() {
 
     let saveButton = document.createElement("button");
     saveButton.textContent = "Apply";
-    saveButton.classList.add("btn", "btn-lg", "btn-default");
+    saveButton.classList.add("btn", "btn-lg", "btn-default", "apply-button");
     saveButton.addEventListener("click", filterDataGrid);
     let saveButtonContainer = document.createElement("div");
     saveButtonContainer.classList.add("control-container", "button-container");
@@ -446,9 +473,15 @@ function filterDataGrid() {
         }
         if (ftype == "number") {
             let numoperator = operatorEls[i].querySelector("select").value;
-            let numvaluefrom = fvalueEl.querySelector(".filtergrid-from-number").value;
-            let numvalueto = fvalueEl.querySelector(".filtergrid-to-number").value || 9007199254740991;
-            if (numvaluefrom) {
+            let numvaluefromEl = fvalueEl.querySelector(".filtergrid-from-number");
+            let numvaluetoEl = fvalueEl.querySelector(".filtergrid-to-number");
+            let numvaluefrom = numvaluefromEl.value;
+            let numvalueto = numvaluetoEl.value;
+            if (numvaluefrom || numvalueto) {
+                if (!numvaluefrom) numvaluefrom = -9007199254740991;
+                if (!numvalueto) numvalueto = 9007199254740991;
+                numvaluefromEl.value = numvaluefrom;
+                numvaluetoEl.value = numvalueto;
                 if (numoperator.toLowerCase() == "between") {
                     output = heading + ':{' + numvaluefrom + ' TO ' + numvalueto + '}';
                 } else if (numoperator.toLowerCase() == "from-to") {
@@ -467,15 +500,24 @@ function filterDataGrid() {
             let fromEl = fvalueEl.querySelector(".filtergrid-from-date");
             let toEl = fvalueEl.querySelector(".filtergrid-to-date");
             let format = fromEl.getAttribute("format");
-            if (fromEl.value) {
+            if (fromEl.value || toEl.value) {
                 let dtvaluefrom = dayjs(fromEl.value).format(format);
                 let dtvalueto = dayjs(toEl.value).format(format);
                 if (dtvaluefrom == "Invalid Date") dtvaluefrom = dayjs('1000/01/01').format(format);
                 if (dtvalueto == "Invalid Date") dtvalueto = dayjs('3000/01/01').format(format);
+                if (fromEl.type == "date") {
+                    fromEl.value = dayjs(dtvaluefrom).format('YYYY-MM-DD');
+                    toEl.value = dayjs(dtvalueto).format('YYYY-MM-DD');
+                } else {
+                    fromEl.value = dtvaluefrom;
+                    toEl.value = dtvalueto;
+                }
                 if (dtoperator.toLowerCase() == "between") {
                     output = heading + ':{' + dtvaluefrom + ' TO ' + dtvalueto + '}';
+                } else if (dtoperator.toLowerCase() == "from-to") {
+                    output = heading + ':[' + dtvaluefrom + ' TO ' + dayjs(dtvalueto).add(1, 'day').format(format) + ']';
                 } else if (dtoperator.toLowerCase() == "equals") {
-                    output = heading + ':' + dtvaluefrom;
+                    output = heading + ':{' + dtvaluefrom + ' TO ' + dayjs(dtvaluefrom).add(1, 'day').format(format) + '}';
                 } else if (dtoperator.toLowerCase() == "greater than") {
                     output = heading + ':{' + dtvaluefrom + ' TO ' + dayjs('3000/01/01').format(format) + '}';
                 } else if (dtoperator.toLowerCase() == "smaller than") {
@@ -548,7 +590,16 @@ function clearForm() {
     for (let i = 0; i < visuallyHidden.length; i++) {
         visuallyHidden[i].classList.remove("visually-hidden");
     }
+    let operators = stadiumFilters.querySelectorAll(".filter-operator");
+    for (let i = 0; i < operators.length; i++) {
+        operators[i].dispatchEvent(new Event('change'));
+    }
     scope[`${datagridname}SearchTerm`] = null;
+}
+function applyOnKeypress(e){
+    if(e.keyCode === 13){
+        e.target.closest(".stadium-filters").querySelector(".apply-button").click();
+    }
 }
 function setAttributes(el, attrs) {
   for(var key in attrs) {
@@ -585,6 +636,8 @@ function getElementFromObjects(haystack, needle, column) {
    5. data (List)
       1. Item (Any)
    6. format (Any)
+   7. operators (List)
+      1. Item (Any)
 
 ![Type Setup](images/TypeSetup.png)
 
@@ -613,16 +666,21 @@ function getElementFromObjects(haystack, needle, column) {
 ![](images/ColumnPropertyName.png)
    4. *display*
       1. For *boolean* and *enum* types: These are shown as dropdowns by default, but passing the value "radio" in this property will cause them to be shown as radio button lists instead
-      2. For *date* type: Add "picker" to display a browser-provided HTML Date Picker in the date input fields
+      2. For *date* type (optional; default is false): Add "picker" to display a browser-provided HTML Date Picker in the date input fields
    5. *data*: filters of type *enum* and *multiselect* require a list of data users can select from
-   6. *format* (*date* type only): The format in which date filter values are passed to the DataGrid search box. The module uses [DayJS Formats](https://day.js.org/docs/en/display/format)
+   6. *format* (*date* type only; default 'YYYY/MM/DD'): The format in which date filter values are passed to the DataGrid search box. The module uses [DayJS Formats](https://day.js.org/docs/en/display/format)
+   7. *operators* (list; optional; only for types 'text', 'date' and 'number'): A list of operators to show in the operators dropdown. Use when you want to show only a subset of the options below. Allowed operators
+      1. text: "Contains", "Does Not Contain", "Equals", "Does Not Equal"
+      2. number: "Between", "From-To", "Equals", "Greater than", "Smaller than"
+      3. date: "Between", "From-To", "Equals", "Greater than", "Smaller than"
 
 Fields Definition Example
 ```json
 = [{
 	"type": "text",
 	"name": "First Name",
-	"column": "FirstName"
+	"column": "FirstName",
+    "operators": ["Contains", "Does Not Contain"]
 },{
     "type": "text",
     "name": "Last Name",
@@ -631,16 +689,19 @@ Fields Definition Example
 	"type": "date",
 	"name": "Start Date",
 	"column": "StartDate",
-    "display": "picker"
+    "display": "picker",
+    "operators": ["Between", "From-To", "Equals"]
 },{
 	"type": "date",
 	"name": "End Date",
 	"column": "EndDate",
-    "format": "YYYY-MM-DD"
+    "format": "YYYY-MM-DD",
+    "operators": ["Greater than", "Smaller than"]
 },{
 	"type": "number",
 	"name": "Number Of Pets",
-	"column": "NoOfPets"
+	"column": "NoOfPets",
+    "operators": ["Between", "From-To", "Equals"]
 },{
 	"type": "boolean",
 	"name": "Healthy",

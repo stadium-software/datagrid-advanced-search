@@ -43,6 +43,13 @@
         width: 100%;
     }
 
+    select[readonly='readonly'] {
+        user-select: none;
+        pointer-events: none;
+        background-color: var(--FORM-CONTROL-BACKGROUND-COLOR, #f9f9f9);
+        background-image: none;
+    }
+
     .control-container:has(.filtergrid-text-value),
     .filtergrid-text-value {
         padding-right: 0;
