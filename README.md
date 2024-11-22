@@ -519,7 +519,7 @@ function filterDataGrid() {
                 } else if (dtoperator.toLowerCase() == "from-to") {
                     output = heading + ':[' + dtvaluefrom + ' TO ' + dtvalueto + ']';
                 } else if (dtoperator.toLowerCase() == "equals") {
-                    output = heading + ':[' + dtvaluefrom + ' TO ' + dtvaluefrom + ']';
+                    output = heading + ':[' + dtvaluefrom + ' TO ' + dayjs(dtvaluefrom).add(1, 'day').format(format) + ']';
                 } else if (dtoperator.toLowerCase() == "greater than") {
                     output = heading + ':{' + dtvaluefrom + ' TO ' + dayjs('3000/01/01').format(format) + '}';
                 } else if (dtoperator.toLowerCase() == "smaller than") {
