@@ -243,7 +243,7 @@ function initFilterForm() {
         }
         if (type == "number") {
             select = document.createElement("select");
-            let options = ["Between", "From-To", "Equals", "Greater than", "Smaller than"];
+            let options = ["From-To", "Between", "Equals", "Greater than", "Smaller than"];
             for(let s = 0; s < options.length; s++) {
                 let opt = options[s];
                 if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
@@ -274,7 +274,7 @@ function initFilterForm() {
         if (type == "date") {
             if (!format) format = 'YYYY/MM/DD';
             select = document.createElement("select");
-            let options = ["Between", "From-To", "Equals", "Greater than", "Smaller than"];
+            let options = ["From-To", "Between", "Equals", "Greater than", "Smaller than"];
             for(let s = 0; s < options.length; s++) {
                 let opt = options[s];
                 if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
