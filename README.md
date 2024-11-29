@@ -42,7 +42,7 @@ Current version 3.0.1
 5. Fixed "Between" dates bug
 6. Made "From-To" the default operator for dates and numbers
 
-3.0.1 Bug fix equals operator
+3.0.1 Bug fix 'equals' operator
 
 ## Content
 - [DataGrid Client Side Filters](#datagrid-client-side-filters)
