@@ -5,7 +5,7 @@ Building advanced client-side search forms for DataGrids
 https://github.com/user-attachments/assets/e62cbf4d-bbd1-481e-a7f3-11e7dfbf9bf3
 
 ## Version
-Current version 3.0
+Current version 3.0.1
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
@@ -41,6 +41,8 @@ Current version 3.0
 4. Fixed "picker" filter date not showing bug
 5. Fixed "Between" dates bug
 6. Made "From-To" the default operator for dates and numbers
+
+3.0.1 Bug fix equals operator
 
 ## Content
 - [DataGrid Client Side Filters](#datagrid-client-side-filters)
@@ -79,7 +81,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v3.0 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.0.1 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -479,7 +481,7 @@ function filterDataGrid() {
             let numvaluetoEl = fvalueEl.querySelector(".filtergrid-to-number");
             let numvaluefrom = numvaluefromEl.value;
             let numvalueto = numvaluetoEl.value;
-            if (numvaluefrom || numvalueto) {
+            if (numvaluefrom) {
                 if (!numvaluefrom) numvaluefrom = -9007199254740991;
                 if (!numvalueto) numvalueto = 9007199254740991;
                 numvaluefromEl.value = numvaluefrom;
@@ -502,7 +504,7 @@ function filterDataGrid() {
             let fromEl = fvalueEl.querySelector(".filtergrid-from-date");
             let toEl = fvalueEl.querySelector(".filtergrid-to-date");
             let format = fromEl.getAttribute("format");
-            if (fromEl.value || toEl.value) {
+            if (fromEl.value) {
                 let dtvaluefrom = dayjs(fromEl.value).format(format);
                 let dtvalueto = dayjs(toEl.value).format(format);
                 if (dtvaluefrom == "Invalid Date") dtvaluefrom = dayjs('1000/01/01').format(format);
