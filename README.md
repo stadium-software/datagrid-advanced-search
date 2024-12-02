@@ -2,7 +2,7 @@
 
 Building advanced client-side search forms for DataGrids
 
-https://github.com/user-attachments/assets/e62cbf4d-bbd1-481e-a7f3-11e7dfbf9bf3
+https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 
 ## Content
 - [DataGrid Client Side Filters](#datagrid-client-side-filters)
