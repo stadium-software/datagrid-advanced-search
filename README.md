@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
   - [Known Issues](#known-issues)
 
 ## Version
-Current version 3.2
+Current version 3.2.1
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
@@ -71,6 +71,8 @@ Current version 3.2
 1. Added 'Callback' parameter; when provided this script returns applied filters to the callback script
 2. Added 'SelectedFilters' parameter to apply filters programatically
 
+3.2.1 Adjusted date filtering logic to cater for datetime columns
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -90,7 +92,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    8. SelectedFilters
 3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
 ```javascript
-/* Stadium Script v3.2 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.2.1 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -548,11 +550,11 @@ async function filterDataGrid(){
                 if (dtoperator.toLowerCase() == "between") {
                     output = heading + ':{' + dtvaluefrom + ' TO ' + dtvalueto + '}';
                 } else if (dtoperator.toLowerCase() == "from-to") {
-                    output = heading + ':[' + dtvaluefrom + ' TO ' + dtvalueto + ']';
+                    output = heading + ':{' + dayjs(dtvaluefrom).add(-1, 'day').format(format) + ' TO ' + dayjs(dtvalueto).add(1, 'day').format(format) + '}';
                 } else if (dtoperator.toLowerCase() == "equals") {
-                    output = heading + ':[' + dtvaluefrom + ' TO ' + dayjs(dtvaluefrom).add(1, 'day').format(format) + ']';
+                    output = heading + ':{' + dayjs(dtvaluefrom).add(-1, 'day').format(format) + ' TO ' + dayjs(dtvaluefrom).add(1, 'day').format(format) + '}';
                 } else if (dtoperator.toLowerCase() == "greater than") {
-                    output = heading + ':{' + dtvaluefrom + ' TO ' + dayjs('3000/01/01').format(format) + '}';
+                    output = heading + ':{' + dayjs(dtvaluefrom).add(1, 'day').format(format) + ' TO ' + dayjs('3000/01/01').format(format) + '}';
                 } else if (dtoperator.toLowerCase() == "smaller than") {
                     output = heading + ':{' + dayjs('1000/01/01').format(format) + ' TO ' + dtvaluefrom + '}';
                 }
