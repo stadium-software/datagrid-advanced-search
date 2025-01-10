@@ -73,7 +73,7 @@ Current version 3.2.2
 
 3.2.1 Adjusted date filtering logic to cater for datetime columns
 
-3.2.2 Bug fix SelectedFilters 'To' field not hidden; Collapsed FilterHeading not used bug 
+3.2.2 Bug fix SelectedFilters 'To' field not hidden; Collapsed FilterHeading not used bug fix
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
