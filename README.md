@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
   - [Known Issues](#known-issues)
 
 ## Version
-Current version 3.2.1
+Current version 3.2.2
 
 ### Change Log
 2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
