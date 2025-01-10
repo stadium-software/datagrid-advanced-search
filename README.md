@@ -73,7 +73,7 @@ Current version 3.2.2
 
 3.2.1 Adjusted date filtering logic to cater for datetime columns
 
-3.2.2 Bug fix SelectedFilters 'To' field not hidden; Collapsed FilterHeading not used bug fix
+3.2.2 Bug fix SelectedFilters 'To' field not hidden; Collapsed FilterHeading not used bug fix; CollapseOnClickAway not used bug fix
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -110,6 +110,7 @@ let selectedFilters = ~.Parameters.Input.SelectedFilters || [];
 let displayMode = ~.Parameters.Input.DisplayMode;
 if (displayMode) displayMode = displayMode.toLowerCase();
 let filterHeading = ~.Parameters.Input.FilterHeading;
+let dismissClick = ~.Parameters.Input.CollapseOnClickAway == "false" || ~.Parameters.Input.CollapseOnClickAway == false ? false : true;
 const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
 let numberSelectChange = (e) => {
     let target = e.target;
@@ -470,14 +471,16 @@ function initFilterForm() {
     buttonBar.appendChild(saveButtonContainer);
 
     stadiumFilters.appendChild(buttonBar);
-    document.body.addEventListener("click", function(e){
-        if (!e.target.closest(filterClassName)) {
-            let allFilters = document.querySelectorAll(filterClassName);
-            for (let i=0;i<allFilters.length;i++){
-                allFilters[i].classList.remove("expand");
+    if (dismissClick) {
+        document.body.addEventListener("click", function (e) {
+            if (!e.target.closest(filterClassName)) {
+                let allFilters = document.querySelectorAll(filterClassName);
+                for (let i = 0; i < allFilters.length; i++) {
+                    allFilters[i].classList.remove("expand");
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 async function filterDataGrid(){
