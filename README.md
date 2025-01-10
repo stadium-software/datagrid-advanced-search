@@ -73,7 +73,7 @@ Current version 3.2.2
 
 3.2.1 Adjusted date filtering logic to cater for datetime columns
 
-3.2.2 Bug fix SelectedFilters 'To' field not hidden
+3.2.2 Bug fix SelectedFilters 'To' field not hidden; Collapsed FilterHeading not used bug 
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -109,6 +109,7 @@ let callback = ~.Parameters.Input.Callback;
 let selectedFilters = ~.Parameters.Input.SelectedFilters || [];
 let displayMode = ~.Parameters.Input.DisplayMode;
 if (displayMode) displayMode = displayMode.toLowerCase();
+let filterHeading = ~.Parameters.Input.FilterHeading;
 const insert = (arr, index, newItem) => [...arr.slice(0, index), newItem, ...arr.slice(index)];
 let numberSelectChange = (e) => {
     let target = e.target;
@@ -202,7 +203,7 @@ function initFilterForm() {
                 datagridheader.appendChild(filterContainer);
             }
         } else if (displayMode == "collapsed") { 
-            filterHeader.textContent = "Advanced Filter";
+            filterHeader.textContent = filterHeading;
             filterContainer.classList.add("filter-collapsed");
         }
     }
