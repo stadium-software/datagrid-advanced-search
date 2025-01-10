@@ -73,6 +73,8 @@ Current version 3.2.1
 
 3.2.1 Adjusted date filtering logic to cater for datetime columns
 
+3.2.2 Bug fix SelectedFilters 'To' field not hidden
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -93,7 +95,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 3. Drag a Javascript action into the script and paste the Javascript below into the action
 4. Do not make any changes to any of this script
 ```javascript
-/* Stadium Script v3.2.1 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.2.2 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -261,18 +263,17 @@ function initFilterForm() {
                     let el = document.createElement("option");
                     el.textContent = opt;
                     el.value = opt;
-                    if (operators.length == 1) select.setAttribute("readonly", "readonly");
-                    select.classList.add("filter-operator");
                     select.appendChild(el);
                 }
             }
-            select.classList.add("form-control");
+            if (operators.length == 1) select.setAttribute("readonly", "readonly");
+            select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             input = document.createElement("input");
             input.classList.add("form-control", "text-box-input", "filtergrid-text-value");
             input.setAttribute("placeholder", "Text");
             input.addEventListener("keypress", applyOnKeypress);
-            valueField.classList.add("control-container","text-box-container");
+            valueField.classList.add("control-container", "text-box-container");
         }
         if (type == "number") {
             select = document.createElement("select");
@@ -283,12 +284,11 @@ function initFilterForm() {
                     let el = document.createElement("option");
                     el.textContent = opt;
                     el.value = opt;
-                    if (operators.length == 1) select.setAttribute("readonly", "readonly");
-                    select.classList.add("filter-operator");
                     select.appendChild(el);
                 }
             }
-            select.classList.add("form-control");
+            if (operators.length == 1) select.setAttribute("readonly", "readonly");
+            select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             let numInput1 = document.createElement("input");
             numInput1.classList.add("form-control", "text-box-input", "filtergrid-from-number");
@@ -314,12 +314,11 @@ function initFilterForm() {
                     let el = document.createElement("option");
                     el.textContent = opt;
                     el.value = opt;
-                    if (operators.length == 1) select.setAttribute("readonly", "readonly");
-                    select.classList.add("filter-operator");
                     select.appendChild(el);
                 }
             }
-            select.classList.add("form-control");
+            if (operators.length == 1) select.setAttribute("readonly", "readonly");
+            select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             let dtInput1 = document.createElement("input");
             dtInput1.classList.add("form-control", "text-box-input", "filtergrid-from-date");
@@ -447,6 +446,7 @@ function initFilterForm() {
         stadiumFilters.appendChild(label);
         stadiumFilters.appendChild(operator);
         stadiumFilters.appendChild(valueField);
+        select.dispatchEvent(new Event('change'));
     }
     let buttonBar = document.createElement("div"); buttonBar.classList.add("filter-button-bar");
 
