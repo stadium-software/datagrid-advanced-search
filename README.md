@@ -90,7 +90,8 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
    6. CollapseOnClickAway
    7. Callback
    8. SelectedFilters
-3. Drag a Javascript action into the script and paste the Javascript below unaltered into the action
+3. Drag a Javascript action into the script and paste the Javascript below into the action
+4. Do not make any changes to any of this script
 ```javascript
 /* Stadium Script v3.2.1 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
@@ -160,7 +161,7 @@ let filterContainer = document.querySelectorAll(filterClassName);
 if (filterContainer.length == 0) {
     console.error("The container for the filter was not found. Drag a container control into the page and assign the class '" + filterClassName + "' to it.");
     return false;
-} else if (dg.length > 1) {
+} else if (filterContainer.length > 1) {
     console.error("The class '" + filterClassName + "' is assigned to multiple controls. Assign a unique classname to the filter container");
     return false;
 }
@@ -925,6 +926,7 @@ The CSS below is required for the correct functioning of the module. Some elemen
 1. Open the CSS file called [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) from this repo
 2. Adjust the variables in the *:root* element as you see fit
 3. Overwrite the file in the CSS folder of your application with the customised file
+4. Do not change any CSS other than the variables provided in the *-variables.css file
 
 ## CSS Upgrading
 To upgrade the CSS in this module, follow the [steps outlined in this repo](https://github.com/stadium-software/samples-upgrading)
