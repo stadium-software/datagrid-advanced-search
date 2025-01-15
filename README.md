@@ -29,32 +29,6 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 Current version 3.2.2
 
 ### Change Log
-2.0 Complete rewrite of the feature. Simplified setup by generating all form elements in JS script. Added [display modes](#display-modes) (standard, collapsed and integrated)
-
-2.1 Fixed selectable column bug
-
-2.2 Changed Save/Apply button text
-
-2.3 Fixed url parsing bug
-
-2.4 Switched column parameter from [heading property to name property](#pageload-setup); fixed number and date input display bug; general JS cleanup
-
-2.5 Fixed "control in template" bug; fixed "invisible column" filter bug; fixed non-existent column number filter bug; fixed integrated display bug (CSS)
-
-2.6 Added "Equals" condition for number and date types
-
-2.6.1 Added CSS variable to reverse the order of the "Apply" and "Clear" buttons (CSS only)
-
-2.7 Fixed "Selectable Data" bug
-
-2.8 Fixed "From-To" top margin display bug (CSS only)
-
-2.9 Bug fixes and enhancements:
-1. Fixed "Integrated" collapsed display bug
-2. Fixed Number & Date "not to value provided" search error
-3. Added Date "format" option
-4. Added Date "display" option
-
 3.0 Bug fixes and enhancements
 1. Enable enter key press to search when focus is in a value field
 2. Optional 'operator' list property in 'FilterConfig' type to limit field operators for text, number & date filters
