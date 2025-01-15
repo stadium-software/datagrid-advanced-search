@@ -1,31 +1,29 @@
-# DataGrid Client Side Filters
+# DataGrid Client Side Filters <!-- omit in toc -->
 
 Building advanced client-side search forms for DataGrids
 
 https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 
-## Content
-- [DataGrid Client Side Filters](#datagrid-client-side-filters)
-  - [Content](#content)
-  - [Version](#version)
-    - [Change Log](#change-log)
-  - [Application Setup](#application-setup)
-  - [Database, Connector and DataGrid](#database-connector-and-datagrid)
-  - [Global Script Setup](#global-script-setup)
-  - [FilterConfig Type Setup (Required)](#filterconfig-type-setup-required)
-  - [SelectedFilters Type Setup (Optional)](#selectedfilters-type-setup-optional)
-  - [Page Setup](#page-setup)
-  - [Page.Load Setup](#pageload-setup)
-  - [Display Modes](#display-modes)
-    - [Default](#default)
-    - [Collapsed](#collapsed)
-    - [Integrated](#integrated)
-  - [Callback Script Setup](#callback-script-setup)
-  - [Programatically Applying Filters](#programatically-applying-filters)
-  - [Applying the CSS](#applying-the-css)
-  - [Customising CSS](#customising-css)
-  - [CSS Upgrading](#css-upgrading)
-  - [Known Issues](#known-issues)
+## Content <!-- omit in toc -->
+- [Version](#version)
+  - [Change Log](#change-log)
+- [Application Setup](#application-setup)
+- [Database, Connector and DataGrid](#database-connector-and-datagrid)
+- [Global Script Setup](#global-script-setup)
+- [FilterConfig Type Setup (Required)](#filterconfig-type-setup-required)
+- [SelectedFilters Type Setup (Optional)](#selectedfilters-type-setup-optional)
+- [Page Setup](#page-setup)
+- [Page.Load Setup](#pageload-setup)
+- [Display Modes](#display-modes)
+  - [Default](#default)
+  - [Collapsed](#collapsed)
+  - [Integrated](#integrated)
+- [Callback Script Setup](#callback-script-setup)
+- [Programatically Applying Filters](#programatically-applying-filters)
+- [Applying the CSS](#applying-the-css)
+- [Customising CSS](#customising-css)
+- [CSS Upgrading](#css-upgrading)
+- [Known Issues](#known-issues)
 
 ## Version
 Current version 3.2.2
@@ -762,7 +760,7 @@ async function scriptCaller(script, data) {
    7. operators (List)
       1. Item (Any)
 
-![Filters COnfigType Setup](images/TypeSetup.png)
+![Filters ConfigType Setup](images/TypeSetup.png)
 
 ## SelectedFilters Type Setup (Optional)
 1. If you wish to apply filters programatically, it may be useful to create a second type called "SelectedFilters"
