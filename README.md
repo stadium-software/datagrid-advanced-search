@@ -1,6 +1,6 @@
 # DataGrid Client Side Filters <!-- omit in toc -->
 
-Building advanced client-side search forms for DataGrids
+Generating advanced client-side search forms for DataGrids
 
 https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 
@@ -26,7 +26,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 - [Known Issues](#known-issues)
 
 ## Version
-Current version 3.2.2
+Current version 3.2.3
 
 ### Change Log
 3.0 Bug fixes and enhancements
@@ -45,7 +45,9 @@ Current version 3.2.2
 
 3.2.1 Adjusted date filtering logic to cater for datetime columns
 
-3.2.2 Bug fix SelectedFilters 'To' field not hidden; Collapsed FilterHeading not used bug fix; CollapseOnClickAway not used bug fix
+3.2.2 Bug fix: SelectedFilters 'To' field not hidden; Collapsed FilterHeading not used bug fix; CollapseOnClickAway not used bug fix
+
+3.2.3 Bug fix: SelectedFilters not populating date field when display is 'picker'
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -67,7 +69,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 3. Drag a Javascript action into the script and paste the Javascript below into the action
 4. Do not make any changes to any of this script
 ```javascript
-/* Stadium Script v3.2.2 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.2.3 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -618,9 +620,23 @@ function setSelectedFilters(){
             if (selectedvalues && selectedvalues.length > 0) value.querySelectorAll("input")[1].value = selectedvalues[1];
         }
         if (type == "date") {
+            let fval1 = value.querySelectorAll("input")[0];
+            let fval2 = value.querySelectorAll("input")[1];
             if (selectedoperator && [...select.options].map(el => el.value).includes(selectedoperator.toString())) select.value = selectedoperator;
-            if (selectedvalues && selectedvalues.length > 0) value.querySelectorAll("input")[0].value = selectedvalues[0];
-            if (selectedvalues && selectedvalues.length > 0) value.querySelectorAll("input")[1].value = selectedvalues[1];
+            if (selectedvalues && selectedvalues.length > 0) {
+                if (fval1.type == "date") {
+                    fval1.value = dayjs(selectedvalues[0]).format('YYYY-MM-DD');
+                } else { 
+                    fval1.value = selectedvalues[0];
+                }
+            }
+            if (selectedvalues && selectedvalues.length > 0) {
+                if (fval2.type == "date") {
+                    fval2.value = dayjs(selectedvalues[1]).format('YYYY-MM-DD');
+                } else {
+                    fval2.value = selectedvalues[1];
+                }
+            }
         }
         if (type == "boolean") {
             if (display == "radio") {
