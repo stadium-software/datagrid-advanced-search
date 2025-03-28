@@ -1,6 +1,6 @@
 /* Stadium CSS https://github.com/stadium-software/datagrid-advanced-search */
 .stadium-filter-container {
-    margin-top: 10px;
+    margin-top: 1rem;
 
     .visually-hidden {
         height: 0;
@@ -13,12 +13,12 @@
     }
 
     .stadium-filters {
-        border: 1px solid var(--datagrid-integrated-filter-border-color, var(--GENERAL-BORDER-COLOR));
+        border: 0.1rem solid var(--datagrid-integrated-filter-border-color, var(--GENERAL-BORDER-COLOR));
         background-color: var(--datagrid-filter-background-color, var(--BODY-BACKGROUND-COLOR));
         display: grid;
-        grid-template-columns: minmax(min-content, max-content) max-content minmax(120px, 1fr);
+        grid-template-columns: minmax(min-content, max-content) max-content minmax(12rem, 1fr);
         align-items: center;
-        padding: 0 6px;
+        padding: 0 0.6rem;
     }
 
     .stadium-filter-inner-container {
@@ -35,11 +35,11 @@
 
     input:not([type='checkbox'], [type='radio']) {
         width: 100%;
-        max-width: 300px;
+        max-width: 30rem;
     }
 
     select {
-        min-width: 135px;
+        min-width: 13.5rem;
         width: 100%;
     }
 
@@ -57,29 +57,29 @@
 
     .number-values {
         display: flex;
-        gap: 10px;
-        margin-top: 10px;
+        gap: 1rem;
+        margin-top: 1rem;
 
         &>.form-control {
-            width: calc(50% - 5px);
-            max-width: 145px;
+            width: calc(50% - 0.5rem);
+            max-width: 14.5rem;
         }
     }
 
     .date-values {
         display: flex;
-        gap: 10px;
-        margin-top: 10px;
+        gap: 1rem;
+        margin-top: 1rem;
 
         &>.form-control {
-            width: calc(50% - 5px);
-            max-width: 145px;
+            width: calc(50% - 0.5rem);
+            max-width: 14.5rem;
         }
     }
 
     .filtergrid-checkbox-list,
     .filtergrid-radiobutton-list {
-        padding: 6px;
+        padding: 0.6rem;
     }
 
     .label-container {
@@ -92,7 +92,7 @@
 
     .filter-button-bar {
         grid-column: 1 / 3;
-        padding-bottom: 6px;
+        padding-bottom: 0.6rem;
         display: flex;
         > .button-container:nth-child(1) {
             order: var(--datagrid-filter-clear-button-position, 1);
@@ -101,7 +101,7 @@
     .filtergrid-from-date:has(+ .visually-hidden),
     .filtergrid-from-number:has(+ .visually-hidden) {
         width: 100%;
-        max-width: 300px;
+        max-width: 30rem;
     }
 }
 
@@ -110,13 +110,13 @@
         user-select: none;
         background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
         background-repeat: no-repeat;
-        background-size: 20px;
+        background-size: 2rem;
         background-color: var(--datagrid-integrated-filter-header-background-color, var(--BODY-BACKGROUND-COLOR));
-        background-position: right 8px center;
+        background-position: right 0.8rem center;
         cursor: pointer;
         font-weight: bold;
         line-height: 2;
-        padding: 6px;
+        padding: 0.6rem;
     }
 
     .stadium-filters {
@@ -141,19 +141,19 @@
         user-select: none;
         background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
         background-repeat: no-repeat;
-        background-size: 20px;
+        background-size: 2rem;
         background-color: var(--datagrid-integrated-filter-header-background-color, var(--BODY-BACKGROUND-COLOR));
         background-position: center;
         cursor: pointer;
         font-weight: bold;
         line-height: 2;
-        width: 38px;
-        height: 38px;
+        width: 3.8rem;
+        height: 3.8rem;
     }
 
     .stadium-filter-inner-container {
         position: absolute;
-        top: calc(100% - 2px);
+        top: calc(100% - 0.2rem);
         z-index: 10;
         display: grid;
         grid-template-rows: 0fr;
@@ -165,14 +165,14 @@
         overflow: hidden;
         transition: border-color 500ms;
         border-color: white;
-        border-bottom-right-radius: 6px;
-        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 0.6rem;
+        border-bottom-left-radius: 0.6rem;
     }
 }
 .expand.filter-integrated {
     position: relative;
     .stadium-filter-inner-container {
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 2rem 2.5rem -0.5rem, rgba(0, 0, 0, 0.04) 0 1rem 1rem -0.5rem;
     }
 }
 .expand.filter-integrated,
@@ -182,7 +182,11 @@
         grid-template-columns: max-content;
     }
     .stadium-filters {
-        padding: 12px;
+        padding: 1.2rem;
         border-color: var(--datagrid-integrated-filter-border-color, var(--GENERAL-BORDER-COLOR));
     }
+}
+html {
+    min-height: 100%;
+    font-size: 62.5%;
 }

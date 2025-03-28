@@ -22,13 +22,14 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
   - [Integrated](#integrated)
 - [Callback Script Setup](#callback-script-setup)
 - [Programatically Applying Filters](#programatically-applying-filters)
-- [Applying the CSS](#applying-the-css)
-- [Customising CSS](#customising-css)
-- [CSS Upgrading](#css-upgrading)
-- [Known Issues](#known-issues)
+- [CSS](#css)
+  - [Before v6.12](#before-v612)
+  - [v6.12+](#v612)
+  - [Customising CSS](#customising-css)
+- [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
-Current version 3.2.3
+Version 3.2.3(1)
 
 ### Change Log
 3.0 Bug fixes and enhancements
@@ -50,6 +51,8 @@ Current version 3.2.3
 3.2.2 Bug fix: SelectedFilters 'To' field not hidden; Collapsed FilterHeading not used bug fix; CollapseOnClickAway not used bug fix
 
 3.2.3 Bug fix: SelectedFilters not populating date field when display is 'picker'
+
+3.2.3(1): Converted px to rem (css only)
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -899,31 +902,40 @@ In order to apply filters from scripts or event handlers (for example defaults o
    2. selectedoperator: The value for the operator (only needed for text, number and date types)
    3. selectedvalues: A List of type "Any" containing the values to filter by (first value will be 'From' and second value 'To' where applicable). 
 
-## Applying the CSS
-The CSS below is required for the correct functioning of the module. Some elements can be [customised](#customising-css) using a variables CSS file. 
+## CSS
+The CSS below is required for the correct functioning of the module. Variables exposed in the [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) file can be [customised](#customising-css).
 
-**Stadium 6.6 or higher**
+### Before v6.12
 1. Create a folder called "CSS" inside of your Embedded Files in your application
 2. Drag the two CSS files from this repo [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) and [*datagrid-custom-filters.css*](datagrid-custom-filters.css) into that folder
-3. Paste the link tags below into the "head" property of your application
+3. Paste the link tags below into the *head* property of your application
 ```html
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters.css">
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters-variables.css">
 ``` 
 
-![](images/ApplicationHeader.png)
+### v6.12+
+1. Create a folder called "CSS" inside of your Embedded Files in your application
+2. Drag the CSS files from this repo [*datagrid-custom-filters.css*](datagrid-custom-filters.css) into that folder
+3. Paste the link tag below into the *head* property of your application
+```html
+<link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters.css">
+``` 
 
-**Versions lower than 6.6**
-1. Copy the CSS from the two css files into the Stylesheet in your application
-
-## Customising CSS
+### Customising CSS
 1. Open the CSS file called [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) from this repo
 2. Adjust the variables in the *:root* element as you see fit
-3. Overwrite the file in the CSS folder of your application with the customised file
-4. Do not change any CSS other than the variables provided in the *-variables.css file
+3. Stadium 6.12+ users can comment out any variable they do **not** want to customise
+4. Add the [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) to the "CSS" folder in the EmbeddedFiles (overwrite)
+5. Paste the link tag below into the *head* property of your application (if you don't already have it there)
+```html
+<link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters-variables.css">
+``` 
+6. Add the file to the "CSS" inside of your Embedded Files in your application
 
-## CSS Upgrading
-To upgrade the CSS in this module, follow the [steps outlined in this repo](https://github.com/stadium-software/samples-upgrading)
+**NOTE: Do not change any of the CSS in the 'datagrid-custom-filters.css' file**
 
-## Known Issues
-1. Using an underscore (_) in the page or template name can cause the script to break
+## Upgrading Stadium Repos
+Stadium Repos are not static. They change as additional features are added and bugs are fixed. Using the right method to work with Stadium Repos allows for upgrading them in a controlled manner. 
+
+How to use and update application repos is described here: [Working with Stadium Repos](https://github.com/stadium-software/samples-upgrading)
