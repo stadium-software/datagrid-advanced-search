@@ -1,8 +1,8 @@
 # DataGrid Client Side Filters <!-- omit in toc -->
 
-Generating advanced client-side search forms for DataGrids
+Generates advanced client-side search forms for DataGrids and populates the DataGrid search box. 
 
-This module will be deprecated. Consider using the more flexible [Filter Grid Generator](https://github.com/stadium-software/filter-grid) instead of this module. 
+Alternatively, you can also use the [Filter Grid Generator](https://github.com/stadium-software/filter-grid). 
 
 https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 
