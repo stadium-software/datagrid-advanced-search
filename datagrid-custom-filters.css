@@ -38,12 +38,12 @@
         max-width: 30rem;
     }
 
-    select {
+    select.form-control {
         min-width: 13.5rem;
         width: 100%;
     }
 
-    select[readonly='readonly'] {
+    select.form-control[readonly='readonly'] {
         user-select: none;
         pointer-events: none;
         background-color: var(--FORM-CONTROL-BACKGROUND-COLOR, #f9f9f9);

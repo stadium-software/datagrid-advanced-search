@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 - [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
-Version 3.2.3(1)
+Version 3.2.3(2)
 
 ### Change Log
 3.0 Bug fixes and enhancements
@@ -53,6 +53,8 @@ Version 3.2.3(1)
 3.2.3 Bug fix: SelectedFilters not populating date field when display is 'picker'
 
 3.2.3(1): Converted px to rem (css only)
+
+3.2.3(2): Fixed drop-down width bug (css only)
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
