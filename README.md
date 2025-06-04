@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 - [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
-Version 3.2.3(2)
+Version 3.2.4
 
 ### Change Log
 3.0 Bug fixes and enhancements
@@ -54,7 +54,7 @@ Version 3.2.3(2)
 
 3.2.3(1): Converted px to rem (css only)
 
-3.2.3(2): Fixed drop-down width bug (css only)
+3.2.4: Adjusted display width for enum, boolean, radiobuttonlist and checkboxlist displays
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -76,7 +76,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 3. Drag a Javascript action into the script and paste the Javascript below into the action
 4. Do not make any changes to any of this script
 ```javascript
-/* Stadium Script v3.2.3 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.2.4 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -345,7 +345,7 @@ function initFilterForm() {
                     cont.appendChild(lab);
                     select.appendChild(cont);
                 }
-                operator.classList.add("control-container", "radio-button-list-container", "filtergrid-radiobutton-list");
+                operator.classList.add("control-container", "radio-button-list-container", "filtergrid-radiobutton-list", "span-2");
             } else {
                 select = document.createElement("select");
                 for(let s = 0; s < options.length; s++) {
@@ -356,9 +356,10 @@ function initFilterForm() {
                     select.appendChild(el);
                 }
                 select.classList.add("form-control");
-                operator.classList.add("control-container", "drop-down-container", "filtergrid-boolean-operator");
+                operator.classList.add("control-container", "drop-down-container", "filtergrid-boolean-operator", "span-2");
             }
             input = document.createElement("div");
+            valueField.classList.add("no-display");
         }
         if (type == "enum") {
             data = insert(data, 0, "Show all");
@@ -383,7 +384,7 @@ function initFilterForm() {
                     cont.appendChild(lab);
                     select.appendChild(cont);
                 }
-                operator.classList.add("control-container", "radio-button-list-container", "filtergrid-radiobutton-list");
+                operator.classList.add("control-container", "radio-button-list-container", "filtergrid-radiobutton-list", "span-2");
             } else {
                 select = document.createElement("select");
                 for (let s = 0; s < data.length; s++) {
@@ -394,9 +395,10 @@ function initFilterForm() {
                     select.appendChild(el);
                 }
                 select.classList.add("form-control");
-                operator.classList.add("control-container", "drop-down-container", "filtergrid-enum-operator");
+                operator.classList.add("control-container", "drop-down-container", "filtergrid-enum-operator", "span-2");
             }
             input = document.createElement("div");
+            valueField.classList.add("no-display");
         }
         if (type == "multiselect") {
             select = document.createElement("div");
@@ -417,8 +419,9 @@ function initFilterForm() {
                 cont.appendChild(lab);
                 select.appendChild(cont);
             }
-            operator.classList.add("control-container", "check-box-list-container", "filtergrid-checkbox-list");
+            operator.classList.add("control-container", "check-box-list-container", "filtergrid-checkbox-list", "span-2");
             input = document.createElement("div");
+            valueField.classList.add("no-display");
         }
         setAttributes(operator, { "foperator": column, "ftype": type, "cno": colNo, "fdisplay": display });
         operator.appendChild(select);
