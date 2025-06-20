@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 - [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
-Version 3.2.4
+Version 3.3
 
 ### Change Log
 3.0 Bug fixes and enhancements
@@ -56,6 +56,8 @@ Version 3.2.4
 
 3.2.4: Adjusted display width for enum, boolean, radiobuttonlist and checkboxlist displays
 
+3.3 Fixed reinitialise bug
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -76,7 +78,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 3. Drag a Javascript action into the script and paste the Javascript below into the action
 4. Do not make any changes to any of this script
 ```javascript
-/* Stadium Script v3.2.4 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.3 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -151,19 +153,20 @@ if (filterContainer.length == 0) {
     return false;
 }
 filterContainer = filterContainer[0];
-let filterInnerContainer = filterContainer.querySelector(".stadium-filter-inner-container"),
-    stadiumFilters  = filterContainer.querySelector(".stadium-filters");
-if (!filterInnerContainer){
-    filterContainer.classList.add("stadium-filter-container");
-    filterInnerContainer = document.createElement("div");
-    filterInnerContainer.classList.add("stadium-filter-inner-container");
-    filterContainer.appendChild(filterInnerContainer);
-    stadiumFilters = document.createElement("div");
-    stadiumFilters.classList.add("stadium-filters");
-    stadiumFilters.setAttribute("forDG",dg.id);
-    filterInnerContainer.appendChild(stadiumFilters);
-    initFilterForm();
+let filterInnerContainer = filterContainer.querySelector(".stadium-filter-inner-container");
+if (filterInnerContainer){
+    filterInnerContainer.remove();
 }
+filterContainer.classList.add("stadium-filter-container");
+filterInnerContainer = document.createElement("div");
+filterInnerContainer.classList.add("stadium-filter-inner-container");
+filterContainer.appendChild(filterInnerContainer);
+let stadiumFilters = document.createElement("div");
+stadiumFilters.classList.add("stadium-filters");
+stadiumFilters.setAttribute("forDG",dg.id);
+filterInnerContainer.appendChild(stadiumFilters);
+initFilterForm();
+
 if (selectedFilters.length > 0) {
     setSelectedFilters();
 }
