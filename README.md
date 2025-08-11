@@ -156,7 +156,7 @@ if (filterContainer.length == 0) {
 }
 filterContainer = filterContainer[0];
 let filterHeader = filterContainer.querySelector(".stadium-filter-header");
-if (filterHeader){
+if (filterHeader && displayMode == "collapsed"){
     filterHeader.remove();
 }
 let filterInnerContainer = filterContainer.querySelector(".stadium-filter-inner-container");
