@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 - [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
-Version 3.3
+Version 3.3.1
 
 ### Change Log
 3.0 Bug fixes and enhancements
@@ -58,6 +58,8 @@ Version 3.3
 
 3.3 Fixed reinitialise bug
 
+3.3.1 Fixed duplicate header on script recall bug
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -78,7 +80,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 3. Drag a Javascript action into the script and paste the Javascript below into the action
 4. Do not make any changes to any of this script
 ```javascript
-/* Stadium Script v3.3 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.3.1 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -153,6 +155,10 @@ if (filterContainer.length == 0) {
     return false;
 }
 filterContainer = filterContainer[0];
+let filterHeader = filterContainer.querySelector(".stadium-filter-header");
+if (filterHeader){
+    filterHeader.remove();
+}
 let filterInnerContainer = filterContainer.querySelector(".stadium-filter-inner-container");
 if (filterInnerContainer){
     filterInnerContainer.remove();
