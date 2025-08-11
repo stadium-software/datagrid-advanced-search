@@ -2,7 +2,7 @@
 
 Generates advanced client-side search forms for DataGrids and populates the DataGrid search box. 
 
-Alternatively, you can also use the [Filter Grid Generator](https://github.com/stadium-software/filter-grid). 
+For new implementations, please rather use the [Filter Grid Generator](https://github.com/stadium-software/filter-grid). 
 
 https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 
