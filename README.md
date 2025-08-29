@@ -1180,7 +1180,7 @@ In order to apply filters from scripts or event handlers (for example defaults o
    3. selectedvalues: A List of type "Any" containing the values to filter by (first value will be 'From' and second value 'To' where applicable). 
 
 ## CSS
-The CSS below is required for the correct functioning of the module. Variables exposed in the [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) file can be [customised](#customising-css).
+Variables exposed in the [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) file can be [customised](#customising-css).
 
 ### Before v6.12
 1. Create a folder called "CSS" inside of your Embedded Files in your application
