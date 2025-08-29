@@ -1079,7 +1079,7 @@ To apply filters programatically, create a second type called "SelectedFilters"
 
 Fields Definition Example
 ```json
-= [{
+[{
 	"type": "text",
 	"name": "First Name",
 	"column": "FirstName",
