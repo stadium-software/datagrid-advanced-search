@@ -7,26 +7,31 @@ For new implementations, please rather use the [Filter Grid Generator](https://g
 https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 
 ## Content <!-- omit in toc -->
-- [Version](#version)
-  - [Change Log](#change-log)
-- [Application Setup](#application-setup)
-- [Database, Connector and DataGrid](#database-connector-and-datagrid)
-- [Global Script Setup](#global-script-setup)
-- [FilterConfig Type Setup (Required)](#filterconfig-type-setup-required)
-- [SelectedFilters Type Setup (Optional)](#selectedfilters-type-setup-optional)
-- [Page Setup](#page-setup)
-- [Page.Load Setup](#pageload-setup)
-- [Display Modes](#display-modes)
-  - [Default](#default)
-  - [Collapsed](#collapsed)
-  - [Integrated](#integrated)
-- [Callback Script Setup](#callback-script-setup)
-- [Programatically Applying Filters](#programatically-applying-filters)
-- [CSS](#css)
-  - [Before v6.12](#before-v612)
-  - [v6.12+](#v612)
-  - [Customising CSS](#customising-css)
-- [Upgrading Stadium Repos](#upgrading-stadium-repos)
+1. [Version](#version)
+   1. [Change Log](#change-log)
+2. [Application Setup](#application-setup)
+3. [Database, Connector and DataGrid](#database-connector-and-datagrid)
+4. [Global Script Setup](#global-script-setup)
+5. [Types](#types)
+   1. [FilterConfig Type Setup (Required)](#filterconfig-type-setup-required)
+      1. [Manual Type Creation](#manual-type-creation)
+      2. [Type Import](#type-import)
+   2. [SelectedFilters Type Setup (Optional)](#selectedfilters-type-setup-optional)
+      1. [Manual Type Creation](#manual-type-creation-1)
+      2. [Type Import](#type-import-1)
+6. [Page Setup](#page-setup)
+7. [Page.Load Setup](#pageload-setup)
+8. [Display Modes](#display-modes)
+   1. [Default](#default)
+   2. [Collapsed](#collapsed)
+   3. [Integrated](#integrated)
+9. [Callback Script Setup](#callback-script-setup)
+10. [Programatically Applying Filters](#programatically-applying-filters)
+11. [CSS](#css)
+    1. [Before v6.12](#before-v612)
+    2. [v6.12+](#v612)
+    3. [Customising CSS](#customising-css)
+12. [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
 Version 3.3.1
@@ -756,7 +761,15 @@ async function scriptCaller(script, data) {
 }
 ```
 
-## FilterConfig Type Setup (Required)
+## Types
+The types can create one nested type manually or use the import option to generate the type. How the type is used remains the same
+
+### FilterConfig Type Setup (Required)
+The completed type should have the structure shown below
+
+![Filters ConfigType Setup](images/TypeSetup.png)
+
+#### Manual Type Creation
 1. Add a type called "FilterConfig" to the types collection in the Stadium Application Explorer
 2. Add the following properties to the type
    1. type (Any)
@@ -769,17 +782,55 @@ async function scriptCaller(script, data) {
    7. operators (List)
       1. Item (Any)
 
-![Filters ConfigType Setup](images/TypeSetup.png)
+#### Type Import
+1. Right-click on the `Types` node in the `Application Explorer`
 
-## SelectedFilters Type Setup (Optional)
-1. If you wish to apply filters programatically, it may be useful to create a second type called "SelectedFilters"
-2. Add the following properties to the type
+![](images/TypeImport.png)
+
+2. In the `Import Type` popup
+    1. Add "FilterConfig" into the `Name` input field
+    2. Copy & paste the JSON below into the main input area
+
+```json
+{
+	"type": "",
+	"name": "",
+	"column": "",
+    "format": "",
+    "display": "",
+    "operators": [],
+    "data": []
+}
+```
+
+![](images/TypeImportPopup.png)
+
+### SelectedFilters Type Setup (Optional)
+To apply filters programatically, create a second type called "SelectedFilters"
+
+#### Manual Type Creation
+1. Add a type called "SelectedFilters" to the types collection in the Stadium Application Explorer
+1. Add the following properties to the type
    1. column (Any)
    2. selectedoperator (Any)
    3. selectedvalues (List)
       1. Item (Any)
 
 ![Applied Filters Type](images/AppliedFiltersType.png)
+
+#### Type Import
+1. Right-click on the `Types` node in the `Application Explorer`
+2. In the `Import Type` popup
+    1. Add "SelectedFilters" into the `Name` input field
+    2. Copy & paste the JSON below into the main input area
+
+```json
+{
+    "column":"",
+    "selectedoperator":"",
+    "selectedvalues":[]
+}
+```
 
 ## Page Setup
 1. Add a *Container* control to the page
