@@ -29,8 +29,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 10. [Programatically Applying Filters](#programatically-applying-filters)
 11. [CSS](#css)
     1. [Before v6.12](#before-v612)
-    2. [v6.12+](#v612)
-    3. [Customising CSS](#customising-css)
+    2. [Customising CSS](#customising-css)
 12. [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
@@ -65,6 +64,8 @@ Version 3.3.1
 
 3.3.1 Fixed duplicate header on script recall bug
 
+3.4 Integrated CSS with the script
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -85,7 +86,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 3. Drag a Javascript action into the script and paste the Javascript below into the action
 4. Do not make any changes to any of this script
 ```javascript
-/* Stadium Script v3.3.1 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.4 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -759,6 +760,217 @@ async function scriptCaller(script, data) {
         }
     }
 }
+loadCSS();
+function loadCSS() {
+    let moduleID = "stadium-datagrid-filter-css";
+    if (!document.getElementById(moduleID)) {
+        let cssMain = document.createElement("style");
+        cssMain.id = moduleID;
+        cssMain.type = "text/css";
+        cssMain.textContent = `/* Stadium CSS https://github.com/stadium-software/datagrid-advanced-search */
+.stadium-filter-container {
+    margin-top: 1rem;
+
+    .visually-hidden {
+        height: 0;
+        width: 0;
+        overflow: hidden;
+        outline: 0;
+        border: 0;
+        position: absolute;
+        padding: 0;
+    }
+
+    .stadium-filters {
+        border: 0.1rem solid var(--datagrid-integrated-filter-border-color, var(--GENERAL-BORDER-COLOR));
+        background-color: var(--datagrid-filter-background-color, var(--BODY-BACKGROUND-COLOR));
+        display: grid;
+        grid-template-columns: minmax(min-content, max-content) max-content minmax(12rem, 1fr);
+        align-items: center;
+        padding: 0 0.6rem;
+    }
+
+    .stadium-filter-inner-container {
+        overflow: hidden;
+    }
+
+    .lite-button,
+    .lite-button:hover, 
+    .lite-button:focus {
+        background-color: var(--datagrid-filter-clear-button-background-color, var(--BUTTON-TEXT-COLOR));
+        color: var(--datagrid-filter-clear-button-font-color, var(--BUTTON-BACKGROUND-COLOR));
+        box-shadow: none;
+    }
+
+    input:not([type='checkbox'], [type='radio']) {
+        width: 100%;
+        max-width: 30rem;
+    }
+
+    select.form-control {
+        min-width: 13.5rem;
+        width: 100%;
+    }
+
+    select.form-control[readonly='readonly'] {
+        user-select: none;
+        pointer-events: none;
+        background-color: var(--FORM-CONTROL-BACKGROUND-COLOR, #f9f9f9);
+        background-image: none;
+    }
+
+    .control-container:has(.filtergrid-text-value),
+    .filtergrid-text-value {
+        padding-right: 0;
+    }
+
+    .number-values {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        &>.form-control {
+            width: calc(50% - 0.5rem);
+            max-width: 14.5rem;
+        }
+    }
+
+    .date-values {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        &>.form-control {
+            width: calc(50% - 0.5rem);
+            max-width: 14.5rem;
+        }
+    }
+
+    .filtergrid-checkbox-list,
+    .filtergrid-radiobutton-list {
+        padding: 0.6rem;
+        margin-right: 0;
+    }
+
+    .label-container {
+       overflow-wrap: break-word;
+    }
+
+    .label-container:has(+ .filtergrid-checkbox-list) {
+        align-self: self-start;
+    }
+
+    .filter-button-bar {
+        grid-column: 1 / 3;
+        padding-bottom: 0.6rem;
+        display: flex;
+        > .button-container:nth-child(1) {
+            order: var(--datagrid-filter-clear-button-position, 1);
+        }
+    }
+    .filtergrid-from-date:has(+ .visually-hidden),
+    .filtergrid-from-number:has(+ .visually-hidden) {
+        width: 100%;
+        max-width: 30rem;
+    }
+
+    .no-display {
+        display: none;
+    }
+    .span-2 {
+        grid-column: 2 / span 2;
+        padding-right: 0;
+    }
+}
+
+.filter-collapsed {
+    .stadium-filter-header {
+        user-select: none;
+        background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
+        background-repeat: no-repeat;
+        background-size: 2rem;
+        background-color: var(--datagrid-integrated-filter-header-background-color, var(--BODY-BACKGROUND-COLOR));
+        background-position: right 0.8rem center;
+        cursor: pointer;
+        font-weight: bold;
+        line-height: 2;
+        padding: 0.6rem;
+    }
+
+    .stadium-filters {
+        overflow: hidden;
+        transition: border-color 500ms;
+        border-color: white;
+    }
+
+    .stadium-filter-inner-container {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 500ms;
+    }
+}
+
+.filter-integrated {
+    position: relative;
+    background-color: transparent;
+    margin-top: 0;
+
+    .stadium-filter-header {
+        user-select: none;
+        background-image: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxwYXRoIGZpbGw9IiM4ODg4ODgiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTExLjUgMmExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNOS4wNSAzYTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MWgtMi4wNWEyLjUgMi41IDAgMCAxLTQuOSAwSDBWM2g5LjA1ek00LjUgN2ExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3pNMi4wNSA4YTIuNSAyLjUgMCAwIDEgNC45IDBIMTZ2MUg2Ljk1YTIuNSAyLjUgMCAwIDEtNC45IDBIMFY4aDIuMDV6bTkuNDUgNGExLjUgMS41IDAgMSAwIDAgM2ExLjUgMS41IDAgMCAwIDAtM3ptLTIuNDUgMWEyLjUgMi41IDAgMCAxIDQuOSAwSDE2djFoLTIuMDVhMi41IDIuNSAwIDAgMS00LjkgMEgwdi0xaDkuMDV6Ii8+PC9zdmc+');
+        background-repeat: no-repeat;
+        background-size: 2rem;
+        background-color: var(--datagrid-integrated-filter-header-background-color, var(--BODY-BACKGROUND-COLOR));
+        background-position: center;
+        cursor: pointer;
+        font-weight: bold;
+        line-height: 2;
+        width: 3.8rem;
+        height: 3.8rem;
+    }
+
+    .stadium-filter-inner-container {
+        position: absolute;
+        top: calc(100% - 0.2rem);
+        z-index: 10;
+        display: grid;
+        grid-template-rows: 0fr;
+        grid-template-columns: max-content;
+        transition: grid-template-rows 500ms;
+    }
+
+    .stadium-filters {
+        overflow: hidden;
+        transition: border-color 500ms;
+        border-color: white;
+        border-bottom-right-radius: 0.6rem;
+        border-bottom-left-radius: 0.6rem;
+    }
+}
+.expand.filter-integrated {
+    position: relative;
+    .stadium-filter-inner-container {
+        box-shadow: rgba(0, 0, 0, 0.1) 0 2rem 2.5rem -0.5rem, rgba(0, 0, 0, 0.04) 0 1rem 1rem -0.5rem;
+    }
+}
+.expand.filter-integrated,
+.expand.filter-collapsed {
+    .stadium-filter-inner-container {
+        grid-template-rows: 1fr;
+        grid-template-columns: max-content;
+    }
+    .stadium-filters {
+        padding: 1.2rem;
+        border-color: var(--datagrid-integrated-filter-border-color, var(--GENERAL-BORDER-COLOR));
+    }
+}
+html {
+    min-height: 100%;
+    font-size: 62.5%;
+}`;
+        document.head.appendChild(cssMain);
+    }   
+}
 ```
 
 ## Types
@@ -975,16 +1187,7 @@ The CSS below is required for the correct functioning of the module. Variables e
 2. Drag the two CSS files from this repo [*datagrid-custom-filters-variables.css*](datagrid-custom-filters-variables.css) and [*datagrid-custom-filters.css*](datagrid-custom-filters.css) into that folder
 3. Paste the link tags below into the *head* property of your application
 ```html
-<link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters.css">
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters-variables.css">
-``` 
-
-### v6.12+
-1. Create a folder called "CSS" inside of your Embedded Files in your application
-2. Drag the CSS files from this repo [*datagrid-custom-filters.css*](datagrid-custom-filters.css) into that folder
-3. Paste the link tag below into the *head* property of your application
-```html
-<link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters.css">
 ``` 
 
 ### Customising CSS
@@ -997,8 +1200,6 @@ The CSS below is required for the correct functioning of the module. Variables e
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/datagrid-custom-filters-variables.css">
 ``` 
 6. Add the file to the "CSS" inside of your Embedded Files in your application
-
-**NOTE: Do not change any of the CSS in the 'datagrid-custom-filters.css' file**
 
 ## Upgrading Stadium Repos
 Stadium Repos are not static. They change as additional features are added and bugs are fixed. Using the right method to work with Stadium Repos allows for upgrading them in a controlled manner. 
