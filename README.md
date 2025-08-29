@@ -33,7 +33,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 12. [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
-Version 3.3.1
+Version 3.4
 
 ### Change Log
 3.0 Bug fixes and enhancements
