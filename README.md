@@ -177,6 +177,7 @@ let stadiumFilters = document.createElement("div");
 stadiumFilters.classList.add("stadium-filters");
 stadiumFilters.setAttribute("forDG",dg.id);
 filterInnerContainer.appendChild(stadiumFilters);
+loadCSS();
 initFilterForm();
 
 if (selectedFilters.length > 0) {
@@ -760,7 +761,6 @@ async function scriptCaller(script, data) {
         }
     }
 }
-loadCSS();
 function loadCSS() {
     let moduleID = "stadium-datagrid-filter-css";
     if (!document.getElementById(moduleID)) {
