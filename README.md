@@ -48,7 +48,7 @@ Version 3.5
 
 3.2 Enhancements
 1. Added 'Callback' parameter; when provided this script returns applied filters to the callback script
-2. Added 'SelectedFilters' parameter to apply filters programatically
+2. Added 'SelectedFilters' parameter to apply filters programmatically
 
 3.2.1 Adjusted date filtering logic to cater for datetime columns
 
@@ -216,7 +216,6 @@ function initFilterForm() {
                 console.error("Column '" + column + "' was not found. The 'column' property must contain the column name exactly as defined in the DataGrid 'Columns' property or the column number.");
                 continue;
             }
-            //colNo = dataGridColumns.map(function (e) {return e.name;}).indexOf(columnDef.name) + 1;
             colNo = findIndex(dataGridColumns, columnDef.name) + 1;
         } else {
             colNo = column;
@@ -257,7 +256,6 @@ function initFilterForm() {
         let select, input;
 
         if (type == "text") {
-            //select = document.createElement("select");
             let options = ["Contains", "Does not contain", "Equals", "Does not equal"];
             select = createSelectWithOptions(options, operators, operators.length == 1);
             for (let s = 0; s < options.length; s++) {
@@ -269,7 +267,6 @@ function initFilterForm() {
                     select.appendChild(el);
                 }
             }
-            //if (operators.length == 1) select.setAttribute("readonly", "readonly");
             select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             input = document.createElement("input");
@@ -279,21 +276,8 @@ function initFilterForm() {
             valueField.classList.add("control-container", "text-box-container");
         }
         if (type == "number") {
-            //select = document.createElement("select");
             let options = ["From-To", "Between", "Equals", "Greater than", "Smaller than"];
             select = createSelectWithOptions(options, operators, operators.length == 1);
-            /*
-            for(let s = 0; s < options.length; s++) {
-                let opt = options[s];
-                if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
-                    let el = document.createElement("option");
-                    el.textContent = opt;
-                    el.value = opt;
-                    select.appendChild(el);
-                }
-            }
-            if (operators.length == 1) select.setAttribute("readonly", "readonly");
-            */
             select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             let numInput1 = document.createElement("input");
@@ -312,21 +296,8 @@ function initFilterForm() {
         }
         if (type == "date") {
             if (!format) format = 'YYYY/MM/DD';
-            //select = document.createElement("select");
             let options = ["From-To", "Between", "Equals", "Greater than", "Smaller than"];
             select = createSelectWithOptions(options, operators, operators.length == 1);
-            /*
-            for(let s = 0; s < options.length; s++) {
-                let opt = options[s];
-                if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
-                    let el = document.createElement("option");
-                    el.textContent = opt;
-                    el.value = opt;
-                    select.appendChild(el);
-                }
-            }
-            if (operators.length == 1) select.setAttribute("readonly", "readonly");
-            */
             select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             let dtInput1 = document.createElement("input");
@@ -703,54 +674,14 @@ function setSelectedFilters(){
 }
 
 function clearForm() { 
-    /*
-    let allCheckboxes = stadiumFilters.querySelectorAll("input[type='checkbox']");
-    for (let i = 0; i < allCheckboxes.length; i++) {
-        allCheckboxes[i].checked = false;
-    }
-    */
     stadiumFilters.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
-    /*
-    let allRadios = stadiumFilters.querySelectorAll("input[type='radio']");
-    for (let i = 0; i < allRadios.length; i++) {
-        allRadios[i].checked = false;
-        if (allRadios[i].value == "Show all") allRadios[i].checked = true;
-    }
-    */
     stadiumFilters.querySelectorAll("input[type='radio']").forEach(radio => {
         radio.checked = radio.value === "Show all";
     });
-    /*
-    let allInputs = stadiumFilters.querySelectorAll("input:not([type='checkbox'],[type='radio'])");
-    for (let i = 0; i < allInputs.length; i++) {
-        allInputs[i].value = "";
-    }
-    */
     stadiumFilters.querySelectorAll("input:not([type='checkbox'],[type='radio'])").forEach(inp => inp.value = "");
-    /*
-    let allSelects = stadiumFilters.querySelectorAll("select");
-    for (let i = 0; i < allSelects.length; i++) {
-        allSelects[i].options.selectedIndex = 0;
-    }
-    */
     stadiumFilters.querySelectorAll("select").forEach(sel => sel.selectedIndex = 0);
-
-    /*
-    let visuallyHidden = stadiumFilters.querySelectorAll(".visually-hidden");
-    for (let i = 0; i < visuallyHidden.length; i++) {
-        visuallyHidden[i].classList.remove("visually-hidden");
-    }
-    */
     stadiumFilters.querySelectorAll(".visually-hidden").forEach(hid => hid.classList.remove("visually-hidden"));
-
-    /*
-    let operators = stadiumFilters.querySelectorAll(".filter-operator");
-    for (let i = 0; i < operators.length; i++) {
-        operators[i].dispatchEvent(new Event('change'));
-    }
-    */
     stadiumFilters.querySelectorAll(".filter-operator").forEach(op => op.dispatchEvent(new Event('change')));
-   
     scope[`${datagridname}SearchTerm`] = null;
 }
 function applyOnKeypress(e){
