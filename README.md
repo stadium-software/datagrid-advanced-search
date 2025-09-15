@@ -33,7 +33,7 @@ https://github.com/user-attachments/assets/ae38a2ce-3b95-4696-b145-a8798844e743
 12. [Upgrading Stadium Repos](#upgrading-stadium-repos)
 
 ## Version
-Version 3.4
+Version 3.5
 
 ### Change Log
 3.0 Bug fixes and enhancements
@@ -66,6 +66,8 @@ Version 3.4
 
 3.4 Integrated CSS with the script
 
+3.5 Minor script optimisations
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -86,7 +88,7 @@ Use the instructions from [this repo](https://github.com/stadium-software/sample
 3. Drag a Javascript action into the script and paste the Javascript below into the action
 4. Do not make any changes to any of this script
 ```javascript
-/* Stadium Script v3.4 https://github.com/stadium-software/datagrid-advanced-search */
+/* Stadium Script v3.5 https://github.com/stadium-software/datagrid-advanced-search */
 let scope = this;
 let filterClassName = "." + ~.Parameters.Input.FilterContainerClass;
 let classInput = ~.Parameters.Input.DataGridClass;
@@ -214,7 +216,8 @@ function initFilterForm() {
                 console.error("Column '" + column + "' was not found. The 'column' property must contain the column name exactly as defined in the DataGrid 'Columns' property or the column number.");
                 continue;
             }
-            colNo = dataGridColumns.map(function (e) {return e.name;}).indexOf(columnDef.name) + 1;
+            //colNo = dataGridColumns.map(function (e) {return e.name;}).indexOf(columnDef.name) + 1;
+            colNo = findIndex(dataGridColumns, columnDef.name) + 1;
         } else {
             colNo = column;
             columnDef = dataGridColumns[column - 1];
@@ -254,8 +257,9 @@ function initFilterForm() {
         let select, input;
 
         if (type == "text") {
-            select = document.createElement("select");
+            //select = document.createElement("select");
             let options = ["Contains", "Does not contain", "Equals", "Does not equal"];
+            select = createSelectWithOptions(options, operators, operators.length == 1);
             for (let s = 0; s < options.length; s++) {
                 let opt = options[s];
                 if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
@@ -265,7 +269,7 @@ function initFilterForm() {
                     select.appendChild(el);
                 }
             }
-            if (operators.length == 1) select.setAttribute("readonly", "readonly");
+            //if (operators.length == 1) select.setAttribute("readonly", "readonly");
             select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             input = document.createElement("input");
@@ -275,8 +279,10 @@ function initFilterForm() {
             valueField.classList.add("control-container", "text-box-container");
         }
         if (type == "number") {
-            select = document.createElement("select");
+            //select = document.createElement("select");
             let options = ["From-To", "Between", "Equals", "Greater than", "Smaller than"];
+            select = createSelectWithOptions(options, operators, operators.length == 1);
+            /*
             for(let s = 0; s < options.length; s++) {
                 let opt = options[s];
                 if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
@@ -287,6 +293,7 @@ function initFilterForm() {
                 }
             }
             if (operators.length == 1) select.setAttribute("readonly", "readonly");
+            */
             select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             let numInput1 = document.createElement("input");
@@ -305,8 +312,10 @@ function initFilterForm() {
         }
         if (type == "date") {
             if (!format) format = 'YYYY/MM/DD';
-            select = document.createElement("select");
+            //select = document.createElement("select");
             let options = ["From-To", "Between", "Equals", "Greater than", "Smaller than"];
+            select = createSelectWithOptions(options, operators, operators.length == 1);
+            /*
             for(let s = 0; s < options.length; s++) {
                 let opt = options[s];
                 if (operators.includes(opt.toLowerCase()) || operators.length == 0) {
@@ -317,6 +326,7 @@ function initFilterForm() {
                 }
             }
             if (operators.length == 1) select.setAttribute("readonly", "readonly");
+            */
             select.classList.add("form-control", "filter-operator");
             operator.classList.add("control-container", "drop-down-container");
             let dtInput1 = document.createElement("input");
@@ -364,7 +374,7 @@ function initFilterForm() {
                 operator.classList.add("control-container", "radio-button-list-container", "filtergrid-radiobutton-list", "span-2");
             } else {
                 select = document.createElement("select");
-                for(let s = 0; s < options.length; s++) {
+                for (let s = 0; s < options.length; s++) {
                     let opt = options[s];
                     let el = document.createElement("option");
                     el.textContent = opt;
@@ -693,31 +703,54 @@ function setSelectedFilters(){
 }
 
 function clearForm() { 
+    /*
     let allCheckboxes = stadiumFilters.querySelectorAll("input[type='checkbox']");
     for (let i = 0; i < allCheckboxes.length; i++) {
         allCheckboxes[i].checked = false;
     }
+    */
+    stadiumFilters.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
+    /*
     let allRadios = stadiumFilters.querySelectorAll("input[type='radio']");
     for (let i = 0; i < allRadios.length; i++) {
         allRadios[i].checked = false;
         if (allRadios[i].value == "Show all") allRadios[i].checked = true;
-    } 
+    }
+    */
+    stadiumFilters.querySelectorAll("input[type='radio']").forEach(radio => {
+        radio.checked = radio.value === "Show all";
+    });
+    /*
     let allInputs = stadiumFilters.querySelectorAll("input:not([type='checkbox'],[type='radio'])");
     for (let i = 0; i < allInputs.length; i++) {
         allInputs[i].value = "";
-    }   
+    }
+    */
+    stadiumFilters.querySelectorAll("input:not([type='checkbox'],[type='radio'])").forEach(inp => inp.value = "");
+    /*
     let allSelects = stadiumFilters.querySelectorAll("select");
     for (let i = 0; i < allSelects.length; i++) {
         allSelects[i].options.selectedIndex = 0;
     }
+    */
+    stadiumFilters.querySelectorAll("select").forEach(sel => sel.selectedIndex = 0);
+
+    /*
     let visuallyHidden = stadiumFilters.querySelectorAll(".visually-hidden");
     for (let i = 0; i < visuallyHidden.length; i++) {
         visuallyHidden[i].classList.remove("visually-hidden");
     }
+    */
+    stadiumFilters.querySelectorAll(".visually-hidden").forEach(hid => hid.classList.remove("visually-hidden"));
+
+    /*
     let operators = stadiumFilters.querySelectorAll(".filter-operator");
     for (let i = 0; i < operators.length; i++) {
         operators[i].dispatchEvent(new Event('change'));
     }
+    */
+    stadiumFilters.querySelectorAll(".filter-operator").forEach(op => op.dispatchEvent(new Event('change')));
+   
     scope[`${datagridname}SearchTerm`] = null;
 }
 function applyOnKeypress(e){
@@ -760,6 +793,22 @@ async function scriptCaller(script, data) {
             wait(100).then(() => scriptCaller(script, data));
         }
     }
+}
+function findIndex(arr, val) {
+    return arr.findIndex(e => e.name === val);
+}
+function createSelectWithOptions(options, operators, isReadonly) {
+    const select = document.createElement("select");
+    options.forEach(opt => {
+        if (operators.includes(opt.toLowerCase()) || operators.length === 0) {
+            const el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+        }
+    });
+    if (isReadonly) select.setAttribute("readonly", "readonly");
+    return select;
 }
 function loadCSS() {
     let moduleID = "stadium-datagrid-filter-css";
